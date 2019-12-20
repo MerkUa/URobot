@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameBotLayout"
+                style="@style/RegistrationTextInputLayoutStyle"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/nameBotEditText"
+                    style="@style/RegistrationEditTextStyle"
+                    android:hint="@string/hint_name_bot"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    android:textColor="#1d1d26"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descriptionBotLayout"
+                style="@style/RegistrationTextInputLayoutStyle"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameBotLayout"
+                tools:ignore="MissingConstraints">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/descriptionBotEditText"
+                    style="@style/RegistrationEditTextStyle"
+                    android:hint="@string/hint_description_bot"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:textColor="#1d1d26"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/phoneLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionBotLayout">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneBotLayout"
+                    style="@style/RegistrationTextInputLayoutStyle"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/phonenBotEditText"
+                        style="@style/RegistrationEditTextStyle"
+                        android:hint="@string/hint_phone_bot"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"
+                        android:textColor="#1d1d26"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_bot_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneBotLayout" />
+
+
+                <Button
+                    android:id="@+id/getCodetButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_rounded_background"
+                    android:text="@string/action_send_phone"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/codeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneLayout">
+
+
+                <EditText
+                    android:id="@+id/codeEdit1"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/codeEdit2"
+                    app:layout_constraintEnd_toStartOf="@+id/codeEdit2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:inputType="number"
+                    tools:ignore="MissingConstraints"
+                    android:layout_height="64dp"
+                    android:layout_width="43dp" />
+
+                <EditText
+                    android:id="@+id/codeEdit2"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/codeEdit2"
+                    app:layout_constraintEnd_toEndOf="@+id/codeEdit3"
+                    app:layout_constraintStart_toEndOf="@+id/codeEdit1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:inputType="number"
+                    tools:ignore="MissingConstraints"
+                    android:layout_height="64dp"
+                    android:layout_width="43dp" />
+
+                <EditText
+                    android:id="@+id/codeEdit3"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/codeEdit2"
+                    app:layout_constraintEnd_toEndOf="@+id/codeEdit4"
+                    app:layout_constraintStart_toEndOf="@+id/codeEdit2"
+                    android:inputType="number"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints"
+                    android:layout_height="64dp"
+                    android:layout_width="43dp" />
+
+                <EditText
+                    android:id="@+id/codeEdit4"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/codeEdit2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/codeEdit3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:inputType="number"
+                    tools:ignore="MissingConstraints"
+                    android:layout_height="64dp"
+                    android:layout_width="43dp" />
+
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/text_resend_code"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/codeEdit1" />
+
+
+                <Button
+                    android:id="@+id/createBotButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_rounded_background"
+                    android:text="@string/action_add_bot"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/deleteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:paddingTop="16dp"
+                android:text="@string/delete"
+                android:textColor="#d0021b"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/codeLayout" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
+
+
+        <TextView
+            android:id="@+id/typeBot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Свой сценарий" />
+
+        <TextView
+            android:id="@+id/titleBot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/typeBot"
+            android:layout_marginTop="4dp"
+            android:text="Название робота"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/descriptionBot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleBot"
+            android:layout_marginTop="4dp"
+            android:text="Короткое описание lorem ipsum dolor sit amet, consec adipiscing elit. Aenean commodo ligula eget dolor."
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iconInstagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/descriptionBot"
+            android:src="@drawable/instagram" />
+
+        <ImageView
+            android:id="@+id/iconWhatsApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_toRightOf="@+id/iconInstagram"
+            android:src="@drawable/whatsapp" />
+
+        <ImageView
+            android:id="@+id/iconViber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_toRightOf="@+id/iconWhatsApp"
+            android:src="@drawable/viber" />
+
+        <ImageView
+            android:id="@+id/iconTelegram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_toRightOf="@+id/iconViber"
+            android:src="@drawable/telegram" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_alignEnd="@+id/descriptionBot"
+            android:layout_marginTop="16dp"
+            android:text="Изменить"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

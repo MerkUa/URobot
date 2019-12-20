@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_ubot"
+        android:icon="@drawable/robots_selector"
+        android:title="@string/title_bot" />
+
+    <item
+        android:id="@+id/navigation_chats"
+        android:icon="@drawable/chat_selector"
+        android:title="@string/title_chats" />
+
+    <item
+        android:id="@+id/navigation_contacts"
+        android:icon="@drawable/contact_selector"
+        android:title="@string/title_contacts" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/settings_selector"
+        android:title="@string/title_settings" />
+
+
+</menu>
