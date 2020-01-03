@@ -1,10 +1,9 @@
 package com.urobot.droid
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -12,10 +11,6 @@ import com.urobot.droid.adapter.TutorialPageAdapter
 import com.urobot.droid.ui.login.LoginActivity
 
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 class TutorialActivity : AppCompatActivity() {
 
     private var mAdapter: TutorialPageAdapter? = null

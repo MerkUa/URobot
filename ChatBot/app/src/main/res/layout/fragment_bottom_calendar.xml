@@ -34,10 +34,10 @@
         android:textColor="@color/black_text"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
+        app:layout_constraintTop_toTopOf="@+id/tvAddDay" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvAddDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -72,17 +72,6 @@
         app:layout_constraintTop_toBottomOf="@+id/viewCalendarRow" />
 
     <TextView
-        android:id="@+id/textViewFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="c"
-        android:textColor="#b0b0b0"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewTime"
-        app:layout_constraintTop_toTopOf="@+id/textViewTime" />
-
-    <TextView
         android:id="@+id/timePickerFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -94,14 +83,36 @@
         app:layout_constraintTop_toTopOf="@+id/textViewTime" />
 
     <TextView
-        android:id="@+id/textViewTo"
+        android:id="@+id/textViewFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:text="c"
         android:textColor="#b0b0b0"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/textViewTime"
+        app:layout_constraintTop_toTopOf="@+id/textViewTime" />
+
+    <TextView
+        android:id="@+id/textViewTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="до"
+        android:textColor="#b0b0b0"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/timePickerFrom"
+        app:layout_constraintTop_toTopOf="@+id/textViewTime" />
+
+    <TextView
+        android:id="@+id/timePickerTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="18:00"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewTo"
         app:layout_constraintTop_toTopOf="@+id/textViewTime" />
 
     <View
@@ -114,6 +125,130 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTime" />
+
+    <TextView
+        android:id="@+id/textViewPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/pause"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewTimeRow" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/pauseEditText"
+        style="@style/RegistrationEditTextStyle"
+
+        android:layout_width="wrap_content"
+        android:minWidth="24dp"
+        android:layout_height="24dp"
+        android:hint="0"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLines="1"
+        android:textColor="#1d1d26"
+        android:textSize="16sp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMin1"
+        app:layout_constraintEnd_toStartOf="@+id/textViewMin1"
+        app:layout_constraintTop_toTopOf="@+id/textViewMin1" />
+
+
+    <TextView
+        android:id="@+id/textViewMin1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/min"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewTimeRow" />
+
+    <View
+        android:id="@+id/viewPauseRow"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#b0b0b0"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPause" />
+
+    <TextView
+        android:id="@+id/textViewSessionTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/session_time"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPauseRow" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/sessionEditText"
+        style="@style/RegistrationEditTextStyle"
+        android:layout_width="wrap_content"
+        android:minWidth="24dp"
+        android:layout_height="24dp"
+        android:hint="0"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLines="1"
+        android:textColor="#1d1d26"
+        android:textSize="16sp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewMin2"
+        app:layout_constraintEnd_toStartOf="@+id/textViewMin2"
+        app:layout_constraintTop_toTopOf="@+id/textViewMin2" />
+
+    <TextView
+        android:id="@+id/textViewMin2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/min"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPauseRow" />
+
+
+    <View
+        android:id="@+id/viewWorkTime"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#b0b0b0"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSessionTime" />
+
+
+    <Button
+        android:id="@+id/createBotButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_rounded_background"
+        android:text="@string/action_add_bot"
+        android:textColor="@color/white"
+        android:layout_marginTop="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

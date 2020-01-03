@@ -79,6 +79,9 @@
     <string name="bottom_title">Сервисы</string>
     <string name="work_day">Рабочие дни</string>
     <string name="work_time">Время работы</string>
+    <string name="pause">Перерыв</string>
+    <string name="session_time">Перерыв</string>
+    <string name="min">мин</string>
     <string name="delete">Удалить</string>
     <string name="text_resend_code">Если смс c кодом подтверждения не придет в течении 5 минут, запросите код повтоно</string>
 
