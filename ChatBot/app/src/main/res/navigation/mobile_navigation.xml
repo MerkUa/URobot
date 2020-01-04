@@ -26,6 +26,12 @@
         android:label="@string/tabs_scripts"
         tools:layout="@layout/fragment_bottom_calendar" />
 
+    <fragment
+        android:id="@+id/navigation_create_payment"
+        android:name="com.urobot.droid.ui.dialogs.BottomPaymentFragment"
+        android:label="@string/tabs_scripts"
+        tools:layout="@layout/fragment_bottom_payment" />
+
 
     <fragment
         android:id="@+id/navigation_create_bot"

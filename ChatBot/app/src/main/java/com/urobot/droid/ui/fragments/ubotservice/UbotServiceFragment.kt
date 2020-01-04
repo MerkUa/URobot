@@ -1,17 +1,13 @@
 package com.urobot.droid.ui.fragments.ubotservice
 
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.urobot.droid.R
@@ -81,10 +77,15 @@ class UbotServiceFragment : Fragment(), ButtomFragment.BottomSheetListener {
         })
     }
 
-    override fun onOptionClick() {
-        Log.d("onOptionClick", "onOptionClick")
+    override fun onCalendarClick() {
         dialog.dismiss()
         findNavController().navigate(R.id.navigation_create_calendar)
+        sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    override fun onPaymentClick() {
+        dialog.dismiss()
+        findNavController().navigate(R.id.navigation_create_payment)
         sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 }

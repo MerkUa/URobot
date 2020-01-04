@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/namePaymentLayout"
+        style="@style/RegistrationTextInputLayoutStyle"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/namePaymentEditText"
+            style="@style/RegistrationEditTextStyle"
+            android:hint="@string/hint_name_calendar"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:textColor="#1d1d26"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/numberPaymentLayout"
+        style="@style/RegistrationTextInputLayoutStyle"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namePaymentLayout"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/numberPaymentEditText"
+            style="@style/RegistrationEditTextStyle"
+            android:hint="@string/hint_number_card"
+            android:inputType="number"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:textColor="#1d1d26"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ownerPaymentLayout"
+        style="@style/RegistrationTextInputLayoutStyle"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberPaymentLayout"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ownerPaymentEditText"
+            style="@style/RegistrationEditTextStyle"
+            android:hint="@string/hint_owner_card"
+            android:inputType="number"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:textColor="#1d1d26"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/textViewPeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/period"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black_text"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ownerPaymentLayout" />
+
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPeriod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewPeriod"
+        app:mask="**  /  ****"
+        app:maskIcon="@drawable/circle"
+        app:maskIconColor="@color/colorPrimary"
+        app:notMaskedSymbol="*" />
+
+    <View
+        android:id="@+id/viewPauseRow"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#b0b0b0"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPeriod" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cvvPaymentLayout"
+        style="@style/RegistrationTextInputLayoutStyle"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPauseRow"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/cvvPaymentEditText"
+            style="@style/RegistrationEditTextStyle"
+            android:hint="@string/hint_cvv"
+            android:inputType="numberPassword"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:textColor="#1d1d26"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/createBotButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_rounded_background"
+        android:text="@string/action_add_bot"
+        android:textColor="@color/white"
+        android:layout_marginTop="200dp"
+        app:layout_constraintTop_toBottomOf="@+id/cvvPaymentLayout"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

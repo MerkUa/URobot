@@ -28,6 +28,10 @@
     <string name="hint_description_bot">Описание</string>
     <string name="hint_phone_bot">Телефон</string>
 
+    <string name="hint_number_card">Номер карты</string>
+    <string name="hint_owner_card">Фамилия Имя (как на карте)</string>
+    <string name="hint_cvv">CVV</string>
+
     <string name="text_bot_description">Введите номер к которому будет привязан робот, на этот номер придет смс с кодом подтверждения</string>
 
     <string name="action_service_calendar">Онлайн запись</string>
@@ -80,6 +84,7 @@
     <string name="work_day">Рабочие дни</string>
     <string name="work_time">Время работы</string>
     <string name="pause">Перерыв</string>
+    <string name="period">Срок действия</string>
     <string name="session_time">Перерыв</string>
     <string name="min">мин</string>
     <string name="delete">Удалить</string>

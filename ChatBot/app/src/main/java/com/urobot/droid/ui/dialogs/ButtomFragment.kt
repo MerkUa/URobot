@@ -20,9 +20,13 @@ class ButtomFragment : BottomSheetDialogFragment() {
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.bottom_sheet_service, container, false)
-        val button = root.findViewById<Button>(R.id.calendarButton)
-        button.setOnClickListener {
-            mBottomSheetListener?.onOptionClick()
+        val buttonCalendar = root.findViewById<Button>(R.id.calendarButton)
+        buttonCalendar.setOnClickListener {
+            mBottomSheetListener?.onCalendarClick()
+        }
+        val buttonPayment = root.findViewById<Button>(R.id.paymentButton)
+        buttonPayment.setOnClickListener {
+            mBottomSheetListener?.onPaymentClick()
         }
         return root
     }
@@ -37,7 +41,8 @@ class ButtomFragment : BottomSheetDialogFragment() {
     }
 
     interface BottomSheetListener {
-        fun onOptionClick()
+        fun onCalendarClick()
+        fun onPaymentClick()
     }
 
 }
