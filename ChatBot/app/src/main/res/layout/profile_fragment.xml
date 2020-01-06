@@ -41,7 +41,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/forgotEmail"
+        android:id="@+id/phoneNumberView"
         style="@style/RegistrationTextInputLayoutStyle"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
         tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/forgotEmailEditText"
+            android:id="@+id/phoneNumberEditText"
             style="@style/RegistrationEditTextStyle"
             android:hint="@string/hint_phone"
             android:imeOptions="actionNext"
@@ -61,6 +61,25 @@
 
 
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tagTextView"
+        android:text="Добавить тег"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listTags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumberView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/tagTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

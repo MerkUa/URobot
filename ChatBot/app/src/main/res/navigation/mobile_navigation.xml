@@ -53,7 +53,31 @@
         android:id="@+id/navigation_contacts"
         android:name="com.urobot.droid.ui.fragments.contacts.ContactsFragment"
         android:label="@string/title_contacts"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_contacts">
+        <action
+            android:id="@+id/action_navigation_contacts_to_navigation_profile2"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.urobot.droid.ui.fragments.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/profile_fragment">
+
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="avatar"
+            app:argType="string" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_settings"
