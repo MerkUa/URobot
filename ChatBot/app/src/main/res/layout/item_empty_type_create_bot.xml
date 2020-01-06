@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/add_event_button"
+        android:id="@+id/add_event_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

@@ -2,7 +2,7 @@ package com.urobot.droid.data.model
 
 class BotData(
     var list: List<BotContentItem>,
-    var level: String,
+    var level: Int,
     type: Int
 ){
     companion object {

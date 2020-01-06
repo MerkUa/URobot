@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
-import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import kotlinx.android.synthetic.main.item_empty_type_create_bot.view.*
 
@@ -31,16 +30,16 @@ class ContentBotAdapter(private val botList: List<BotData>, private val context:
 
     override fun getItemViewType(position: Int): Int {
 
-        if (botList.isEmpty()){
+        return if (botList.isEmpty()) {
             emptyType
-        }else  {
+        } else {
             contentType
         }
 //
 //        else if(position > 1){
 //            emptyType
 //        }
-        return super.getItemViewType(position)
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -60,7 +59,7 @@ class ContentBotAdapter(private val botList: List<BotData>, private val context:
 
 
         init {
-            itemView.add_event_button
+
         }
 
 

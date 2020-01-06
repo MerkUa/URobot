@@ -44,13 +44,19 @@ class CreateBotActivity : AppCompatActivity() {
 
     private fun initAdapter(){
 
-        dataList = ArrayList<BotData>()
+        dataList = ArrayList()
 
 
-        dataList!!.add(BotData(emptyList(), 1.toString(), BotData.EMPTY_TYPE))
-        dataList!!.add(BotData(emptyList(), 1.toString(), BotData.CONTENT_TYPE))
+        dataList!!.add(BotData(emptyList(), 1, BotData.EMPTY_TYPE))
+
+        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 2.toString(), 23.toString(), listOf("2", "2"))), 2,
+            BotData.CONTENT_TYPE))
+
+        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 4.toString(), 5.toString(), listOf("1", "3"))), 2,
+            BotData.CONTENT_TYPE))
 
         adapter = HomeBotAdapter(dataList!!,this)
+
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_main.setHasFixedSize(true)
         rv_main.layoutManager = layoutManager
