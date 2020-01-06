@@ -121,6 +121,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.stfalcon:chatkit:0.3.3'
 //    implementation 'com.code-troopers.betterpickers:library:3.1.0'
+    implementation 'com.github.quiin:unifiedContactPicker:1.0.0'
+    implementation 'org.zakariya.stickyheaders:stickyheaders:0.7.10'
 }
 
 apply plugin: 'com.google.gms.google-services'
