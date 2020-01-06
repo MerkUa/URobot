@@ -30,7 +30,10 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.urobot.droid"
-        minSdkVersion 24
+
+        /** change SDK to 24 in release version
+         * 23 only for testing in device */
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 6
         versionName "1.0"
