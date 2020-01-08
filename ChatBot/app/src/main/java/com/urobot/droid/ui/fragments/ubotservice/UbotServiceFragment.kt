@@ -9,8 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.urobot.droid.R
+import com.urobot.droid.adapter.ServiceListAdapter
+import com.urobot.droid.data.model.Service
 import com.urobot.droid.ui.dialogs.ButtomFragment
 import kotlinx.android.synthetic.main.bottom_sheet_service.*
 import kotlinx.android.synthetic.main.ubot_service_fragment.*
@@ -31,6 +35,18 @@ class UbotServiceFragment : Fragment(), ButtomFragment.BottomSheetListener {
     ): View? {
         val root = inflater.inflate(R.layout.ubot_service_fragment, container, false)
         val createServiceButton: Button = root.findViewById(R.id.createService)
+
+        val listService: RecyclerView = root.findViewById(R.id.listSevice)
+        val list = arrayListOf<Service>()
+        list.add(Service("1", "Детский прием", "Режим работы, кол-во дней"))
+        list.add(Service("1", "Прием для взрослых и красивых дам", "Режим работы, кол-во дней"))
+
+
+        val adapterService = ServiceListAdapter()
+        listService.layoutManager = LinearLayoutManager(context)
+        listService.adapter = adapterService
+        adapterService.setData(list)
+
         return root
     }
 

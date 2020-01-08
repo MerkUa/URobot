@@ -24,7 +24,11 @@
         android:id="@+id/navigation_create_calendar"
         android:name="com.urobot.droid.ui.dialogs.BottomCalendarFragment"
         android:label="@string/tabs_scripts"
-        tools:layout="@layout/fragment_bottom_calendar" />
+        tools:layout="@layout/fragment_bottom_calendar">
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_create_payment"

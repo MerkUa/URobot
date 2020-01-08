@@ -53,15 +53,15 @@ class ContactsFragment : Fragment(), ContactListAdapter.ItemClickListener {
                 "https://cdn.mos.cms.futurecdn.net/MFHVMYQCeJHMGop4u8VkzJ.jpg"
             )
         )
-        list.add(
-            Contact(
-                "3",
-                "Xiaomi",
-                "0680000040",
-                "",
-                "https://i.pinimg.com/originals/68/ab/1e/68ab1e35d6558b90c67f7a3c2c9e90aa.jpg"
-            )
-        )
+//        list.add(
+//            Contact(
+//                "3",
+//                "Xiaomi",
+//                "0680000040",
+//                "",
+//                "https://i.pinimg.com/originals/68/ab/1e/68ab1e35d6558b90c67f7a3c2c9e90aa.jpg"
+//            )
+//        )
         list.add(
             Contact(
                 "4",
