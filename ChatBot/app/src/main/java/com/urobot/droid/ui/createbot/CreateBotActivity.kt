@@ -52,7 +52,7 @@ class CreateBotActivity : AppCompatActivity() {
         dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 2.toString(), 23.toString(), listOf("2", "2"))), 2,
             BotData.CONTENT_TYPE))
 
-        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 4.toString(), 5.toString(), listOf("1", "3"))), 2,
+        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 4.toString(), 5.toString(), listOf("1", "3"))), 3,
             BotData.CONTENT_TYPE))
 
         adapter = HomeBotAdapter(dataList!!,this)
@@ -61,6 +61,8 @@ class CreateBotActivity : AppCompatActivity() {
         rv_main.setHasFixedSize(true)
         rv_main.layoutManager = layoutManager
         rv_main.adapter = adapter
+
+
 
         /** ScrollListener */
         val lastVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()

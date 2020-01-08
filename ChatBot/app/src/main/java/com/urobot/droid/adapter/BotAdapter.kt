@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.urobot.droid.R
-import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
@@ -34,6 +33,7 @@ class HomeBotAdapter(
         horizontalAdapter = ContentBotAdapter(data, context)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
+        holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
 
     }
 

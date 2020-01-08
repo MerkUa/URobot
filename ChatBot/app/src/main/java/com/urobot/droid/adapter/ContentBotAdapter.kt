@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
-import kotlinx.android.synthetic.main.item_empty_type_create_bot.view.*
 
 class ContentBotAdapter(private val botList: List<BotData>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -29,21 +28,23 @@ class ContentBotAdapter(private val botList: List<BotData>, private val context:
     }
 
     override fun getItemViewType(position: Int): Int {
+        val positionList = botList.size - 1
 
-        return if (botList.isEmpty()) {
+        return if (position == positionList ) {
             emptyType
         } else {
             contentType
         }
-//
-//        else if(position > 1){
-//            emptyType
-//        }
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val content = botList[position]
+//        if(content.level == 1){
+//            emptyType
+//        }else{
+//            contentType
+//        }
     }
 
     override fun getItemCount(): Int {
