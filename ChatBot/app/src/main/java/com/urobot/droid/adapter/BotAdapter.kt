@@ -30,7 +30,9 @@ class HomeBotAdapter(
     override fun onBindViewHolder(holder: HomeBotViewHolder, position: Int) {
         val level = (holder.adapterPosition + 1)
         holder.itemView.tv_level.text =  ("$level Уровень")
-        horizontalAdapter = ContentBotAdapter(data, context)
+        val isFirstLevelItem = position == 0
+
+        horizontalAdapter = ContentBotAdapter(isFirstLevelItem, data, context)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
@@ -41,9 +43,9 @@ class HomeBotAdapter(
         return data.size
     }
 
-    inner class HomeBotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+     class HomeBotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val horizontalManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        private val horizontalManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         init {
             itemView.home_recycler_view_horizontal.setHasFixedSize(true)

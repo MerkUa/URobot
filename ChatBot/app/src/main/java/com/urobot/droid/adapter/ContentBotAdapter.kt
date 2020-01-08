@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
+import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
-class ContentBotAdapter(private val botList: List<BotData>, private val context: Context) :
+class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botList: List<BotData>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val emptyType = 0
@@ -28,21 +29,38 @@ class ContentBotAdapter(private val botList: List<BotData>, private val context:
     }
 
     override fun getItemViewType(position: Int): Int {
+
         val positionList = botList.size - 1
 
-        return if (position == positionList ) {
-            emptyType
-        } else {
+        return   if(isFirstLevelItem or (position == positionList)){
+             emptyType
+         }
+
+         else  {
             contentType
+
         }
+
+//        else{
+//             emptyType
+//         }
+//        if (position == positionList ) {
+//            emptyType
+//        } else{
+//            contentType
+//        }
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val content = botList[position]
-//        if(content.level == 1){
-//            emptyType
-//        }else{
+
+//        if ( )
+//            holderHome.adapterPosition
+
+//        if(content.level == 1 and BotData.EMPTY_TYPE ){
+//                emptyType
+//        }else {
 //            contentType
 //        }
     }
