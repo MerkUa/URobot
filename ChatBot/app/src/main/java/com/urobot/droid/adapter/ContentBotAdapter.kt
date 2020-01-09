@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
@@ -72,15 +71,10 @@ class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botL
 
         override fun onClick(v: View?) {
 
-            val manager =
-                (context as AppCompatActivity).supportFragmentManager
-            val ft = context.supportFragmentManager.beginTransaction()
-            val newFragment = CreateEventDialogFragment()
-            newFragment.show(manager, "dialog")
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            context.supportFragmentManager.beginTransaction()
+            val newFragment = CreateEventDialogFragment.getInstance()
+            newFragment?.show(manager, "dialog")
         }
-
-    }
-    fun setData(data: ArrayList<BotData>){
-
     }
 }

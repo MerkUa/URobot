@@ -95,6 +95,7 @@
     <string name="hint_owner_card">Фамилия Имя (как на карте)</string>
     <string name="period">Срок Действия</string>
     <string name="hint_cvv">CVC</string>
+    <string name="start_bot">Запустить</string>
 
 
 </resources>
