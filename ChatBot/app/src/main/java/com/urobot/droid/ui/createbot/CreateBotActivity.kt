@@ -10,7 +10,6 @@ import com.urobot.droid.R
 import com.urobot.droid.adapter.HomeBotAdapter
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
-import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.activity_create_bot.*
 import java.util.*
 
@@ -32,20 +31,11 @@ class CreateBotActivity : AppCompatActivity() {
         initAdapter()
         hideProgressBar()
 
-
-//        if (add_event_button != null){
-//            add_event_button.setOnClickListener {
-//                showFragmentDialog()
-//            }
-//        }
-
     }
 
 
     private fun initAdapter(){
-
         dataList = ArrayList()
-
 
         dataList!!.add(BotData(emptyList(), 1, BotData.EMPTY_TYPE))
 
@@ -80,11 +70,6 @@ class CreateBotActivity : AppCompatActivity() {
         }
         rv_main.addOnScrollListener(scrollListener)
 
-    }
-
-    private fun showFragmentDialog(){
-        val fragmentDialog = CreateEventDialogFragment()
-        fragmentDialog.show(supportFragmentManager, "fragment dialog")
     }
 
     private  fun hideProgressBar(){

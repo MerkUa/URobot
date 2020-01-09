@@ -4,10 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
-import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
+import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
+
 
 class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botList: List<BotData>, private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -41,46 +44,40 @@ class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botL
 
         }
 
-//        else{
-//             emptyType
-//         }
-//        if (position == positionList ) {
-//            emptyType
-//        } else{
-//            contentType
-//        }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val content = botList[position]
 
-//        if ( )
-//            holderHome.adapterPosition
-
-//        if(content.level == 1 and BotData.EMPTY_TYPE ){
-//                emptyType
-//        }else {
-//            contentType
-//        }
     }
 
     override fun getItemCount(): Int {
-        return botList.size
+        return  if(isFirstLevelItem){
+            1
+        } else{
+            botList.size
+        }
     }
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
-    inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
 
         init {
-
+            itemView.setOnClickListener(this)
         }
 
+        override fun onClick(v: View?) {
+
+            val manager =
+                (context as AppCompatActivity).supportFragmentManager
+            val ft = context.supportFragmentManager.beginTransaction()
+            val newFragment = CreateEventDialogFragment()
+            newFragment.show(manager, "dialog")
+        }
 
     }
     fun setData(data: ArrayList<BotData>){

@@ -16,16 +16,16 @@ class CreateEventDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        save_button.setOnClickListener{
-            dismiss()
-        }
-
-        add_buttons_tv.setOnClickListener {
-
-            val bottomSheetFragment = context?.let { it -> BottomSheetDialog(it) }
-            bottomSheetFragment?.setContentView(R.layout.bottom_sheet_add_buttons)
-            bottomSheetFragment?.show()
-        }
+//        save_button.setOnClickListener{
+//            dismiss()
+//        }
+//
+//        add_buttons_tv.setOnClickListener {
+//
+//            val bottomSheetFragment = context?.let { it -> BottomSheetDialog(it) }
+//            bottomSheetFragment?.setContentView(R.layout.bottom_sheet_add_buttons)
+//            bottomSheetFragment?.show()
+//        }
 
         return inflater.inflate(R.layout.dialog_fragment_create_event, null)
     }

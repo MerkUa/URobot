@@ -54,13 +54,4 @@ class HomeBotAdapter(
             itemView.home_recycler_view_horizontal.itemAnimator = DefaultItemAnimator()
         }
     }
-
-//    fun setData(data: ArrayList<BotData>){
-//        items.apply{
-//            clear()
-//            addAll(data)
-//            add(BotData(emptyList(), "", BotData.EMPTY_TYPE))
-//
-//        }
-//    }
 }
