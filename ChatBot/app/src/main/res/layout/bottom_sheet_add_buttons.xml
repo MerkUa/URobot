@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +13,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <Button
-        android:id="@+id/calendarButton"
+        android:id="@+id/add_write_button"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,20 +21,23 @@
         android:background="@drawable/button_rounded_with_border_background"
         android:text="@string/action_service_calendar"
         android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titile" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/paymentButton"
+        android:id="@+id/add_payment_button"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/add_write_button"
         android:layout_gravity="start"
-        android:layout_below="@+id/calendarButton"
         android:background="@drawable/button_rounded_with_border_background"
         android:text="@string/action_service_payment"
         android:textColor="@color/colorAccent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarButton" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_write_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

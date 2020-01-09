@@ -13,7 +13,7 @@ import com.urobot.droid.R
 class ButtomFragment : BottomSheetDialogFragment() {
 
     private lateinit var viewModel: ButtomViewModel
-    private var mBottomSheetListener: ButtomFragment.BottomSheetListener? = null
+    private var mBottomSheetListener: BottomSheetListener? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,7 @@ class ButtomFragment : BottomSheetDialogFragment() {
         viewModel = ViewModelProvider(this).get(ButtomViewModel::class.java)
     }
 
-    fun setSelectedListener(listener: ButtomFragment.BottomSheetListener) {
+    fun setSelectedListener(listener: BottomSheetListener) {
         this.mBottomSheetListener = listener
     }
 
