@@ -10,6 +10,7 @@ import com.urobot.droid.R
 import com.urobot.droid.adapter.HomeBotAdapter
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
+import com.urobot.droid.data.model.ServiceButtons
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.activity_create_bot.*
 import kotlin.collections.ArrayList
@@ -78,7 +79,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onDataChange(text: String, listButtons: ArrayList<String>?) {
+    override fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?) {
 
         dataList.add(BotData(listOf(BotContentItem(null, null, null, text, listButtons!!)), null))
         adapter.setData(dataList)

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.urobot.droid.R
+import com.urobot.droid.data.model.ServiceButtons
 import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 
 
@@ -16,7 +17,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     private var addButtonDialog = AddButtonBottomSheetDialog()
     private var mChangeDataListener: ChangeDataListener? = null
-    private var list : ArrayList<String>? = ArrayList()
+    private var list : ArrayList<ServiceButtons>? = ArrayList()
 
     companion object{
         private var instanceFragment: CreateEventDialogFragment? = null
@@ -78,16 +79,16 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     override fun onWriteButtonClick() {
         write_to_event_button.visibility = View.VISIBLE
-        list?.add(write_to_event_button.text.toString())
+        list?.add(ServiceButtons(1))
     }
 
     override fun onPaymentClick() {
-        payment_button.visibility = View.VISIBLE
-        list?.add(payment_button.text.toString())
+        payment_button_dialog_fragment.visibility = View.VISIBLE
+        list?.add(ServiceButtons(2))
     }
 
     interface ChangeDataListener {
-        fun onDataChange(text: String, listButtons: ArrayList<String>?)
+        fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?)
     }
 
     fun setSelectedListener(listener: ChangeDataListener) {

@@ -75,7 +75,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/write_to_event"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog">
+                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog"
+                >
 
             </androidx.appcompat.widget.AppCompatButton>
 
@@ -94,7 +95,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog">
+                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog"
+               >
 
             </androidx.appcompat.widget.AppCompatButton>
 
@@ -112,7 +114,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/write_to_event">
+                app:layout_constraintStart_toEndOf="@+id/write_to_event"
+                >
 
             </androidx.appcompat.widget.AppCompatButton>
         </androidx.constraintlayout.widget.ConstraintLayout>

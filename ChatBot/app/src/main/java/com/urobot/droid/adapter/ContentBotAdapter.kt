@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
+import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
+import kotlinx.android.synthetic.main.dialog_fragment_create_event.view.*
 import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
@@ -60,6 +62,21 @@ class ContentBotAdapter( private var botAdapterPosition: Int, private val botLis
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+//        if(getItemViewType(position) == contentType){
+
+//            holder.itemView.text_from_dialog.text = botList[position].list[position].description
+//
+//            val listButtons = botList[position].list[position].list_buttons
+//
+//            for( item in listButtons){
+//                if(item.id == 1){
+//                    holder.itemView.write_to_event.visibility = View.VISIBLE
+//                }else{
+//                    holder.itemView.payment_button.visibility = View.VISIBLE
+//                }
+//            }
+//
+//        }
     }
 
     override fun getItemCount(): Int {
@@ -77,6 +94,7 @@ class ContentBotAdapter( private var botAdapterPosition: Int, private val botLis
     }
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
 
         init{
 
