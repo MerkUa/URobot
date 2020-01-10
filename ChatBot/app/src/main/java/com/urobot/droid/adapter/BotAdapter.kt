@@ -31,9 +31,10 @@ class HomeBotAdapter(
     override fun onBindViewHolder(holder: HomeBotViewHolder, position: Int) {
         val level = (holder.adapterPosition + 1)
         holder.itemView.tv_level.text =  ("$level Уровень")
-        val isFirstLevelItem = position == 0
 
-        horizontalAdapter = ContentBotAdapter(isFirstLevelItem, data, context)
+        val botAdapterPosition = position
+
+        horizontalAdapter = ContentBotAdapter(botAdapterPosition, data, context)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
@@ -41,12 +42,16 @@ class HomeBotAdapter(
     }
 
     override fun getItemCount(): Int {
-        return  if (data.isEmpty()){
-            1
-        } else if(data.size == 1) {
-            data.size + 1
-        } else{
-            data.size
+        return when {
+            data.isEmpty() -> {
+                1
+            }
+            data.size == 1 -> {
+                data.size + 1
+            }
+            else -> {
+                data.size + 1
+            }
         }
     }
 

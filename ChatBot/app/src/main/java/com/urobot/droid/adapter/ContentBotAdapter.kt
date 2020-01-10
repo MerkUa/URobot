@@ -12,7 +12,7 @@ import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
-class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botList: ArrayList<BotData> ,private val context: Context) :
+class ContentBotAdapter( private var botAdapterPosition: Int, private val botList: ArrayList<BotData> ,private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val emptyType = 0
@@ -33,16 +33,27 @@ class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botL
 
     override fun getItemViewType(position: Int): Int {
 
-        val positionList = botList.size - 1
+        val lastPosition =  itemCount - 1
 
-        return if(isFirstLevelItem or botList.isEmpty()){
-             emptyType
-         }
-         else if ((position == positionList) and (position > 0)) {
-            emptyType
+        return when {
 
-        } else{
-            contentType
+            (botAdapterPosition == 0) and (botList.size == 0)  -> {
+                emptyType
+
+            }
+
+            (position == lastPosition) and (lastPosition != 0)-> {
+                emptyType
+
+            }
+
+            (botAdapterPosition > 0) and (botList.size > 0) and (position == 0) -> {
+                contentType
+            }
+
+            else -> {
+                contentType
+            }
         }
 
     }
@@ -52,10 +63,16 @@ class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botL
     }
 
     override fun getItemCount(): Int {
-        return  if(isFirstLevelItem){
-            1
-        } else{
-            botList.size
+        return when {
+            botAdapterPosition == 0 -> {
+                1
+            }
+            botList.size==1 -> {
+                botList.size + 1
+            }
+            else -> {
+                botList.size + 1
+            }
         }
     }
 

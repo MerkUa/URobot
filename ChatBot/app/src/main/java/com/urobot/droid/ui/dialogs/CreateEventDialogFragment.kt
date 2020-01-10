@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.urobot.droid.R
-import kotlinx.android.synthetic.main.bottom_sheet_add_buttons.*
 import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 
 
@@ -18,6 +16,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     private var addButtonDialog = AddButtonBottomSheetDialog()
     private var mChangeDataListener: ChangeDataListener? = null
+    private var list : ArrayList<String>? = ArrayList()
 
     companion object{
         private var instanceFragment: CreateEventDialogFragment? = null
@@ -64,11 +63,13 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
         }  else if (v?.id == R.id.save_button ){
 
+
             save_button.setOnClickListener {
 
                 val text = descriptionEditText.text.toString()
 
-                mChangeDataListener?.onTextChange(text)
+
+                mChangeDataListener?.onDataChange(text, list)
 //                mChangeDataListener?.onButtonChange()
                 dismiss()
             }
@@ -77,15 +78,16 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     override fun onWriteButtonClick() {
         write_to_event_button.visibility = View.VISIBLE
+        list?.add(write_to_event_button.text.toString())
     }
 
     override fun onPaymentClick() {
         payment_button.visibility = View.VISIBLE
+        list?.add(payment_button.text.toString())
     }
 
     interface ChangeDataListener {
-        fun onTextChange(text:String)
-        fun onButtonChange()
+        fun onDataChange(text: String, listButtons: ArrayList<String>?)
     }
 
     fun setSelectedListener(listener: ChangeDataListener) {

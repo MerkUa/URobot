@@ -78,14 +78,9 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onTextChange(text: String) {
+    override fun onDataChange(text: String, listButtons: ArrayList<String>?) {
 
-        dataList.add(BotData(listOf(BotContentItem(null, null, null, text, emptyList())), null))
+        dataList.add(BotData(listOf(BotContentItem(null, null, null, text, listButtons!!)), null))
         adapter.setData(dataList)
-    }
-
-
-    override fun onButtonChange() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
