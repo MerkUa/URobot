@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
+import com.urobot.droid.data.model.Contact
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
 class HomeBotAdapter(
-    private val data: List<BotData>,
-    private val context: Context
-) :
+    private val context: Context) :
     RecyclerView.Adapter<HomeBotAdapter.HomeBotViewHolder>() {
 
     private var horizontalAdapter: ContentBotAdapter? = null
     private val recycledViewPool: RecycledViewPool = RecycledViewPool()
+
+    private val data: ArrayList<BotData> = mutableListOf<BotData>() as ArrayList<BotData>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBotViewHolder {
         val theView =
@@ -40,7 +41,13 @@ class HomeBotAdapter(
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return  if (data.isEmpty()){
+            1
+        } else if(data.size == 1) {
+            data.size + 1
+        } else{
+            data.size
+        }
     }
 
      class HomeBotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -53,5 +60,12 @@ class HomeBotAdapter(
             itemView.home_recycler_view_horizontal.layoutManager = horizontalManager
             itemView.home_recycler_view_horizontal.itemAnimator = DefaultItemAnimator()
         }
+    }
+
+
+    fun setData(items : ArrayList<BotData>){
+        data.clear()
+        data.addAll(items)
+        notifyDataSetChanged()
     }
 }

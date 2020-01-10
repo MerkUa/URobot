@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddButtonBottomSheetDialog.AddButtonBottomSheetListener {
 
     private var addButtonDialog = AddButtonBottomSheetDialog()
+    private var mChangeDataListener: ChangeDataListener? = null
 
     companion object{
         private var instanceFragment: CreateEventDialogFragment? = null
@@ -33,12 +35,10 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
          val view = inflater.inflate(R.layout.dialog_fragment_create_event, null)
 
         view.findViewById<View>(R.id.add_buttons_tv).setOnClickListener(this)
-        view.findViewById<View>(R.id.add_buttons_tv).setOnClickListener(this)
+        view.findViewById<TextView>(R.id.save_button).setOnClickListener(this)
+
         addButtonDialog.setSelectedListener(this)
 
-//        save_button.setOnClickListener{
-//            dismiss()
-//        }
         return view
     }
 
@@ -61,6 +61,17 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                 val manager = (context as AppCompatActivity).supportFragmentManager
                 bottomSheetFragment?.show(manager, "dialog")
             }
+
+        }  else if (v?.id == R.id.save_button ){
+
+            save_button.setOnClickListener {
+
+                val text = descriptionEditText.text.toString()
+
+                mChangeDataListener?.onTextChange(text)
+//                mChangeDataListener?.onButtonChange()
+                dismiss()
+            }
         }
     }
 
@@ -70,5 +81,14 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     override fun onPaymentClick() {
         payment_button.visibility = View.VISIBLE
+    }
+
+    interface ChangeDataListener {
+        fun onTextChange(text:String)
+        fun onButtonChange()
+    }
+
+    fun setSelectedListener(listener: ChangeDataListener) {
+        this.mChangeDataListener = listener
     }
 }

@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
+import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
-class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botList: List<BotData>, private val context: Context) :
+class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botList: ArrayList<BotData> ,private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val emptyType = 0
@@ -34,19 +35,19 @@ class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botL
 
         val positionList = botList.size - 1
 
-        return   if(isFirstLevelItem or (position == positionList)){
+        return if(isFirstLevelItem or botList.isEmpty()){
              emptyType
          }
+         else if ((position == positionList) and (position > 0)) {
+            emptyType
 
-         else  {
+        } else{
             contentType
-
         }
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val content = botList[position]
 
     }
 
@@ -60,6 +61,9 @@ class ContentBotAdapter( private val isFirstLevelItem: Boolean, private val botL
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        init{
+
+        }
     }
 
     inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
