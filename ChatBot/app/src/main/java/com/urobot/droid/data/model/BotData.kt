@@ -1,8 +1,8 @@
 package com.urobot.droid.data.model
 
  data class BotData(
-    var list: List<BotContentItem>,
-    var level: Int?
+     var botContentList: List<BotContentItem>,
+     var level: Int?
  )
 
 
