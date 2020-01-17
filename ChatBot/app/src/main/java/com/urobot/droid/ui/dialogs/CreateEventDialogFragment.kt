@@ -55,25 +55,18 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     override fun onClick(v: View?) {
         if( v?.id == R.id.add_buttons_tv){
-            add_buttons_tv.setOnClickListener {
 
-                val bottomSheetFragment = context?.let { addButtonDialog }
-                val manager = (context as AppCompatActivity).supportFragmentManager
-                bottomSheetFragment?.show(manager, "dialog")
-            }
+            val bottomSheetFragment = context?.let { addButtonDialog }
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            bottomSheetFragment?.show(manager, "dialog")
+
 
         }  else if (v?.id == R.id.save_button ){
+            val text = descriptionEditText.text.toString()
 
+            mChangeDataListener?.onDataChange(text, list)
+            dismiss()
 
-            save_button.setOnClickListener {
-
-                val text = descriptionEditText.text.toString()
-
-
-                mChangeDataListener?.onDataChange(text, list)
-//                mChangeDataListener?.onButtonChange()
-                dismiss()
-            }
         }
     }
 

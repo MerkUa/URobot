@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotData
-import com.urobot.droid.data.model.Contact
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
 class HomeBotAdapter(
@@ -34,7 +33,8 @@ class HomeBotAdapter(
 
         val botAdapterPosition = position
 
-        horizontalAdapter = ContentBotAdapter(botAdapterPosition, data, context)
+        horizontalAdapter =
+            ContentBotAdapter(botAdapterPosition, data[position].botContentList, context)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
@@ -42,17 +42,7 @@ class HomeBotAdapter(
     }
 
     override fun getItemCount(): Int {
-        return when {
-            data.isEmpty() -> {
-                1
-            }
-            data.size == 1 -> {
-                data.size + 1
-            }
-            else -> {
-                data.size + 1
-            }
-        }
+        return data.size
     }
 
      class HomeBotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
