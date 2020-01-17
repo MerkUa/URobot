@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotContentItem
+import com.urobot.droid.ui.createbot.CreateBotActivity
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
@@ -111,6 +112,7 @@ class ContentBotAdapter(
             val manager = activity.supportFragmentManager
             activity.supportFragmentManager.beginTransaction()
             val newFragment = CreateEventDialogFragment.getInstance(botList[adapterPosition])
+            newFragment?.setSelectedListener(activity as CreateBotActivity)
             newFragment?.show(manager, "dialog")
         }
     }

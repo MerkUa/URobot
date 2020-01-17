@@ -85,20 +85,20 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
     override fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?) {
 
-        dataList.add(
-            BotData(
-                listOf(
-                    BotContentItem(
-                        null,
-                        null,
-                        null,
-                        text,
-                        listButtons
-                    )
-                ) as ArrayList<BotContentItem>, null
-            )
-        )
-        adapter.setData(dataList)
+//        dataList.add(
+//            BotData(
+//                listOf(
+//                    BotContentItem(
+//                        null,
+//                        null,
+//                        null,
+//                        text,
+//                        listButtons
+//                    ).to
+//                ), null
+//            )
+//        )
+//        adapter.setData(dataList)
     }
 
     override fun onBotDataChanged(botContentItem: BotContentItem) {
