@@ -59,13 +59,18 @@ class ContentBotAdapter( private var botAdapterPosition: Int, private val botLis
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+        //TODO crash
+
 //        if((getItemViewType(position) == contentType) and botList.isNotEmpty()){
 
 
-//                holder.itemView.text_from_dialog.text = botList[position].botContentList[position].let { it.description  }
+
+
+//                holder.itemView.text_from_dialog.text = botList[holder.adapterPosition].botContentList[holder.adapterPosition].description
 //
 //                val listButtons = botList[position].botContentList[position].list_buttons
 //
+//            if (listButtons != null) {
 //                for( item in listButtons){
 //                    if(item.id == 1){
 //                        holder.itemView.write_to_event.visibility = View.VISIBLE
@@ -73,6 +78,7 @@ class ContentBotAdapter( private var botAdapterPosition: Int, private val botLis
 //                        holder.itemView.payment_button.visibility = View.VISIBLE
 //                    }
 //                }
+//            }
 //            }
 
     }
@@ -92,8 +98,7 @@ class ContentBotAdapter( private var botAdapterPosition: Int, private val botLis
     }
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
+        
         init{
 
         }
