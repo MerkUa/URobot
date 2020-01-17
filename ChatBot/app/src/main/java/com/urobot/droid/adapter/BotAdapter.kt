@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.urobot.droid.R
+import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
@@ -55,6 +56,19 @@ class HomeBotAdapter(
             itemView.home_recycler_view_horizontal.layoutManager = horizontalManager
             itemView.home_recycler_view_horizontal.itemAnimator = DefaultItemAnimator()
         }
+    }
+
+    fun addData(bot: BotContentItem) {
+        for (dataList in data) {
+            for (dataItem in dataList.botContentList) {
+                if (dataItem.id!! == bot.id) {
+                    var position = dataList.botContentList.indexOf(dataItem)
+                    dataList.botContentList.set(position, bot)
+                }
+            }
+
+        }
+        notifyDataSetChanged()
     }
 
 

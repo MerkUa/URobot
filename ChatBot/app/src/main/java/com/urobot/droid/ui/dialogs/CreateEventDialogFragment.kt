@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.urobot.droid.R
+import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.ServiceButtons
 import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 
@@ -64,7 +65,8 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         }  else if (v?.id == R.id.save_button ){
             val text = descriptionEditText.text.toString()
 
-            mChangeDataListener?.onDataChange(text, list)
+            val item = BotContentItem(1, null, null, -1, false, "", list)
+            mChangeDataListener?.onDataChange(item)
             dismiss()
 
         }
@@ -81,7 +83,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
     }
 
     interface ChangeDataListener {
-        fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?)
+        fun onDataChange(item: BotContentItem)
     }
 
     fun setSelectedListener(listener: ChangeDataListener) {

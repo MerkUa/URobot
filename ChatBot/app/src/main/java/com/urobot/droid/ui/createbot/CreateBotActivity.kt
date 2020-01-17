@@ -45,7 +45,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         var listContent: ArrayList<BotContentItem> = ArrayList()
         var list: ArrayList<ServiceButtons>? = ArrayList()
-        listContent.add(BotContentItem(null, null, null, "", list))
+        listContent.add(BotContentItem(1, null, null, -1, true, "", list))
         dataList!!.add(BotData(listContent, 1))
 
         adapter = HomeBotAdapter(this)
@@ -83,9 +83,9 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?) {
-
-        dataList.add(BotData(listOf(BotContentItem(null, null, null, text, listButtons)), null))
-        adapter.setData(dataList)
+    override fun onDataChange(bot: BotContentItem) {
+        adapter.addData(bot)
+//        dataList.add(bot)
+//        adapter.setData(dataList)
     }
 }

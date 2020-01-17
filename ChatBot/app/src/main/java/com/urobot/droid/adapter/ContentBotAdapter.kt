@@ -1,15 +1,16 @@
 package com.urobot.droid.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
-import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
 class ContentBotAdapter(
@@ -29,7 +30,6 @@ class ContentBotAdapter(
             AddContentViewHolder(emptyView)
         } else {
             val contentView = LayoutInflater.from(parent.context).inflate(R.layout.item_with_event_create_bot, parent,false)
-
             ContentViewHolder(contentView)
         }
     }
@@ -43,7 +43,7 @@ class ContentBotAdapter(
             (botList.isEmpty()) -> {
                 emptyType
             }
-            (botList[position].id == null) -> {
+            (botList[position].isEmpty) -> {
                 emptyType
             }
             else -> {
@@ -57,19 +57,19 @@ class ContentBotAdapter(
 
         if ((getItemViewType(position) == contentType) and botList.isNotEmpty()) {
 
-            holder.itemView.text_from_dialog.text = botList[position].description
+            Log.d("onBindViewHolder", "description " + botList[position].description)
 
             val listButtons = botList[position].list_buttons
 
-            if (listButtons != null) {
-                for (item in listButtons) {
-                    if (item.id == 1) {
-                        holder.itemView.write_to_event.visibility = View.VISIBLE
-                    } else {
-                        holder.itemView.payment_button.visibility = View.VISIBLE
-                    }
-                }
-            }
+//            if (listButtons != null) {
+//                for (item in listButtons) {
+//                    if (item.id == 1) {
+//                        holder.itemView.write_to_event.visibility = View.VISIBLE
+//                    } else {
+//                        holder.itemView.payment_button.visibility = View.VISIBLE
+//                    }
+//                }
+//            }
         }
 
     }
@@ -90,10 +90,10 @@ class ContentBotAdapter(
     }
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        
-        init{
 
-        }
+        private var descriptoin: TextView = itemView.findViewById(R.id.text_from_dialog)
+
+
     }
 
     inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
