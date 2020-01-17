@@ -1,17 +1,20 @@
 package com.urobot.droid.ui.fragments.ubot
 
 import android.app.Application
-import android.net.Uri
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.urobot.droid.Repository.UserRepository
+import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import kotlinx.coroutines.launch
 import java.io.File
 
-class SettingsViewModel(application: Application) : AndroidViewModel(application) {
+class SettingsViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
     private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private var listener: ISettingsContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: UserRepository
@@ -21,8 +24,12 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
-        repository = UserRepository(userDao)
+        repository = UserRepository(userDao, this)
         User = repository.User
+    }
+
+    fun setListener(listener: ISettingsContract) {
+        this.listener = listener
     }
 
     /**
@@ -38,5 +45,29 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun sendUpdate(user: User, fileUri: File) {
         repository.update(user, fileUri)
+    }
+
+    fun logout(token: String) {
+
+        viewModelScope.launch {
+            repository.logout(token)
+            userDao.deleteAll()
+            listener?.onLogoutResult()
+        }
+    }
+
+
+    interface ISettingsContract {
+        fun onLogoutResult()
+    }
+
+    override fun onUpdateResult(user: User) {
+        viewModelScope.launch {
+
+            userDao.update(user)
+        }
+    }
+
+    override fun onUpdateError() {
     }
 }

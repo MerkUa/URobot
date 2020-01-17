@@ -39,7 +39,12 @@ class ProfileFragment : Fragment() {
         val phone = ProfileFragmentArgs.fromBundle(arguments).phone
 
         textViewName.text = name
-        Picasso.get().load(avatar).into(photoView)
+        if (avatar.isNotEmpty()) {
+            Picasso.get().load(avatar).into(photoView)
+        } else {
+            Picasso.get().load("https://www.iconsdb.com/icons/preview/black/contacts-xxl.png")
+                .into(photoView)
+        }
         phoneNumberEditText.setText(phone)
 
         list.add(ContactTag("", "Тип 1", Color.BLACK))

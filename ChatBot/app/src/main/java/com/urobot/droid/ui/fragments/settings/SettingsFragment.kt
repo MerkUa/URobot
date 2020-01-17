@@ -5,12 +5,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
-import android.graphics.Bitmap
-import android.media.MediaScannerConnection
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.Log
@@ -25,23 +23,17 @@ import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.squareup.picasso.Picasso
+import com.urobot.droid.Helper.Utils
 import com.urobot.droid.R
 import com.urobot.droid.db.User
-import com.urobot.droid.ui.fragments.addMesenger.AddMessengerFragment
-import com.urobot.droid.ui.fragments.promo.PromoFragment
-import com.urobot.droid.ui.fragments.support.SupportFragment
+import com.urobot.droid.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.util.*
 
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
 
     private lateinit var settingsViewModel: SettingsViewModel
 
@@ -68,12 +60,14 @@ class SettingsFragment : Fragment() {
             // Update the cached copy of the words in the adapter.
             users?.let {
                 currentUser = it
-                textViewName.text = if (currentUser != null) currentUser.name else ""
+                textViewName.text =
+                    if (currentUser != null) currentUser.fName + " " + currentUser.lName else ""
                 textViewPhone.text = if (currentUser != null) currentUser.cellPhone else ""
                 Log.d("currentUser", "id " + currentUser.id)
                 Picasso.get().load(Uri.parse(currentUser.photoURL)).into(photoView)
             }
         })
+        settingsViewModel.setListener(this)
 
         return root
     }
@@ -107,7 +101,10 @@ class SettingsFragment : Fragment() {
                 if (checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) ==
                         PermissionChecker.PERMISSION_DENIED) {
                     //permission denied
-                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    val permissions = arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
                     //show popup to request runtime permission
                     requestPermissions(permissions, PERMISSION_CODE);
                 }
@@ -123,8 +120,12 @@ class SettingsFragment : Fragment() {
                 }
             } else {
                 //system OS is < Marshmallow
-                pickImageFromGallery();
+                pickImageFromGallery()
             }
+        }
+
+        logOutTextView.setOnClickListener {
+            settingsViewModel.logout(currentUser.token!!)
         }
     }
 
@@ -142,6 +143,7 @@ class SettingsFragment : Fragment() {
             currentUser.cellPhone = editText.text.toString()
             textViewPhone.text = editText.text
             settingsViewModel.update(currentUser)
+//                settingsViewModel.sendUpdate(currentUser,null)
         }
         builder.show()
     }
@@ -168,14 +170,11 @@ class SettingsFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == IMAGE_PICK_CODE) {
                 Log.d("photoURL", "photoURL " + data?.data)
-//                val thumbnail = data!!.extras!!.get("data") as Bitmap
-//                photoView!!.setImageBitmap(thumbnail)
-//                saveImage(thumbnail)
 
                 photoView.setImageURI(data?.data)
                 currentUser.photoURL = data?.data.toString()
-                val file = File(data?.data?.path)
-                settingsViewModel.update(currentUser)
+                val file = File(Utils.getRealPath(context!!, data?.data!!))
+
                 settingsViewModel.sendUpdate(currentUser, file)
             }
             if (requestCode == FILE_PICK_CODE) {
@@ -209,5 +208,19 @@ class SettingsFragment : Fragment() {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
         startActivityForResult(cameraIntent, IMAGE_PICK_CODE)
 
+    }
+
+    override fun onLogoutResult() {
+        Log.d("onLogoutResult", "onLogoutResult ")
+
+        val sharedPrefL: SharedPreferences = activity!!.getSharedPreferences("isLoged", 0)
+
+        var intent = Intent(activity, LoginActivity::class.java)
+        val editor = sharedPrefL.edit()
+        editor.putBoolean("isLoged", false)
+        editor.apply()
+
+        startActivity(intent)
+        activity!!.finish()
     }
 }

@@ -40,108 +40,131 @@
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/cardView" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <LinearLayout
-            android:id="@+id/phoneNumberView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:paddingLeft="24dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Телефон" />
-
-            <TextView
-                android:id="@+id/textViewPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/black_text"
-                android:text="+ 7 918 017 21 31" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="24dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:gravity="top"
             android:paddingTop="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingBottom="16dp"
-            android:background="?selectableItemBackground"
-            android:orientation="vertical">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/phoneNumberView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Индустрия" />
+                android:background="?selectableItemBackground"
+                android:paddingLeft="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Телефон" />
+
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/black_text"
+                    android:text="+ 7 918 017 21 31" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="16dp"
+                android:background="?selectableItemBackground"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Индустрия" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/black_text"
+                    android:text="Салон красоты, еще что-нибудь" />
+            </LinearLayout>
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/messengerTextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:padding="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
                 android:textColor="@color/black_text"
-                android:text="Салон красоты, еще что-нибудь" />
+                android:text="Привязать мессенджеры" />
+
+            <TextView
+                android:id="@+id/supportTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:textColor="@color/black_text"
+                android:text="Поддержка" />
+
+            <TextView
+                android:id="@+id/promoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:textColor="@color/black_text"
+                android:text="Промокод" />
+
+
+            <TextView
+                android:id="@+id/logOutTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:textColor="@color/black_text"
+                android:text="Выход" />
+
+
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/messengerTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="24dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?selectableItemBackground"
-            android:textColor="@color/black_text"
-            android:text="Привязать мессенджеры" />
-
-        <TextView
-            android:id="@+id/supportTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="24dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?selectableItemBackground"
-            android:textColor="@color/black_text"
-            android:text="Поддержка" />
-
-        <TextView
-            android:id="@+id/promoTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="24dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?selectableItemBackground"
-            android:textColor="@color/black_text"
-            android:text="Промокод" />
-
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

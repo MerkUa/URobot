@@ -13,12 +13,14 @@
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Логин</string>
     <string name="hint_phone">Телефон</string>
+    <string name="hint_token">Токен</string>
     <string name="prompt_forgot_email">Введите e-mail адрес</string>
     <string name="prompt_password">Пароль</string>
     <string name="prompt_name">Имя</string>
     <string name="prompt_lastname">Фамилия</string>
     <string name="action_sign_in">Войти</string>
     <string name="action_send_phone">Получить код</string>
+    <string name="action_send_token">Подключить бота</string>
     <string name="action_add_bot">Создать</string>
     <string name="action_sign_up">Создать</string>
     <string name="action_promo">Подарить другу</string>
@@ -96,6 +98,29 @@
     <string name="period">Срок Действия</string>
     <string name="hint_cvv">CVC</string>
     <string name="start_bot">Запустить</string>
+
+    <string name="tabs_my_contacts">Контакты 1</string>
+    <string name="tabs_server_contacts">Контакты 2</string>
+
+
+    <array name="material_calendar_months_array">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </array>
+
+    <string name="material_calendar_today_button"></string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Отмена</string>
 
 
 </resources>

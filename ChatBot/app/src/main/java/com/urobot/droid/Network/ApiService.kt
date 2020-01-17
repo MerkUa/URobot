@@ -1,17 +1,17 @@
 package com.urobot.droid.Network
 
-import io.reactivex.Observable
 import com.urobot.droid.NetModel.ResponseLoginModel
+import com.urobot.droid.data.NetModel.Request.RequestCreateBot
 import com.urobot.droid.data.NetModel.Request.RequestLogin
 import com.urobot.droid.data.NetModel.Request.RequestSignInSocial
 import com.urobot.droid.data.NetModel.Request.RequestSignUp
-import com.urobot.droid.data.NetModel.Request.RequestUpdateUser
 import com.urobot.droid.data.NetModel.Response.GetPromoModel
 import com.urobot.droid.data.NetModel.Response.GetUserResponseModel
+import io.reactivex.Observable
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
-import retrofit2.http.Headers
 
 
 interface ApiService {
@@ -21,6 +21,14 @@ interface ApiService {
     fun login(
             @Body login: RequestLogin
     ): Observable<ResponseLoginModel>
+
+
+    @Headers("accept: application/json", "Content-Type: application/json-patch+json")
+    @DELETE("auth/logout/")
+    fun logout(
+        @Query("Authorization") token: String
+    ): Observable<ResponseBody>
+
 
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("auth/registration/")
@@ -35,14 +43,12 @@ interface ApiService {
     ): Observable<ResponseLoginModel>
 
     @Multipart
-    @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("users/update/")
     fun updateUser(
-            @Part("user_id") userId: String,
-            @Part("first_name") userName: String,
-            @Part("last_name") userLastName: String,
-            @Part("phone") phone: String,
-            @Part file: MultipartBody.Part
+        @Header("Authorization") login: String,
+        @PartMap phot: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part file: MultipartBody.Part,
+        @Part("photo") photo: RequestBody
 
     ): Observable<ResponseLoginModel>
 
@@ -64,4 +70,16 @@ interface ApiService {
     fun getRefCode(
             @Path("Authorization") token: String
     ): Observable<GetPromoModel>
+
+    @POST("bots/create-with-robot")
+    fun createBot(
+        @Header("Authorization") authorization: String,
+        @Body requestCreateBot: RequestCreateBot
+    ): Observable<ResponseBody>
+
+    @POST("bots/get-contacts")
+    fun getContacts(
+        @Header("Authorization") authorization: String,
+        @Body requestCreateBot: RequestCreateBot
+    ): Observable<ResponseBody>
 }

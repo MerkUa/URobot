@@ -2,10 +2,15 @@ package com.urobot.droid.ui.dialogs
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.applandeo.materialcalendarview.CalendarView
+import com.applandeo.materialcalendarview.DatePicker
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder
+import com.applandeo.materialcalendarview.listeners.OnSelectDateListener
 import com.urobot.droid.R
 import kotlinx.android.synthetic.main.fragment_bottom_calendar.*
 import java.text.SimpleDateFormat
@@ -18,6 +23,15 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class BottomCalendarFragment : Fragment() {
+
+    var calendars: List<Calendar> = emptyList()
+
+    var listener = OnSelectDateListener() {
+        calendars = it
+        for (calendar in calendars) {
+            Log.d("OnSelectDateListener", "calendar " + calendar.timeInMillis)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +48,7 @@ class BottomCalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tvAddDay.setOnClickListener {
-            //            val cdp = CalendarDatePickerDialogFragment()
-//                .setFirstDayOfWeek(Calendar.MONDAY)
-//                .setDateRange(null, null)
-//                .setDoneText("Yay")
-//                .setCancelText("Nop")
-//                .setThemeDark()
-//            cdp.show(activity!!.supportFragmentManager, "FRAG_TAG_DATE_PICKER")
+            showCalendar()
         }
         timePickerFrom.setOnClickListener {
             val cal = Calendar.getInstance()
@@ -74,6 +82,42 @@ class BottomCalendarFragment : Fragment() {
             ).show()
         }
     }
+
+    fun showCalendar() {
+
+        val builder = DatePickerBuilder(context, listener)
+            .setPickerType(CalendarView.MANY_DAYS_PICKER)
+            .setDate(Calendar.getInstance()) // Initial date as Calendar object
+//            .setMinimumDate(Calendar.getInstance()) // Minimum available date
+//            .setMaximumDate(Calendar.getInstance()) // Maximum available date
+            .setHeaderColor(R.color.colorAccent) // Color of the dialog header
+            .setHeaderLabelColor(R.color.white_text) // Color of the header label
+//            .setPreviousButtonSrc(R.drawable.drawable) // Custom drawable of the previous arrow
+//            .setForwardButtonSrc(R.drawable.drawable) // Custom drawable of the forward arrow
+//            .setPreviousPageChangeListener(new OnCalendarPageChangeListener(){}) // Listener called when scroll to the previous page
+//            .setForwardPageChangeListener(new OnCalendarPageChangeListener(){}) // Listener called when scroll to the next page
+//            .setAbbreviationsBarColor(R.color.color) // Color of bar with day symbols
+//            .setAbbreviationsLabelsColor(R.color.color) // Color of symbol labels
+//            .setPagesColor(R.color.sampleLighter) // Color of the calendar background
+            .setSelectionColor(R.color.colorAccent) // Color of the selection circle
+//            .setSelectionLabelColor(R.color.color) // Color of the label in the circle
+//            .setDaysLabelsColor(R.color.color) // Color of days numbers
+//            .setAnotherMonthsDaysLabelsColor(R.color.color) // Color of visible days numbers from previous and next month page
+//            .setDisabledDaysLabelsColor(R.color.color) // Color of disabled days numbers
+//            .setHighlightedDaysLabelsColor(R.color.color) // Color of highlighted days numbers
+//            .setTodayColor(R.color.color) // Color of the present day background
+//            .setTodayLabelColor(R.color.color) // Color of the today number
+//            .setDialogButtonsColor(R.color.color) // Color of "Cancel" and "OK" buttons
+//            .setMaximumDaysRange(int) // Maximum number of selectable days in range mode
+//            .setNavigationVisibility(int) // Navigation buttons visibility
+            .setSelectedDays(calendars) /// List of selected days
+
+
+        val datePicker: DatePicker = builder.build()
+        datePicker.show()
+    }
+
+
 
 
 }

@@ -4,19 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
-import com.urobot.droid.data.NetModel.Request.RequestUpdateUser
+import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserDao
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.Headers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Multipart
 import java.io.File
 
-class UserRepository(private val userDao: UserDao) {
+
+class UserRepository(private val userDao: UserDao, val userContract: IUserContract) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
@@ -34,22 +33,34 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUserById(id)!!
     }
 
-    fun update(user: User, fileUri: File) {
+    fun update(user: User, file: File) {
         try {
-            var requestFile: RequestBody
-            requestFile = RequestBody.create(
-                    MediaType.parse("image.jpg"),
-                    fileUri
-            )
-            val partBody =
-                    MultipartBody.Part.createFormData("photo", fileUri.getName(), requestFile)
+            val requestBody: RequestBody =
+                RequestBody.create(MediaType.parse("image/*"), file)
+            val fileupload =
+                MultipartBody.Part.createFormData("photo", file.name, requestBody)
 
             val apiService: ApiService = Apifactory.create()
-            val loginBody = RequestUpdateUser(user.id, "", user.cellPhone, user.name, "")
-            apiService.updateUser(user.id, user.name!!, "", user.cellPhone!!, partBody)
+            val description: RequestBody =
+                toRequestBody(user.fName!!)
+            val place: RequestBody = toRequestBody(user.lName!!)
+            val time: RequestBody = toRequestBody(user.cellPhone!!)
+
+            val map: HashMap<String, RequestBody> = HashMap()
+            map["first_name"] = description
+            map["last_name"] = place
+            map["phone"] = time
+
+
+            apiService.updateUser(user.token!!, map, fileupload, requestBody)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe({ result ->
+                        var user = User(
+                            result.userId!!, result.firstName, result.lastName!!, user.token,
+                            result.phone!!, result.photo
+                        )
+                        userContract.onUpdateResult(user)
 
                     }, { error ->
                         Log.d("Result", "Error ")
@@ -59,5 +70,29 @@ class UserRepository(private val userDao: UserDao) {
         } catch (e: Throwable) {
             Log.d("Result", "Error " + e.localizedMessage)
         }
+    }
+
+    fun logout(token: String) {
+        try {
+            Log.d("Retr", "logout ")
+
+            val apiService: ApiService = Apifactory.create()
+
+            apiService.logout(token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ result ->
+                    Log.d("Retr", "logout ")
+
+                }, { error ->
+                })
+
+        } catch (e: Throwable) {
+            Log.d("Retr", "Error " + e.localizedMessage)
+        }
+    }
+
+    fun toRequestBody(value: String): RequestBody {
+        return RequestBody.create(MediaType.parse("text/plain"), value)
     }
 }

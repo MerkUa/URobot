@@ -5,10 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.urobot.droid.Repository.UserRepository
+import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application), IUserContract {
     private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
 
     // The ViewModel maintains a reference to the repository to get data.
@@ -19,7 +20,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
 
-        repository = UserRepository(userDao)
+        repository = UserRepository(userDao, this)
         currentUser = repository.User
+    }
+
+    override fun onUpdateResult(user: User) {
+    }
+
+    override fun onUpdateError() {
     }
 }

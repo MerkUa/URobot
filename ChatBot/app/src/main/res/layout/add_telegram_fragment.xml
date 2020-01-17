@@ -20,20 +20,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.pinball83.maskededittext.MaskedEditText
-            android:id="@+id/phoneEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="64dp"
-            app:mask="+38 (***) *** ** **"
-            app:notMaskedSymbol="*"
-            app:maskIcon="@drawable/circle"
-            app:maskIconColor="@color/colorPrimary"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tokenView"
+            style="@style/RegistrationTextInputLayoutStyle"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/MessengerImage" />
+            app:layout_constraintTop_toBottomOf="@+id/MessengerImage"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tokenEditText"
+                style="@style/RegistrationEditTextStyle"
+                android:hint="@string/hint_token"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:text="1052862410:AAFWJekfeab9Q3WhME03Kd9i9at-jRq6h7c"
+                android:textColor="#1d1d26"
+                android:textSize="16sp" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/textView"
@@ -44,11 +54,11 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/tokenView" />
 
 
         <Button
-            android:id="@+id/sendPhoneButton"
+            android:id="@+id/sendTokenButton"
             style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,7 +67,7 @@
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/button_rounded_background"
-            android:text="@string/action_send_phone"
+            android:text="@string/action_send_token"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

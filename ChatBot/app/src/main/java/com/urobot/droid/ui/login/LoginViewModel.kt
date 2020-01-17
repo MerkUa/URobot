@@ -2,19 +2,22 @@ package com.urobot.droid.ui.login
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.util.Log
 import android.util.Patterns
-import androidx.lifecycle.*
-import com.urobot.droid.data.LoginRepository
-
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.urobot.droid.R
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.ILoginContract
+import com.urobot.droid.contracts.IUserContract
+import com.urobot.droid.data.LoginRepository
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import kotlinx.coroutines.launch
 
-class LoginViewModel(application: Application) : AndroidViewModel(application), ILoginContract {
+class LoginViewModel(application: Application) : AndroidViewModel(application), ILoginContract,
+    IUserContract {
 
     private val app: Application = application
 
@@ -131,15 +134,21 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
         editor.apply()
 
         val userDao = UserRoomDatabase.getDatabase(app, viewModelScope).userDao()
-        val repository: UserRepository = UserRepository(userDao)
+        val repository = UserRepository(userDao, this)
         viewModelScope.launch {
             userDao.deleteAll()
             repository.insert(user)
 
             _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = user.name!!))
+                LoginResult(success = LoggedInUserView(displayName = user.fName + user.lName!!))
         }
 
 
+    }
+
+    override fun onUpdateResult(user: User) {
+    }
+
+    override fun onUpdateError() {
     }
 }

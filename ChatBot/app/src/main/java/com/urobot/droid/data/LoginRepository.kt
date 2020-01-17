@@ -3,11 +3,11 @@ package com.urobot.droid.data
 import android.util.Log
 import com.urobot.droid.Apifactory
 import com.urobot.droid.NetModel.ResponseLoginModel
-import com.urobot.droid.data.NetModel.Request.RequestLogin
 import com.urobot.droid.Network.ApiService
+import com.urobot.droid.contracts.ILoginContract
+import com.urobot.droid.data.NetModel.Request.RequestLogin
 import com.urobot.droid.data.NetModel.Request.RequestSignInSocial
 import com.urobot.droid.data.NetModel.Request.RequestSignUp
-import com.urobot.droid.contracts.ILoginContract
 import com.urobot.droid.data.model.LoggedInUser
 import com.urobot.droid.db.User
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,7 +54,8 @@ class LoginRepository(val loginContract: ILoginContract) {
                     .subscribeOn(Schedulers.io())
                     .subscribe({ result ->
 
-                        var user = User(result.userId!!, result.firstName + " " + result.lastName!!, result.token!!,
+                        var user = User(
+                            result.userId!!, result.firstName, result.lastName!!, result.token!!,
                                 result.phone!!, result.photo)
                         loginContract.onLoginResult(user)
 
@@ -85,7 +86,8 @@ class LoginRepository(val loginContract: ILoginContract) {
                     .subscribeOn(Schedulers.io())
                     .subscribe({ result ->
 
-                        var user = User(result.userId!!, result.firstName + " " + result.lastName!!, result.token!!,
+                        var user = User(
+                            result.userId!!, result.firstName, result.lastName!!, result.token!!,
                                 result.phone!!, result.photo)
                         loginContract.onLoginResult(user)
 
