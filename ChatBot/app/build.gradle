@@ -128,6 +128,13 @@ dependencies {
     implementation 'org.zakariya.stickyheaders:stickyheaders:0.7.10'
 
     implementation 'com.applandeo:material-calendar-view:1.7.0'
+
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+
+    /**Koin*/
+    implementation 'org.koin:koin-android:2.0.0'
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

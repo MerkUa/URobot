@@ -63,11 +63,15 @@ class HomeBotAdapter(
         for (dataList in data) {
             for (dataItem in dataList.botContentList) {
                 if (dataItem.id!! == bot.id) {
-                    var position = dataList.botContentList.indexOf(dataItem)
-                    dataList.botContentList.set(position, bot)
+                    var positionOfItem = dataList.botContentList.indexOf(dataItem)
+                    dataList.botContentList.set(positionOfItem, bot)
+
+//                    var positionORow = data.indexOf(dataList)
+//
+//                    data[positionORow + 1]
+
                 }
             }
-
         }
         notifyDataSetChanged()
     }

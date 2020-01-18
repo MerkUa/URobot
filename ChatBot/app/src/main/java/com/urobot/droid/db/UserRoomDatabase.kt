@@ -10,10 +10,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the User class
-@Database(entities = arrayOf(User::class), version = 1, exportSchema = false)
+@Database(entities = [User::class, BotInfo::class], version = 2, exportSchema = false)
 public abstract class UserRoomDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+    abstract fun botDao(): BotDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

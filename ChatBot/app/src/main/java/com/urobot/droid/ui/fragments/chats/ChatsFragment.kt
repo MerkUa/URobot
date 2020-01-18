@@ -1,23 +1,25 @@
 package com.urobot.droid.ui.fragments.chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.urobot.droid.R
 import com.urobot.droid.adapter.ChatListAdapter
 import com.urobot.droid.data.model.Chat
-import com.urobot.droid.ui.fragments.message.MessageFragment
-import com.urobot.droid.ui.fragments.support.SupportFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChatsFragment : Fragment() {
 
     private lateinit var chatsViewModel: ChatsViewModel
+//    val myViewModel: ChatsViewModel by viewModel()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -42,11 +44,23 @@ class ChatsFragment : Fragment() {
             val action = ChatsFragmentDirections.Action_navigation_chats_to_navigation_messages(chat.imageUrl, "")
             view.findNavController().navigate(action)
         }
+        chatsViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+            // Update the cached copy of the words in the adapter.
+            users?.let {
+                Log.d("currentUser", "currentUser " + it.id)
+                Log.d("currentUser", "token " + it.token)
+
+                chatsViewModel.getContactId()
+            }
+        })
+//        chatsViewModel.getContactId()
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
     }
 }

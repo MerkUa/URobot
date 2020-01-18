@@ -7,6 +7,8 @@ import com.urobot.droid.data.NetModel.Request.RequestSignInSocial
 import com.urobot.droid.data.NetModel.Request.RequestSignUp
 import com.urobot.droid.data.NetModel.Response.GetPromoModel
 import com.urobot.droid.data.NetModel.Response.GetUserResponseModel
+import com.urobot.droid.data.model.CreateWithRobotModel
+import com.urobot.droid.data.model.GetContactsModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -75,11 +77,11 @@ interface ApiService {
     fun createBot(
         @Header("Authorization") authorization: String,
         @Body requestCreateBot: RequestCreateBot
-    ): Observable<ResponseBody>
+    ): Observable<CreateWithRobotModel>
 
     @POST("bots/get-contacts")
     fun getContacts(
         @Header("Authorization") authorization: String,
-        @Body requestCreateBot: RequestCreateBot
-    ): Observable<ResponseBody>
+        @Body botID: Int?
+    ): Observable<GetContactsModel>
 }
