@@ -8,20 +8,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.urobot.droid.R
-import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.adapter.ChatListAdapter
 import com.urobot.droid.data.model.Chat
-import com.urobot.droid.db.User
-import com.urobot.droid.db.UserRoomDatabase
-import com.urobot.droid.ui.fragments.message.MessageFragment
-import com.urobot.droid.ui.fragments.support.SupportFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChatsFragment : Fragment() {
@@ -52,7 +44,16 @@ class ChatsFragment : Fragment() {
             val action = ChatsFragmentDirections.Action_navigation_chats_to_navigation_messages(chat.imageUrl, "")
             view.findNavController().navigate(action)
         }
-        chatsViewModel.getContactId()
+        chatsViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+            // Update the cached copy of the words in the adapter.
+            users?.let {
+                Log.d("currentUser", "currentUser " + it.id)
+                Log.d("currentUser", "token " + it.token)
+
+                chatsViewModel.getContactId()
+            }
+        })
+//        chatsViewModel.getContactId()
         return root
     }
 
