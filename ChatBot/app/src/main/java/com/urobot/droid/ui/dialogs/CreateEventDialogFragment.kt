@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.urobot.droid.R
+import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.ServiceButtons
 import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 
@@ -55,25 +56,19 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     override fun onClick(v: View?) {
         if( v?.id == R.id.add_buttons_tv){
-            add_buttons_tv.setOnClickListener {
 
-                val bottomSheetFragment = context?.let { addButtonDialog }
-                val manager = (context as AppCompatActivity).supportFragmentManager
-                bottomSheetFragment?.show(manager, "dialog")
-            }
+            val bottomSheetFragment = context?.let { addButtonDialog }
+            val manager = (context as AppCompatActivity).supportFragmentManager
+            bottomSheetFragment?.show(manager, "dialog")
+
 
         }  else if (v?.id == R.id.save_button ){
+            val text = descriptionEditText.text.toString()
 
+            val item = BotContentItem(1, null, null, -1, false, "", list)
+            mChangeDataListener?.onDataChange(item)
+            dismiss()
 
-            save_button.setOnClickListener {
-
-                val text = descriptionEditText.text.toString()
-
-
-                mChangeDataListener?.onDataChange(text, list)
-//                mChangeDataListener?.onButtonChange()
-                dismiss()
-            }
         }
     }
 
@@ -88,7 +83,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
     }
 
     interface ChangeDataListener {
-        fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?)
+        fun onDataChange(item: BotContentItem)
     }
 
     fun setSelectedListener(listener: ChangeDataListener) {

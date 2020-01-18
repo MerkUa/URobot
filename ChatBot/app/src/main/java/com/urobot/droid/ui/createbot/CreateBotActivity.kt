@@ -13,7 +13,6 @@ import com.urobot.droid.data.model.BotData
 import com.urobot.droid.data.model.ServiceButtons
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.activity_create_bot.*
-import kotlin.collections.ArrayList
 
 
 class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeDataListener {
@@ -43,6 +42,11 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 //
 //        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 4.toString(), 5.toString(), listOf("1", "3"))), 3,
 //            BotData.CONTENT_TYPE))
+
+        var listContent: ArrayList<BotContentItem> = ArrayList()
+        var list: ArrayList<ServiceButtons>? = ArrayList()
+        listContent.add(BotContentItem(1, null, null, -1, true, "", list))
+        dataList!!.add(BotData(listContent, 1))
 
         adapter = HomeBotAdapter(this)
         adapter.setData(dataList)
@@ -79,9 +83,9 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?) {
-
-        dataList.add(BotData(listOf(BotContentItem(null, null, null, text, listButtons)), null))
-        adapter.setData(dataList)
+    override fun onDataChange(bot: BotContentItem) {
+        adapter.addData(bot)
+//        dataList.add(bot)
+//        adapter.setData(dataList)
     }
 }
