@@ -82,6 +82,6 @@ interface ApiService {
     @GET("bots/get-contacts")
     fun getContacts(
         @Header("Authorization") authorization: String,
-        @Body botID: Int?
-    ): Observable<GetContactsModel>
+        @Query("bot_id")botID: Int?
+    ): Observable<List<GetContactsModel>>
 }
