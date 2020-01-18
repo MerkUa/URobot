@@ -17,19 +17,24 @@ import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddButtonBottomSheetDialog.AddButtonBottomSheetListener {
 
     private var addButtonDialog = AddButtonBottomSheetDialog()
-    private var mChangeDataListener: ChangeDataListener? = null
+    private var changeDataListener: ChangeDataListener? = null
     private var list : ArrayList<ServiceButtons>? = ArrayList()
+    private var botContentItem: BotContentItem? = null
 
     companion object{
         private var instanceFragment: CreateEventDialogFragment? = null
 
-        fun getInstance(): CreateEventDialogFragment? {
+        fun getInstance(botItem: BotContentItem): CreateEventDialogFragment? {
             instanceFragment =
                 if (instanceFragment == null) CreateEventDialogFragment() else instanceFragment
+            instanceFragment!!.setContentItem(botItem)
             return instanceFragment
         }
     }
 
+    private fun setContentItem(botItem: BotContentItem) {
+        botContentItem = botItem
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -43,7 +48,6 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         return view
     }
 
-
     override fun onStart() {
         super.onStart()
         val dialog: Dialog? = dialog
@@ -54,21 +58,21 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         }
     }
 
-    override fun onClick(v: View?) {
-        if( v?.id == R.id.add_buttons_tv){
-
-            val bottomSheetFragment = context?.let { addButtonDialog }
-            val manager = (context as AppCompatActivity).supportFragmentManager
-            bottomSheetFragment?.show(manager, "dialog")
-
-
-        }  else if (v?.id == R.id.save_button ){
-            val text = descriptionEditText.text.toString()
-
-            val item = BotContentItem(1, null, null, -1, false, "", list)
-            mChangeDataListener?.onDataChange(item)
-            dismiss()
-
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.add_buttons_tv -> {
+                val bottomSheetFragment = context?.let { addButtonDialog }
+                val manager = (context as AppCompatActivity).supportFragmentManager
+                bottomSheetFragment?.show(manager, "dialog")
+            }
+            R.id.save_button -> {
+                val text: String? = descriptionEditText.text.toString()
+                changeDataListener.let {
+                    text?.let { _text -> it?.onDataChange(_text, list) }
+                    botContentItem?.let { _item -> it?.onBotDataChanged(_item) }
+                }
+                dismiss()
+            }
         }
     }
 
@@ -83,10 +87,11 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
     }
 
     interface ChangeDataListener {
-        fun onDataChange(item: BotContentItem)
+        fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?)
+        fun onBotDataChanged(botContentItem: BotContentItem)
     }
 
     fun setSelectedListener(listener: ChangeDataListener) {
-        this.mChangeDataListener = listener
+        this.changeDataListener = listener
     }
 }
