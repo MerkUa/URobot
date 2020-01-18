@@ -14,7 +14,6 @@ import androidx.navigation.findNavController
 import com.urobot.droid.R
 import com.urobot.droid.adapter.ChatListAdapter
 import com.urobot.droid.data.model.Chat
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChatsFragment : Fragment() {
 
@@ -50,10 +49,10 @@ class ChatsFragment : Fragment() {
                 Log.d("currentUser", "currentUser " + it.id)
                 Log.d("currentUser", "token " + it.token)
 
-                chatsViewModel.getContactId()
+                chatsViewModel.getContactId(it.token!!)
             }
         })
-//        chatsViewModel.getContactId()
+
         return root
     }
 

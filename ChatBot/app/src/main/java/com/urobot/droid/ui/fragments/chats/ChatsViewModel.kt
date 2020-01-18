@@ -1,7 +1,6 @@
 package com.urobot.droid.ui.fragments.chats
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +34,7 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application), 
     }
 
 
-    fun getContactId(){
+    fun getContactId(token: String){
 
 CoroutineScope(Dispatchers.IO).launch {
 
@@ -47,15 +45,12 @@ CoroutineScope(Dispatchers.IO).launch {
     val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
 
     if (resultBotId != null) {
-        currentUser.value?.token?.let {
-            apiService.getContacts(it, resultBotId.botId)
+
+            apiService.getContacts(token, resultBotId.botId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { result->
-                    result.id
+                .subscribe {
                 }
-        }
-
 
     }
 }

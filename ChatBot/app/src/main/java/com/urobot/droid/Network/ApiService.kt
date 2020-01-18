@@ -79,7 +79,7 @@ interface ApiService {
         @Body requestCreateBot: RequestCreateBot
     ): Observable<CreateWithRobotModel>
 
-    @POST("bots/get-contacts")
+    @GET("bots/get-contacts")
     fun getContacts(
         @Header("Authorization") authorization: String,
         @Body botID: Int?
