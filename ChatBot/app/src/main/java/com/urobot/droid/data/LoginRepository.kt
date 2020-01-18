@@ -55,7 +55,7 @@ class LoginRepository(val loginContract: ILoginContract) {
                     .subscribe({ result ->
 
                         var user = User(
-                            result.userId!!, result.firstName, result.lastName!!, result.token!!,
+                            result.userId!!,  result.firstName, result.lastName!!, result.token!!,
                                 result.phone!!, result.photo)
                         loginContract.onLoginResult(user)
 

@@ -2,6 +2,10 @@ package com.urobot.droid.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import io.reactivex.Completable
+
+
+
 
 @Dao
 interface UserDao {
@@ -20,4 +24,8 @@ interface UserDao {
 
     @Query("SELECT * FROM user_table WHERE id = :userId LIMIT 1")
     fun getUserById(userId: String): User?
+
+//    @Query("SELECT token FROM user_table")
+//    fun getToken(): User
+
 }

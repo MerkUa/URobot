@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.contracts.IUserContract
+import com.urobot.droid.db.BotInfo
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserDao
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -58,8 +59,7 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
                     .subscribe({ result ->
                         var user = User(
                             result.userId!!, result.firstName, result.lastName!!, user.token,
-                            result.phone!!, result.photo
-                        )
+                            result.phone!!, result.photo)
                         userContract.onUpdateResult(user)
 
                     }, { error ->
