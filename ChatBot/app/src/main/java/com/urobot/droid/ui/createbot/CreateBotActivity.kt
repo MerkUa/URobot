@@ -3,6 +3,7 @@ package com.urobot.droid.ui.createbot
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,6 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
     private var dataList: ArrayList<BotData> = ArrayList()
     private lateinit var adapter: HomeBotAdapter
     private lateinit var scrollListener: RecyclerView.OnScrollListener
-    private var eventDialogFragment = CreateEventDialogFragment.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         initAdapter()
         hideProgressBar()
-        eventDialogFragment?.setSelectedListener(this)
+//        eventDialogFragment?.setSelectedListener(this)
     }
 
 
@@ -43,10 +43,10 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 //        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 4.toString(), 5.toString(), listOf("1", "3"))), 3,
 //            BotData.CONTENT_TYPE))
 
-        var listContent: ArrayList<BotContentItem> = ArrayList()
-        var list: ArrayList<ServiceButtons>? = ArrayList()
-        listContent.add(BotContentItem(1, null, null, -1, true, "", list))
-        dataList!!.add(BotData(listContent, 1))
+        val listContent: ArrayList<BotContentItem> = ArrayList()
+        val list: ArrayList<ServiceButtons>? = ArrayList()
+        listContent.add(BotContentItem(null, null, null, "", list))
+        dataList.add(BotData(listContent, 1))
 
         adapter = HomeBotAdapter(this)
         adapter.setData(dataList)
@@ -83,9 +83,25 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onDataChange(bot: BotContentItem) {
-        adapter.addData(bot)
-//        dataList.add(bot)
+    override fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?) {
+
+//        dataList.add(
+//            BotData(
+//                listOf(
+//                    BotContentItem(
+//                        null,
+//                        null,
+//                        null,
+//                        text,
+//                        listButtons
+//                    ).to
+//                ), null
+//            )
+//        )
 //        adapter.setData(dataList)
+    }
+
+    override fun onBotDataChanged(botContentItem: BotContentItem) {
+        Toast.makeText(this, botContentItem.description + ", bitch! ", Toast.LENGTH_SHORT).show()
     }
 }

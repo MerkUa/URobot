@@ -1,9 +1,9 @@
 package com.urobot.droid.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,8 @@ import com.urobot.droid.data.model.BotData
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
 class HomeBotAdapter(
-    private val context: Context) :
+    private val activity: AppCompatActivity
+) :
     RecyclerView.Adapter<HomeBotAdapter.HomeBotViewHolder>() {
 
     private var horizontalAdapter: ContentBotAdapter? = null
@@ -24,7 +25,7 @@ class HomeBotAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBotViewHolder {
         val theView =
-            LayoutInflater.from(context).inflate(R.layout.horizontal_layout_home, parent, false)
+            LayoutInflater.from(activity).inflate(R.layout.horizontal_layout_home, parent, false)
         return HomeBotViewHolder(theView)
     }
 
@@ -35,7 +36,7 @@ class HomeBotAdapter(
         val botAdapterPosition = position
 
         horizontalAdapter =
-            ContentBotAdapter(botAdapterPosition, data[position].botContentList, context)
+            ContentBotAdapter(botAdapterPosition, data[position].botContentList, activity)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)

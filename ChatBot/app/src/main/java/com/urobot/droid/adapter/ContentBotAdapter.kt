@@ -1,24 +1,27 @@
 package com.urobot.droid.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotContentItem
+import com.urobot.droid.ui.createbot.CreateBotActivity
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
+import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
 class ContentBotAdapter(
     private var botAdapterPosition: Int,
     private val botList: List<BotContentItem>,
-    private val context: Context
+    private val activity: AppCompatActivity
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        const val REQUEST_RESULT_CODE = 1488
+    }
 
     private val emptyType = 0
     private val contentType = 1
@@ -30,6 +33,7 @@ class ContentBotAdapter(
             AddContentViewHolder(emptyView)
         } else {
             val contentView = LayoutInflater.from(parent.context).inflate(R.layout.item_with_event_create_bot, parent,false)
+
             ContentViewHolder(contentView)
         }
     }
@@ -43,7 +47,7 @@ class ContentBotAdapter(
             (botList.isEmpty()) -> {
                 emptyType
             }
-            (botList[position].isEmpty) -> {
+            (botList[position].id == null) -> {
                 emptyType
             }
             else -> {
@@ -57,19 +61,19 @@ class ContentBotAdapter(
 
         if ((getItemViewType(position) == contentType) and botList.isNotEmpty()) {
 
-            Log.d("onBindViewHolder", "description " + botList[position].description)
+            holder.itemView.text_from_dialog.text = botList[position].description
 
             val listButtons = botList[position].list_buttons
 
-//            if (listButtons != null) {
-//                for (item in listButtons) {
-//                    if (item.id == 1) {
-//                        holder.itemView.write_to_event.visibility = View.VISIBLE
-//                    } else {
-//                        holder.itemView.payment_button.visibility = View.VISIBLE
-//                    }
-//                }
-//            }
+            if (listButtons != null) {
+                for (item in listButtons) {
+                    if (item.id == 1) {
+                        holder.itemView.write_to_event.visibility = View.VISIBLE
+                    } else {
+                        holder.itemView.payment_button.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
     }
@@ -91,9 +95,9 @@ class ContentBotAdapter(
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private var descriptoin: TextView = itemView.findViewById(R.id.text_from_dialog)
+        init {
 
-
+        }
     }
 
     inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -105,9 +109,10 @@ class ContentBotAdapter(
 
         override fun onClick(v: View?) {
 
-            val manager = (context as AppCompatActivity).supportFragmentManager
-            context.supportFragmentManager.beginTransaction()
-            val newFragment = CreateEventDialogFragment.getInstance()
+            val manager = activity.supportFragmentManager
+            activity.supportFragmentManager.beginTransaction()
+            val newFragment = CreateEventDialogFragment.getInstance(botList[adapterPosition])
+            newFragment?.setSelectedListener(activity as CreateBotActivity)
             newFragment?.show(manager, "dialog")
         }
     }
