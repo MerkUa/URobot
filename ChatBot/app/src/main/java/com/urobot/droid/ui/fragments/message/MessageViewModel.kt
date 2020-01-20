@@ -7,6 +7,7 @@ import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
+import com.urobot.droid.data.NetModel.Request.RequestMessage
 import com.urobot.droid.data.model.GetMessageModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
@@ -46,6 +47,19 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
                 }
 
             }
+    }
+
+    fun sendMessage(token:String, id:Int, message:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val apiService: ApiService = Apifactory.create()
+
+            val requestMessage = RequestMessage(
+                id,
+                message
+            )
+
+            apiService.sendMessage(token, requestMessage)
+        }
     }
 
     override fun onUpdateResult(user: User) {

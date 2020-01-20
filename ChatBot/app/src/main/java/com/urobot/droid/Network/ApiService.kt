@@ -1,20 +1,18 @@
 package com.urobot.droid.Network
 
 import com.urobot.droid.NetModel.ResponseLoginModel
-import com.urobot.droid.data.NetModel.Request.RequestCreateBot
-import com.urobot.droid.data.NetModel.Request.RequestLogin
-import com.urobot.droid.data.NetModel.Request.RequestSignInSocial
-import com.urobot.droid.data.NetModel.Request.RequestSignUp
+import com.urobot.droid.data.NetModel.Request.*
 import com.urobot.droid.data.NetModel.Response.GetPromoModel
 import com.urobot.droid.data.NetModel.Response.GetUserResponseModel
 import com.urobot.droid.data.model.CreateWithRobotModel
 import com.urobot.droid.data.model.GetContactsModel
 import com.urobot.droid.data.model.GetMessageModel
+import com.urobot.droid.data.model.Message
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.Response
 import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.*
 
 
@@ -94,4 +92,10 @@ interface ApiService {
         @Query("page") page : Int?,
         @Query("limit") limit : Int?
     ): retrofit2.Response<GetMessageModel>
+
+    @POST("bots/send-message")
+    suspend fun sendMessage(
+        @Header("Authorization") authorization: String,
+        @Body message: RequestMessage
+    ): Response<ResponseBody>
 }

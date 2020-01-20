@@ -20,6 +20,7 @@ import com.urobot.droid.R
 import com.urobot.droid.data.model.Author
 import com.urobot.droid.data.model.Message
 import kotlinx.android.synthetic.main.message_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,6 +43,7 @@ class MessageFragment : Fragment() {
         val root = inflater.inflate(R.layout.message_fragment, container, false)
 
         val listChat: MessagesList = root.findViewById(R.id.messagesList)
+        val recipientId = MessageFragmentArgs.fromBundle(arguments).idRecipient
 
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
@@ -77,8 +79,18 @@ class MessageFragment : Fragment() {
 
 
         inputField.setInputListener(InputListener {
-            //validate and send message
+
             val inputMessage = Message(1, authorMe, it.toString(), Date())
+
+            messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
+
+                users?.let {
+                    messageViewModel.sendMessage(it.token!!, recipientId, inputField.inputEditText.text.toString())
+                }
+            })
+
+            //validate and send message
+
             adapter.addToStart(inputMessage, true)
             true
         })
@@ -88,7 +100,7 @@ class MessageFragment : Fragment() {
 
         })
 
-        val recipientId = MessageFragmentArgs.fromBundle(arguments).idRecipient
+
 //        listChat.click
 
         //Get Message
@@ -107,14 +119,19 @@ class MessageFragment : Fragment() {
 
 
         messageViewModel.messageLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { result ->
-        val message =  result.data?.get(adapter.itemCount)?.message
-            val messageId =   result.data?.get(adapter.itemCount)?.id
-            val list: ArrayList<Message> = ArrayList()
 
-            val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
-            list.add(Message(messageId, authorMe, message!!))
-            adapter.addToEnd(list, false)
-            messagesList.setAdapter(adapter)
+            for(item in result.data!!.indices){
+                val message =  result.data?.get(item)?.message
+                val messageId =   result.data?.get(item)?.id
+
+                val list: ArrayList<Message> = ArrayList()
+
+                val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
+                list.add(Message(messageId, authorMe, message!!))
+                adapter.addToEnd(list, false)
+                messagesList.setAdapter(adapter)
+            }
+
         })
     }
 
