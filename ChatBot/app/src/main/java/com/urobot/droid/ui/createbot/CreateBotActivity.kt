@@ -3,7 +3,6 @@ package com.urobot.droid.ui.createbot
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,8 +44,8 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         val listContent: ArrayList<BotContentItem> = ArrayList()
         val list: ArrayList<ServiceButtons>? = ArrayList()
-        listContent.add(BotContentItem(null, null, null, "", list))
-        dataList.add(BotData(listContent, 1))
+        listContent.add(BotContentItem(1, null, null, -1, true, "", list))
+        dataList.add(BotData(listContent))
 
         adapter = HomeBotAdapter(this)
         adapter.setData(dataList)
@@ -83,25 +82,8 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?) {
-
-//        dataList.add(
-//            BotData(
-//                listOf(
-//                    BotContentItem(
-//                        null,
-//                        null,
-//                        null,
-//                        text,
-//                        listButtons
-//                    ).to
-//                ), null
-//            )
-//        )
-//        adapter.setData(dataList)
-    }
-
     override fun onBotDataChanged(botContentItem: BotContentItem) {
-        Toast.makeText(this, botContentItem.description + ", bitch! ", Toast.LENGTH_SHORT).show()
+        adapter.addData(botContentItem)
+//        Toast.makeText(this, botContentItem.description + ", bitch! ", Toast.LENGTH_SHORT).show()
     }
 }

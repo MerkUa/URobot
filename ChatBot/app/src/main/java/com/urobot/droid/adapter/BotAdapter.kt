@@ -1,5 +1,6 @@
 package com.urobot.droid.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.urobot.droid.R
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
+import com.urobot.droid.data.model.ServiceButtons
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
 class HomeBotAdapter(
@@ -60,18 +62,54 @@ class HomeBotAdapter(
     }
 
     fun addData(bot: BotContentItem) {
+        val listContent: ArrayList<BotContentItem> = ArrayList()
+        Log.d("addData", "bot " + bot.id)
         for (dataList in data) {
             for (dataItem in dataList.botContentList) {
+                Log.d("addData", "dataItem.id " + dataItem.id)
+
                 if (dataItem.id!! == bot.id) {
                     var positionOfItem = dataList.botContentList.indexOf(dataItem)
                     dataList.botContentList.set(positionOfItem, bot)
 
-//                    var positionORow = data.indexOf(dataList)
-//
-//                    data[positionORow + 1]
+                    val list: ArrayList<ServiceButtons>? = ArrayList()
 
+
+                    if ((data.indexOf(dataList) + 1) == data.size) {
+                        for (buttons in bot.list_buttons!!) {
+                            listContent.add(
+                                BotContentItem(
+                                    data.size + bot.id!! + buttons.id!!,
+                                    bot.id,
+                                    null,
+                                    buttons.id,
+                                    true,
+                                    "",
+                                    list
+                                )
+                            )
+                        }
+                    } else {
+                        val nextRow = data[(data.indexOf(dataList) + 1)]
+                        for (buttons in bot.list_buttons!!) {
+                            nextRow.botContentList.add(
+                                BotContentItem(
+                                    data.size + bot.id!! + buttons.id!!,
+                                    bot.id,
+                                    null,
+                                    buttons.id,
+                                    true,
+                                    "",
+                                    list
+                                )
+                            )
+                        }
+                    }
                 }
             }
+        }
+        if (listContent.isNotEmpty()) {
+            data.add(BotData(listContent))
         }
         notifyDataSetChanged()
     }

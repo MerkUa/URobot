@@ -8,6 +8,7 @@ import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
+import com.urobot.droid.data.model.Chat
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,8 +50,22 @@ CoroutineScope(Dispatchers.IO).launch {
             apiService.getContacts(token, resultBotId.botId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                }
+                .subscribe({ result ->
+                    val list = arrayListOf<Chat>()
+                    for (contact in result) {
+                        list.add(
+                            Chat(
+                                contact.id!!, contact.firstName + " " + contact.lastName,
+                                contact.photo!!,
+                                true, false, "12:07", " "
+                            )
+                        )
+                        listener?.onGetContactsResult(list)
+                    }
+
+                }, { error ->
+
+                })
 
     }
 }
@@ -70,7 +85,7 @@ CoroutineScope(Dispatchers.IO).launch {
 
 
     interface IChatsContract {
-        fun onLogoutResult()
+        fun onGetContactsResult(list: ArrayList<Chat>)
     }
 
     override fun onUpdateResult(user: User) {

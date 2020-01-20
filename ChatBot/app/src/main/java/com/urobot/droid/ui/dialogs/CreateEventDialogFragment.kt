@@ -2,6 +2,7 @@ package com.urobot.droid.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         private var instanceFragment: CreateEventDialogFragment? = null
 
         fun getInstance(botItem: BotContentItem): CreateEventDialogFragment? {
+            Log.d("getInstance", "getInstance " + botItem.id)
             instanceFragment =
                 if (instanceFragment == null) CreateEventDialogFragment() else instanceFragment
             instanceFragment!!.setContentItem(botItem)
@@ -48,6 +50,12 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        descriptionEditText.setText(botContentItem!!.description)
+
+    }
+
     override fun onStart() {
         super.onStart()
         val dialog: Dialog? = dialog
@@ -66,11 +74,14 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                 bottomSheetFragment?.show(manager, "dialog")
             }
             R.id.save_button -> {
-                val text: String? = descriptionEditText.text.toString()
                 changeDataListener.let {
-                    text?.let { _text -> it?.onDataChange(_text, list) }
-                    botContentItem?.let { _item -> it?.onBotDataChanged(_item) }
+                    botContentItem!!.isEmpty = false
+                    botContentItem!!.description = descriptionEditText.text.toString()
+                    botContentItem!!.list_buttons = list
+                    it!!.onBotDataChanged(botContentItem!!)
                 }
+                descriptionEditText.setText("")
+                list?.clear()
                 dismiss()
             }
         }
@@ -87,7 +98,6 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
     }
 
     interface ChangeDataListener {
-        fun onDataChange(text: String, listButtons: ArrayList<ServiceButtons>?)
         fun onBotDataChanged(botContentItem: BotContentItem)
     }
 

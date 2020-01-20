@@ -84,7 +84,7 @@
     <string name="delete">Удалить</string>
     <string name="text_resend_code">Если смс c кодом подтверждения не придет в течении 5 минут, запросите код повтоно</string>
     <string name="payment">Оплата</string>
-    <string name="write_event_and_important">Запись и важная</string>
+    <string name="write_event_and_important">Запись</string>
     <string name="level_one">1 уровень</string>
     <string name="add_buttons">Добавить кнопки</string>
     <string name="write_event">Запись</string>

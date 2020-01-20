@@ -37,7 +37,12 @@ class ChatListAdapter(private val context: Context,
         if (chat.isOnline)
             onlineStatus.visibility = View.VISIBLE
 
-        Picasso.get().load(chat.imageUrl).into(photo)
+        if (chat.imageUrl.isNotEmpty()) {
+            Picasso.get().load(chat.imageUrl).into(photo)
+        } else {
+            Picasso.get().load("https://www.iconsdb.com/icons/preview/black/contacts-xxl.png")
+                .into(photo)
+        }
 
 
 

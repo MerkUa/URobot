@@ -19,9 +19,6 @@ class ContentBotAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object {
-        const val REQUEST_RESULT_CODE = 1488
-    }
 
     private val emptyType = 0
     private val contentType = 1
@@ -40,14 +37,9 @@ class ContentBotAdapter(
 
     override fun getItemViewType(position: Int): Int {
 
-        val lastPosition =  itemCount - 1
-
         return when {
 
-            (botList.isEmpty()) -> {
-                emptyType
-            }
-            (botList[position].id == null) -> {
+            (botList[position].isEmpty) -> {
                 emptyType
             }
             else -> {
@@ -73,6 +65,16 @@ class ContentBotAdapter(
                         holder.itemView.payment_button.visibility = View.VISIBLE
                     }
                 }
+            }
+
+        }
+        if (getItemViewType(position) == emptyType) {
+            holder.itemView.setOnClickListener {
+                val manager = activity.supportFragmentManager
+                activity.supportFragmentManager.beginTransaction()
+                val newFragment = CreateEventDialogFragment.getInstance(botList[position])
+                newFragment?.setSelectedListener(activity as CreateBotActivity)
+                newFragment?.show(manager, botList[position].id.toString())
             }
         }
 
@@ -100,20 +102,13 @@ class ContentBotAdapter(
         }
     }
 
-    inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class AddContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
         init {
-            itemView.setOnClickListener(this)
+
         }
 
-        override fun onClick(v: View?) {
 
-            val manager = activity.supportFragmentManager
-            activity.supportFragmentManager.beginTransaction()
-            val newFragment = CreateEventDialogFragment.getInstance(botList[adapterPosition])
-            newFragment?.setSelectedListener(activity as CreateBotActivity)
-            newFragment?.show(manager, "dialog")
-        }
     }
 }
