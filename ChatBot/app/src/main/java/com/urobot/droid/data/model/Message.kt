@@ -5,7 +5,7 @@ import com.stfalcon.chatkit.commons.models.MessageContentType
 import java.util.*
 
 
-class Message(private val id: String, user: Author, private var text: String, createdAt: Date) :
+class Message(private val id: Int?, user: Author, private var text: String, createdAt: Date) :
         IMessage, MessageContentType.Image,
         MessageContentType /*and this one is for custom content type (in this case - voice message)*/ {
     private var createdAt: Date
@@ -13,7 +13,7 @@ class Message(private val id: String, user: Author, private var text: String, cr
     private var image: Image? = null
     var voice: Voice? = null
 
-    constructor(id: String, user: Author, text: String) : this(
+    constructor(id: Int?, user: Author, text: String) : this(
             id,
             user,
             text,
@@ -21,8 +21,8 @@ class Message(private val id: String, user: Author, private var text: String, cr
     ) {
     }
 
-    override fun getId(): String {
-        return id
+    override fun getId(): String? {
+        return id.toString()
     }
 
     override fun getText(): String {

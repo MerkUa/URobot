@@ -144,8 +144,9 @@
         tools:layout="@layout/message_fragment">
         <argument
             android:name="IdRecipient"
-            app:argType="string" />
-        <argument android:name="IdChat" />
+            app:argType="integer"
+            android:defaultValue="-1" />
+
     </fragment>
 
     <fragment

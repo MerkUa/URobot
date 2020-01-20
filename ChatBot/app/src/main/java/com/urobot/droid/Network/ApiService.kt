@@ -9,9 +9,11 @@ import com.urobot.droid.data.NetModel.Response.GetPromoModel
 import com.urobot.droid.data.NetModel.Response.GetUserResponseModel
 import com.urobot.droid.data.model.CreateWithRobotModel
 import com.urobot.droid.data.model.GetContactsModel
+import com.urobot.droid.data.model.GetMessageModel
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -84,4 +86,12 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Query("bot_id")botID: Int?
     ): Observable<List<GetContactsModel>>
+
+    @GET("bots/get-messages")
+    suspend fun getMessage(
+        @Header("Authorization") authorization: String,
+        @Query("contact_id")contact_id: Int?,
+        @Query("page") page : Int?,
+        @Query("limit") limit : Int?
+    ): retrofit2.Response<GetMessageModel>
 }
