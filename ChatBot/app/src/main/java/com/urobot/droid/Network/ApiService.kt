@@ -4,14 +4,12 @@ import com.urobot.droid.NetModel.ResponseLoginModel
 import com.urobot.droid.data.NetModel.Request.*
 import com.urobot.droid.data.NetModel.Response.GetPromoModel
 import com.urobot.droid.data.NetModel.Response.GetUserResponseModel
-import com.urobot.droid.data.model.CreateWithRobotModel
-import com.urobot.droid.data.model.GetContactsModel
-import com.urobot.droid.data.model.GetMessageModel
-import com.urobot.droid.data.model.Message
+import com.urobot.droid.data.model.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -91,11 +89,38 @@ interface ApiService {
         @Query("contact_id")contact_id: Int?,
         @Query("page") page : Int?,
         @Query("limit") limit : Int?
-    ): retrofit2.Response<GetMessageModel>
+    ): Response<GetMessageModel>
 
     @POST("bots/send-message")
     suspend fun sendMessage(
         @Header("Authorization") authorization: String,
         @Body message: RequestMessage
     ): Response<ResponseBody>
+
+    @PUT("bots/update-scripts")
+    suspend fun putUpdateScripts(
+        @Header("Authorization") authorization: String,
+        @Query("bot_id") botId:Int,
+        @Query("scripts") scripts: JSONObject
+    ) : Response<ResponseBody>
+
+    @POST("/services/create")
+    suspend fun createServices(
+        @Header("Authorization") authorization: String,
+        @Query("bot_id") botId: Int,
+        @Query("name") name: String,
+        @Query("description") description: String,
+        @Query("key") key : Int
+    ) : Response<CreateOrUpdateServicesModel>
+
+    @PUT("services/update")
+    suspend fun updateServices(
+        @Header("Authorization") authorization: String,
+        @Query("service_id") service_id:Int,
+        @Query("bot_id") botId:Int,
+        @Query("name") name: String,
+        @Query("description") description: String,
+        @Query("key") key : Int
+    ) : Response<CreateOrUpdateServicesModel>
+
 }
