@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,11 +40,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         createBotViewModel =
             ViewModelProvider(this).get(CreateBotViewModel::class.java)
 //        eventDialogFragment?.setSelectedListener(this)
-        createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
-            users?.let {
-                createBotViewModel.getBotContentAndScripts(it.token!!)
-            }
-        })
+
     }
 
 
@@ -96,6 +93,21 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
     override fun onBotDataChanged(botContentItem: BotContentItem) {
         adapter.addData(botContentItem)
+
+        createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
+            users?.let {
+                createBotViewModel.getBotContentAndScripts(it.token!!, botContentItem)
+            }
+        })
+
+//        createBotViewModel.createBotLiveData.observe(this, Observer{
+//            result ->
+//            for (item in result.messages!!.indices){
+//                botContentItem.description = result.messages!![item].data!!
+//
+//            }
+//
+//        })
 //        Toast.makeText(this, botContentItem.description + ", bitch! ", Toast.LENGTH_SHORT).show()
     }
 }
