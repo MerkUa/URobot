@@ -45,8 +45,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         val listContent: ArrayList<BotContentItem> = ArrayList()
         val list: ArrayList<ServiceButtons>? = ArrayList()
 
-        listContent.add(BotContentItem("1", "", null, -1, true, "", list))
-        dataList.add(BotData(listContent))
+
 
         adapter = HomeBotAdapter(this)
         rv_main.adapter = adapter
@@ -64,6 +63,9 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
 
+         if (result.isEmpty()){
+          listContent.add(BotContentItem(1, 0, null, -1, true, "", list))
+           dataList.add(BotData(listContent)) }
 
            for(item in result.indices){
 

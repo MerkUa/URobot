@@ -70,7 +70,7 @@ class ContentBotAdapter(
                 holder.itemView.setOnClickListener {
                     val manager = activity.supportFragmentManager
                     activity.supportFragmentManager.beginTransaction()
-                    val newFragment = CreateEventDialogFragment.getInstance(botList[position])
+                    val newFragment = CreateEventDialogFragment.newInstance(botList[position])
                     newFragment?.setSelectedListener(activity as CreateBotActivity)
                     newFragment?.show(manager, botList[position].id.toString())
                     holder.itemView.text_from_dialog.text = botList[position].description

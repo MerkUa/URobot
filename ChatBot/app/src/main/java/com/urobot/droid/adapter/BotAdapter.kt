@@ -78,7 +78,7 @@ class HomeBotAdapter(
 //                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
                             listContent.add(
                                 BotContentItem(
-                                    UUID.randomUUID().toString(),
+                                    (bot.parent_id!! + buttons.id!!),
                                     bot.id,
                                     null,
                                     buttons.id,
@@ -95,7 +95,7 @@ class HomeBotAdapter(
 //                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
                             nextRow.botContentList.add(
                                 BotContentItem(
-                                    UUID.randomUUID().toString(),
+                                    (bot.parent_id!! + buttons.id!!),
                                     bot.id,
                                     null,
                                     buttons.id,
