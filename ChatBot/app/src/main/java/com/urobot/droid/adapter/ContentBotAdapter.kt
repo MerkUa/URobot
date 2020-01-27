@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
 class ContentBotAdapter(
-    private var botAdapterPosition: Int,
     private val botList: List<BotContentItem>,
     private val activity: AppCompatActivity
 ) :
@@ -83,7 +82,7 @@ class ContentBotAdapter(
             holder.itemView.setOnClickListener {
                 val manager = activity.supportFragmentManager
                 activity.supportFragmentManager.beginTransaction()
-                val newFragment = CreateEventDialogFragment.getInstance(botList[position])
+                val newFragment = CreateEventDialogFragment.newInstance(botList[position])
                 newFragment?.setSelectedListener(activity as CreateBotActivity)
                 newFragment?.show(manager, botList[position].id.toString())
             }

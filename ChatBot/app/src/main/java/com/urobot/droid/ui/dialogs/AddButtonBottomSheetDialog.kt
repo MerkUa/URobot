@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.urobot.droid.R
+import com.urobot.droid.data.model.ServiceButtons
 
 
 class AddButtonBottomSheetDialog : BottomSheetDialogFragment() {
@@ -20,11 +21,11 @@ class AddButtonBottomSheetDialog : BottomSheetDialogFragment() {
         val buttonPayment = view.findViewById<Button>(R.id.add_payment_button)
 
         writeButton.setOnClickListener {
-            mAddButtonBottomSheetListener?.onWriteButtonClick()
+            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(1))
         }
 
         buttonPayment.setOnClickListener {
-            mAddButtonBottomSheetListener?.onPaymentClick()
+            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(2))
         }
 
 
@@ -37,8 +38,7 @@ class AddButtonBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     interface AddButtonBottomSheetListener {
-        fun onWriteButtonClick()
-        fun onPaymentClick()
+        fun ButtonClick(button: ServiceButtons)
     }
 
 }

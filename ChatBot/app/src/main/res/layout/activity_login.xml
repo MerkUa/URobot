@@ -48,7 +48,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:text="expdevatwork@gmail.com"
+                android:text="test@gmail.com"
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +69,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="111111"
+                android:text="1029384756"
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +85,7 @@
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/button_rounded_background"
-            android:enabled="false"
+            android:enabled="true"
             android:text="@string/action_sign_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,5 @@
 package com.urobot.droid.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,8 @@ import com.urobot.droid.data.model.ServiceButtons
 import com.urobot.droid.ui.createbot.CreateBotActivity
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeBotAdapter(
     private val activity: AppCompatActivity
@@ -37,10 +38,8 @@ class HomeBotAdapter(
         val level = (holder.adapterPosition + 1)
         holder.itemView.tv_level.text =  ("$level Уровень")
 
-        val botAdapterPosition = position
-
         horizontalAdapter =
-            ContentBotAdapter(botAdapterPosition, data[position].botContentList, activity)
+            ContentBotAdapter(data[position].botContentList, activity)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
@@ -64,23 +63,22 @@ class HomeBotAdapter(
 
     fun addData(bot: BotContentItem) {
         val listContent: ArrayList<BotContentItem> = ArrayList()
-        Log.d("addData", "bot " + bot.id)
         for (dataList in data) {
             for (dataItem in dataList.botContentList) {
-                Log.d("addData", "dataItem.id " + dataItem.id)
 
                 if (dataItem.id!! == bot.id) {
                     var positionOfItem = dataList.botContentList.indexOf(dataItem)
-                    dataList.botContentList.set(positionOfItem, bot)
+                    dataList.botContentList[positionOfItem] = bot
 
                     val list: ArrayList<ServiceButtons>? = ArrayList()
 
 
                     if ((data.indexOf(dataList) + 1) == data.size) {
                         for (buttons in bot.list_buttons!!) {
+//                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
                             listContent.add(
                                 BotContentItem(
-                                    data.size + bot.id!! + buttons.id!!,
+                                    UUID.randomUUID().toString(),
                                     bot.id,
                                     null,
                                     buttons.id,
@@ -90,12 +88,14 @@ class HomeBotAdapter(
                                 )
                             )
                         }
+                        UUID.randomUUID().toString()
                     } else {
                         val nextRow = data[(data.indexOf(dataList) + 1)]
                         for (buttons in bot.list_buttons!!) {
+//                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
                             nextRow.botContentList.add(
                                 BotContentItem(
-                                    data.size + bot.id!! + buttons.id!!,
+                                    UUID.randomUUID().toString(),
                                     bot.id,
                                     null,
                                     buttons.id,
