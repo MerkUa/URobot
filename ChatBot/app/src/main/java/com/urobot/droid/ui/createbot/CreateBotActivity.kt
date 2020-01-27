@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,11 +12,8 @@ import com.urobot.droid.adapter.HomeBotAdapter
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.data.model.ServiceButtons
-import com.urobot.droid.data.model.UpdateScriptsModel
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
-import com.urobot.droid.ui.fragments.chats.ChatsViewModel
 import kotlinx.android.synthetic.main.activity_create_bot.*
-import org.json.JSONObject
 
 
 class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeDataListener {
@@ -53,7 +49,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         val listContent: ArrayList<BotContentItem> = ArrayList()
         val list: ArrayList<ServiceButtons>? = ArrayList()
-        listContent.add(BotContentItem(1, null, null, -1, true, "", list))
+        listContent.add(BotContentItem("1", "", null, -1, true, "", list))
         dataList.add(BotData(listContent))
 
         adapter = HomeBotAdapter(this)

@@ -20,7 +20,6 @@ import com.urobot.droid.R
 import com.urobot.droid.data.model.Author
 import com.urobot.droid.data.model.Message
 import kotlinx.android.synthetic.main.message_fragment.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 

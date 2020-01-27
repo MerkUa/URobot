@@ -1,6 +1,7 @@
 package com.urobot.droid.ui.dialogs
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,10 +26,10 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
     companion object{
         private var instanceFragment: CreateEventDialogFragment? = null
 
-        fun getInstance(botItem: BotContentItem): CreateEventDialogFragment? {
-            Log.d("getInstance", "getInstance " + botItem.id)
+        fun newInstance(botItem: BotContentItem): CreateEventDialogFragment? {
+            instanceFragment = null
             instanceFragment =
-                if (instanceFragment == null) CreateEventDialogFragment() else instanceFragment
+                CreateEventDialogFragment()
             instanceFragment!!.setContentItem(botItem)
             return instanceFragment
         }
@@ -80,21 +81,33 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                     botContentItem!!.list_buttons = list
                     it!!.onBotDataChanged(botContentItem!!)
                 }
-                descriptionEditText.setText("")
-                list?.clear()
                 dismiss()
             }
         }
     }
 
-    override fun onWriteButtonClick() {
-        write_to_event_button.visibility = View.VISIBLE
-        list?.add(ServiceButtons(1))
+    override fun onDismiss(dialog: DialogInterface) {
+        instanceFragment = null
+        super.onDismiss(dialog)
     }
 
-    override fun onPaymentClick() {
-        payment_button_dialog_fragment.visibility = View.VISIBLE
-        list?.add(ServiceButtons(2))
+    override fun ButtonClick(button: ServiceButtons) {
+        Log.d("ButtonClick", "list " + list!!.size)
+
+        when {
+            button.id == 1 -> {
+                if (!list!!.contains(ServiceButtons(1))) {
+                    write_to_event_button.visibility = View.VISIBLE
+                    list?.add(ServiceButtons(1))
+                }
+            }
+            button.id == 2 -> {
+                if (!list!!.contains(ServiceButtons(2))) {
+                    payment_button_dialog_fragment.visibility = View.VISIBLE
+                    list?.add(ServiceButtons(2))
+                }
+            }
+        }
     }
 
     interface ChangeDataListener {
