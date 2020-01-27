@@ -13,6 +13,8 @@ import com.urobot.droid.R
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.data.model.ServiceButtons
+import com.urobot.droid.ui.createbot.CreateBotActivity
+import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 
 class HomeBotAdapter(
@@ -42,7 +44,6 @@ class HomeBotAdapter(
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
-
     }
 
     override fun getItemCount(): Int {

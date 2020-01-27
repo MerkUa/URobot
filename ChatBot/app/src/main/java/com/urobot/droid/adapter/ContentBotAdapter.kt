@@ -67,6 +67,17 @@ class ContentBotAdapter(
                 }
             }
 
+            holder.itemView.setOnClickListener {
+                holder.itemView.setOnClickListener {
+                    val manager = activity.supportFragmentManager
+                    activity.supportFragmentManager.beginTransaction()
+                    val newFragment = CreateEventDialogFragment.getInstance(botList[position])
+                    newFragment?.setSelectedListener(activity as CreateBotActivity)
+                    newFragment?.show(manager, botList[position].id.toString())
+                    holder.itemView.text_from_dialog.text = botList[position].description
+
+                }
+            }
         }
         if (getItemViewType(position) == emptyType) {
             holder.itemView.setOnClickListener {

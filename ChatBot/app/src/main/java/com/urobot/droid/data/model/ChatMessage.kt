@@ -5,7 +5,7 @@ import com.stfalcon.chatkit.commons.models.MessageContentType
 import java.util.*
 
 
-class Message(private val id: Int?, user: Author, private var text: String, createdAt: Date) :
+class ChatMessage(private val id: Int?, user: Author, private var text: String, createdAt: Date) :
         IMessage, MessageContentType.Image,
         MessageContentType /*and this one is for custom content type (in this case - voice message)*/ {
     private var createdAt: Date

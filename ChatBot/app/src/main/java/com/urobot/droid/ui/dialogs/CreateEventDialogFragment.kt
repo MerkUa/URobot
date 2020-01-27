@@ -27,6 +27,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
         fun getInstance(botItem: BotContentItem): CreateEventDialogFragment? {
             Log.d("getInstance", "getInstance " + botItem.id)
+            Log.d("getInstance", "getInstance " + botItem.parent_id)
             instanceFragment =
                 if (instanceFragment == null) CreateEventDialogFragment() else instanceFragment
             instanceFragment!!.setContentItem(botItem)
@@ -78,10 +79,16 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                     botContentItem!!.isEmpty = false
                     botContentItem!!.description = descriptionEditText.text.toString()
                     botContentItem!!.list_buttons = list
+
+                    if(botContentItem!!.parent_id != null){
+                       botContentItem!!.parent_id = botContentItem!!.id
+                    }
+
+
                     it!!.onBotDataChanged(botContentItem!!)
                 }
                 descriptionEditText.setText("")
-                list?.clear()
+//                list?.clear()
                 dismiss()
             }
         }
@@ -89,6 +96,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
     override fun onWriteButtonClick() {
         write_to_event_button.visibility = View.VISIBLE
+
         list?.add(ServiceButtons(1))
     }
 

@@ -9,7 +9,6 @@ import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -97,12 +96,37 @@ interface ApiService {
         @Body message: RequestMessage
     ): Response<ResponseBody>
 
-    @PUT("bots/update-scripts")
-    suspend fun putUpdateScripts(
+
+
+/** bot Scripts */
+
+// create
+@POST("scripts/create")
+suspend fun createScripts(
+    @Header("Authorization") authorization: String,
+    @Body botScripts : RequestBotScripts
+): Response<ResponseBody>
+//    @Query("bot_id") botId:Int,
+//    @Query("scripts") scripts: UpdateScriptsModel
+// update
+
+@PUT("scripts/update")
+suspend fun updateScripts(
+    @Header("Authorization") authorization: String,
+    @Query("bot_id") botId:Int,
+    @Query("scripts") scripts: UpdateOrCreateScriptsModel
+) : Response<ResponseBody>
+
+// get
+
+    @GET("scripts")
+    suspend fun getAllScripts(
         @Header("Authorization") authorization: String,
-        @Query("bot_id") botId:Int,
-        @Query("scripts") scripts: JSONObject
-    ) : Response<ResponseBody>
+        @Query("bot_id") botId:Int
+    ): Response<ArrayList<GetAllScriptsModel>>
+    
+
+    /** Services */
 
     @POST("/services/create")
     suspend fun createServices(

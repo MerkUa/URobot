@@ -1,28 +1,23 @@
 package com.urobot.droid.ui.createbot
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
-import com.urobot.droid.data.model.BotContentItem
-import com.urobot.droid.data.model.MessageScript
-import com.urobot.droid.data.model.UpdateScriptsModel
+import com.urobot.droid.data.NetModel.Request.RequestBotScripts
+import com.urobot.droid.data.model.*
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
-import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import com.urobot.droid.ui.fragments.chats.ChatsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 
 class CreateBotViewModel(application:Application) : AndroidViewModel(application), IUserContract{
@@ -42,28 +37,77 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
         currentUser = repository.User
     }
 
-    fun getBotContentAndScripts(token:String , botContentItem: BotContentItem) {
+    val getAllScriptsLivaData : MutableLiveData<List<GetAllScriptsModel>> = MutableLiveData()
+
+    fun createBotContentAndScripts(token:String, botContentItem: BotContentItem) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
             val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
+
             val apiService: ApiService = Apifactory.create()
 
-            val modelList =  UpdateScriptsModel(0, listOf(MessageScript(
-                0, "", botContentItem.description
-            )))
+            for (item in botContentItem.list_buttons!!.indices){
 
-            val str = Gson().toJson(modelList)
-            val jsonObject = JSONObject(str)
-            Log.d("resultLiveData", jsonObject.toString())
+                val modelList =  listOf(
+                    UpdateOrCreateScriptsModel(listOf(), listOf(Message(
+                        botContentItem.description, 0, "", listOf(
+                            Button(
+                                "",
+                                1,
+                                botContentItem.list_buttons!![item].id
+                            )
+                        )
+                    )), botContentItem.parent_id, botContentItem.id)
+                )
 
-            val response =  apiService.putUpdateScripts(token, resultBotId?.botId!!,jsonObject)
+                val requestMessage = RequestBotScripts(
+                    resultBotId?.botId!!,
+                    modelList
+                )
+                val response =  apiService.createScripts(token, requestMessage)
+            }
 
             withContext(Dispatchers.Main) {
+
             }
 
         }
     }
+
+    fun getAllContentAndScripts(token:String){
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
+
+            val apiService: ApiService = Apifactory.create()
+
+
+                val response =  apiService.getAllScripts(token, resultBotId?.botId!!)
+
+
+            withContext(Dispatchers.Main) {
+
+                if(response.body() != null ){
+
+                    val list: List<GetAllScriptsModel>
+
+                    list = response.body() as ArrayList<GetAllScriptsModel>
+
+                    getAllScriptsLivaData.value = list
+
+                }
+
+
+
+
+            }
+
+        }
+    }
+
+
     override fun onUpdateResult(user: User) {}
     override fun onUpdateError() {}
 }

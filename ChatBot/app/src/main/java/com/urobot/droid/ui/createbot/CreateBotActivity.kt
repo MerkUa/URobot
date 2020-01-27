@@ -13,11 +13,8 @@ import com.urobot.droid.adapter.HomeBotAdapter
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.data.model.ServiceButtons
-import com.urobot.droid.data.model.UpdateScriptsModel
 import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
-import com.urobot.droid.ui.fragments.chats.ChatsViewModel
 import kotlinx.android.synthetic.main.activity_create_bot.*
-import org.json.JSONObject
 
 
 class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeDataListener {
@@ -35,34 +32,70 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_bot)
 
-        initAdapter()
-        hideProgressBar()
         createBotViewModel =
             ViewModelProvider(this).get(CreateBotViewModel::class.java)
-//        eventDialogFragment?.setSelectedListener(this)
 
+        initAdapter()
+        hideProgressBar()
     }
 
 
     private fun initAdapter(){
 
-//        dataList!!.add(BotData(emptyList(), 1, BotData.EMPTY_TYPE))
-//
-//        dataList!!.add(BotData(listOf(BotContentItem(123.toString(), 4.toString(), 5.toString(), listOf("1", "3"))), 3,
-//            BotData.CONTENT_TYPE))
-
         val listContent: ArrayList<BotContentItem> = ArrayList()
         val list: ArrayList<ServiceButtons>? = ArrayList()
-        listContent.add(BotContentItem(1, null, null, -1, true, "", list))
-        dataList.add(BotData(listContent))
+
 
         adapter = HomeBotAdapter(this)
-        adapter.setData(dataList)
-
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_main.setHasFixedSize(true)
-        rv_main.layoutManager = layoutManager
         rv_main.adapter = adapter
+        rv_main.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_main.layoutManager = layoutManager
+
+
+        /**Get All Data */
+        createBotViewModel.currentUser.observe(this, Observer { users ->
+            users?.let {
+                createBotViewModel.getAllContentAndScripts(it.token!!)
+            }
+        })
+
+        createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
+
+
+           for(item in result.indices){
+
+
+
+//                   list!!.add(ServiceButtons(result.messages!![item].buttons!![item].serviceId))
+
+//                   listContent.add(BotContentItem(result.uid, result.parentUid, null, -1, true,
+//                       result.messages!![item].data!!,list))
+
+                   dataList.add(BotData(listContent))
+                   adapter.setData(dataList)
+
+                   Log.d("dataList", dataList.size.toString())
+                   Log.d("dataList", result.toString())
+
+
+
+               for(i in result[item].messages!!.indices){
+    adapter.addData(BotContentItem(result[item].uid, result[item].parentUid, null, -1, true,
+        result[item].messages!![i].data!!,list))
+}
+
+               }
+
+
+//        else{
+//            listContent.add(BotContentItem(1, null, null, -1, true, "", list))
+//            dataList.add(BotData(listContent))
+//            adapter.setData(dataList)
+//        }
+        })
+
+
 
 
         /** ScrollListener */
@@ -94,20 +127,11 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
     override fun onBotDataChanged(botContentItem: BotContentItem) {
         adapter.addData(botContentItem)
 
+        /** Create New Bot Content */
         createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
             users?.let {
-                createBotViewModel.getBotContentAndScripts(it.token!!, botContentItem)
+                createBotViewModel.createBotContentAndScripts(it.token!!, botContentItem)
             }
         })
-
-//        createBotViewModel.createBotLiveData.observe(this, Observer{
-//            result ->
-//            for (item in result.messages!!.indices){
-//                botContentItem.description = result.messages!![item].data!!
-//
-//            }
-//
-//        })
-//        Toast.makeText(this, botContentItem.description + ", bitch! ", Toast.LENGTH_SHORT).show()
     }
 }

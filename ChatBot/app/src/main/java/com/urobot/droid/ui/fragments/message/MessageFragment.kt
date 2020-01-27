@@ -18,9 +18,8 @@ import com.stfalcon.chatkit.messages.MessagesList
 import com.stfalcon.chatkit.messages.MessagesListAdapter
 import com.urobot.droid.R
 import com.urobot.droid.data.model.Author
-import com.urobot.droid.data.model.Message
+import com.urobot.droid.data.model.ChatMessage
 import kotlinx.android.synthetic.main.message_fragment.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,7 +35,7 @@ class MessageFragment : Fragment() {
 
     private lateinit var messageViewModel: MessageViewModel
     private lateinit var inputField: MessageInput
-    private lateinit var adapter: MessagesListAdapter<Message>
+    private lateinit var adapter: MessagesListAdapter<ChatMessage>
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,7 +48,7 @@ class MessageFragment : Fragment() {
 
 
         inputField = root.findViewById(R.id.input)
-        adapter = MessagesListAdapter<Message>("1", imageLoader)
+        adapter = MessagesListAdapter<ChatMessage>("1", imageLoader)
 //        adapter.setOnMessageViewClickListener { view, message ->
 //            Log.d("ClickListener","ClickListener "+view)
 
@@ -80,7 +79,7 @@ class MessageFragment : Fragment() {
 
         inputField.setInputListener(InputListener {
 
-            val inputMessage = Message(1, authorMe, it.toString(), Date())
+            val inputMessage = ChatMessage(1, authorMe, it.toString(), Date())
 
             messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
 
@@ -124,10 +123,10 @@ class MessageFragment : Fragment() {
                 val message =  result.data?.get(item)?.message
                 val messageId =   result.data?.get(item)?.id
 
-                val list: ArrayList<Message> = ArrayList()
+                val list: ArrayList<ChatMessage> = ArrayList()
 
                 val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
-                list.add(Message(messageId, authorMe, message!!))
+                list.add(ChatMessage(messageId, authorMe, message!!))
                 adapter.addToEnd(list, false)
                 messagesList.setAdapter(adapter)
             }
@@ -142,8 +141,8 @@ class MessageFragment : Fragment() {
             if (requestCode == MessageFragment.IMAGE_PICK_CODE) {
                 val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
 
-                val message1 = Message(1, authorMe, "")
-                message1.setImage(Message.Image(data?.data.toString()))
+                val message1 = ChatMessage(1, authorMe, "")
+                message1.setImage(ChatMessage.Image(data?.data.toString()))
                 adapter.addToStart(message1, true)
 
             }
