@@ -52,7 +52,7 @@ class ChatsFragment : Fragment(), ChatsViewModel.IChatsContract {
         listChat.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val chat = listOfChat.get(position)
-                val action = ChatsFragmentDirections.Action_navigation_chats_to_navigation_messages().setIdRecipient(chat.chatId)
+                val action = ChatsFragmentDirections.actionNavigationChatsToNavigationMessages().setIdRecipient(chat.chatId)
                 view.findNavController().navigate(action)
             }
 

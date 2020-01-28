@@ -35,7 +35,7 @@ class SupportDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val eventId = SupportDetailsFragmentArgs.fromBundle(arguments).text
+        val eventId = arguments?.let { SupportDetailsFragmentArgs.fromBundle(it).text }
         text = eventId
 
     }

@@ -42,7 +42,7 @@ class MessageFragment : Fragment() {
         val root = inflater.inflate(R.layout.message_fragment, container, false)
 
         val listChat: MessagesList = root.findViewById(R.id.messagesList)
-        val recipientId = MessageFragmentArgs.fromBundle(arguments).idRecipient
+        val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
 
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
@@ -84,7 +84,9 @@ class MessageFragment : Fragment() {
             messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
 
                 users?.let {
-                    messageViewModel.sendMessage(it.token!!, recipientId, inputField.inputEditText.text.toString())
+                    if (recipientId != null) {
+                        messageViewModel.sendMessage(it.token!!, recipientId, inputField.inputEditText.text.toString())
+                    }
                 }
             })
 

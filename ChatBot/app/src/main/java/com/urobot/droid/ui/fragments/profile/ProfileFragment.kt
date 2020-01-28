@@ -34,12 +34,12 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        val name = ProfileFragmentArgs.fromBundle(arguments).name
-        val avatar = ProfileFragmentArgs.fromBundle(arguments).avatar
-        val phone = ProfileFragmentArgs.fromBundle(arguments).phone
+        val name = arguments?.let { ProfileFragmentArgs.fromBundle(it).name }
+        val avatar = arguments?.let { ProfileFragmentArgs.fromBundle(it).avatar }
+        val phone = arguments?.let { ProfileFragmentArgs.fromBundle(it).phone }
 
         textViewName.text = name
-        if (avatar.isNotEmpty()) {
+        if (avatar?.isNotEmpty()!!) {
             Picasso.get().load(avatar).into(photoView)
         } else {
             Picasso.get().load("https://www.iconsdb.com/icons/preview/black/contacts-xxl.png")

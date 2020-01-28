@@ -37,7 +37,7 @@ class SupportFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         textView1.setOnClickListener {
-            val action = SupportFragmentDirections.Navigation_to_details().setText("lorem ipsum dolor sit amet, consectetuer adipiscing elit." +
+            val action = SupportFragmentDirections.navigationToDetails().setText("lorem ipsum dolor sit amet, consectetuer adipiscing elit." +
                     " Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis," +
                     " ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu." +
                     " In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.")
@@ -45,7 +45,7 @@ class SupportFragment : Fragment() {
         }
 
         textView2.setOnClickListener {
-            val action = SupportFragmentDirections.Navigation_to_details().setText("lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
+            val action = SupportFragmentDirections.navigationToDetails().setText("lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
                     "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec," +
                     " pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut," +
                     " imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.")

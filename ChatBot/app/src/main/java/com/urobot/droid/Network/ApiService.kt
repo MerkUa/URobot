@@ -98,26 +98,20 @@ interface ApiService {
 
 
 
-/** bot Scripts */
+    /** bot Scripts */
 
-// create
-@POST("scripts/create")
-suspend fun createScripts(
+    @POST("scripts/create")
+    suspend fun createScripts(
     @Header("Authorization") authorization: String,
-    @Body botScripts : RequestBotScripts
-): Response<ResponseBody>
-//    @Query("bot_id") botId:Int,
-//    @Query("scripts") scripts: UpdateScriptsModel
-// update
+    @Query("scripts") botScripts : RequestBotScripts
+    ): Response<ResponseBody>
 
-@PUT("scripts/update")
-suspend fun updateScripts(
-    @Header("Authorization") authorization: String,
-    @Query("bot_id") botId:Int,
-    @Query("scripts") scripts: UpdateOrCreateScriptsModel
-) : Response<ResponseBody>
-
-// get
+    @PUT("scripts/update")
+    suspend fun updateScripts(
+        @Header("Authorization") authorization: String,
+        @Query("bot_id") botId:Int,
+        @Query("scripts") scripts: UpdateOrCreateScriptsModel
+    ) : Response<ResponseBody>
 
     @GET("scripts")
     suspend fun getAllScripts(
@@ -127,24 +121,47 @@ suspend fun updateScripts(
     
 
     /** Services */
-
-    @POST("/services/create")
-    suspend fun createServices(
+    //Calendar
+    //Create
+    @POST("services/create")
+    suspend fun createCalendarServices(
         @Header("Authorization") authorization: String,
-        @Query("bot_id") botId: Int,
-        @Query("name") name: String,
-        @Query("description") description: String,
-        @Query("key") key : Int
+        @Body botScripts : RequestBotCalendarService
     ) : Response<CreateOrUpdateServicesModel>
-
+    //Update
     @PUT("services/update")
-    suspend fun updateServices(
+    suspend fun updateOnlineRecordService(
         @Header("Authorization") authorization: String,
         @Query("service_id") service_id:Int,
         @Query("bot_id") botId:Int,
         @Query("name") name: String,
         @Query("description") description: String,
-        @Query("key") key : Int
+        @Query("data") data : ArrayList<OnlineRecordModel>
     ) : Response<CreateOrUpdateServicesModel>
+
+    //Payment
+    //Create
+    @POST("services/create")
+    suspend fun createPaymentServices(
+        @Header("Authorization") authorization: String,
+        @Body botScripts : RequestBotPaymentService
+    ) : Response<CreateOrUpdateServicesModel>
+    //Update
+    @PUT("services/update")
+    suspend fun updatePayMentService(
+        @Header("Authorization") authorization: String,
+        @Query("service_id") service_id:Int,
+        @Query("bot_id") botId:Int,
+        @Query("name") name: String,
+        @Query("description") description: String,
+        @Query("data") data : ArrayList<PaymentModel>
+    ) : Response<CreateOrUpdateServicesModel>
+
+
+    @GET("services")
+    suspend fun getAllServices(
+        @Header("Authorization") authorization: String,
+        @Query("bot_id") botId:Int
+    ) : Response<List<GetAllServicesModel>>
 
 }

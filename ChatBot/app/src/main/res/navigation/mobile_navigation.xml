@@ -25,9 +25,9 @@
         android:name="com.urobot.droid.ui.dialogs.BottomCalendarFragment"
         android:label="@string/tabs_scripts"
         tools:layout="@layout/fragment_bottom_calendar">
-        <argument
-            android:name="title"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_create_calendar_to_navigation_services_fragment"
+            app:destination="@id/navigation_services_fragment" />
     </fragment>
 
     <fragment
@@ -157,6 +157,19 @@
         <argument
             android:name="type"
             app:argType="string" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_services_fragment"
+        android:name="com.urobot.droid.ui.fragments.ubotservice.ServicesFragment"
+        android:label="Services"
+        tools:layout="@layout/ubot_service_fragment">
+        <argument
+            android:name="onlineRecord"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.urobot.droid.data.model.OnlineRecordModel" />
     </fragment>
 
 

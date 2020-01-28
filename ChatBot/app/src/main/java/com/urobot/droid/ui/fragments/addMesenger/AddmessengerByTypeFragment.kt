@@ -54,7 +54,7 @@ class AddmessengerByTypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        val type = AddmessengerByTypeFragmentArgs.fromBundle(arguments).type
+        val type = arguments?.let { AddmessengerByTypeFragmentArgs.fromBundle(it).type }
         when (type) {
             TELEGTAM -> {
                 Log.d("Swich", "TELEGTAM")

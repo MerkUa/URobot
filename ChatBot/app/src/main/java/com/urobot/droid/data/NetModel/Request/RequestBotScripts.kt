@@ -7,5 +7,5 @@ data class RequestBotScripts(
     @field:SerializedName("bot_id")
     val bot_id : Int? = null,
     @field:SerializedName("scripts")
-    val scripts: List<UpdateOrCreateScriptsModel> = emptyList()
+    val scripts: List<UpdateOrCreateScriptsModel>
 )

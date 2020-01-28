@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 import com.urobot.droid.R
 
-class ButtomFragment : BottomSheetDialogFragment() {
+class BottomFragment : BottomSheetDialogFragment() {
 
     private lateinit var viewModel: ButtomViewModel
     private var mBottomSheetListener: BottomSheetListener? = null

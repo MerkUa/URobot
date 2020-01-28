@@ -1,11 +1,7 @@
 package com.urobot.droid.data.model
 
 import com.google.gson.annotations.Expose
-
 import com.google.gson.annotations.SerializedName
-
-
-
 
 data class GetMessageModel(
     @SerializedName("current_page")
@@ -13,7 +9,7 @@ data class GetMessageModel(
     var currentPage: Int? = null,
     @SerializedName("data")
     @Expose
-    var data: List<Datum>? = null,
+    var data: List<DatumMessage>? = null,
     @SerializedName("first_page_url")
     @Expose
     var firstPageUrl: String? = null,
@@ -47,7 +43,7 @@ data class GetMessageModel(
 )
 
 
-data class Datum (
+data class DatumMessage (
     @SerializedName("id")
     @Expose
     var id: Int? = null,

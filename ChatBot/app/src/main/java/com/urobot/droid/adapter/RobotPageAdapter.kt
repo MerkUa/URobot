@@ -3,11 +3,8 @@ package com.urobot.droid.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.urobot.droid.R
-import com.urobot.droid.fragment.TutorialPageFragment
 import com.urobot.droid.ui.fragments.ubot.UbotFragment
-import com.urobot.droid.ui.fragments.ubotservice.UbotServiceFragment
-import kotlinx.android.synthetic.main.fragment_tutorial_page.view.*
+import com.urobot.droid.ui.fragments.ubotservice.ServicesFragment
 
 class RobotPageAdapter(fm: FragmentManager, behavior: Int) :
         FragmentStatePagerAdapter(fm, behavior) {
@@ -16,7 +13,7 @@ class RobotPageAdapter(fm: FragmentManager, behavior: Int) :
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> UbotFragment()
-            1 -> UbotServiceFragment()
+            1 -> ServicesFragment()
             else -> UbotFragment()
         }
     }

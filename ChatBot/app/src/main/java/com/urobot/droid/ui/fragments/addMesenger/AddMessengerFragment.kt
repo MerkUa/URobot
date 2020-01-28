@@ -93,7 +93,7 @@ class AddMessengerFragment : Fragment() {
             }
         })
         textConnectTelegram.setOnClickListener {
-            val action = AddMessengerFragmentDirections.Navigation_to_add_messenger(TELEGTAM)
+            val action = AddMessengerFragmentDirections.navigationToAddMessenger(TELEGTAM)
             view.findNavController().navigate(action)
         }
 

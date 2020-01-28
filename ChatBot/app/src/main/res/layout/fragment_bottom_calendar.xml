@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -138,34 +139,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewTimeRow" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/pauseEditText"
-        style="@style/RegistrationEditTextStyle"
-
-        android:layout_width="wrap_content"
-        android:minWidth="24dp"
-        android:layout_height="24dp"
-        android:hint="0"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:maxLines="1"
-        android:textColor="#1d1d26"
-        android:textSize="16sp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewMin1"
-        app:layout_constraintEnd_toStartOf="@+id/textViewMin1"
-        app:layout_constraintTop_toTopOf="@+id/textViewMin1" />
-
 
     <TextView
-        android:id="@+id/textViewMin1"
+        android:id="@+id/tvBreak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="15 мин"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:hint="15 мин"
         android:textColor="@color/black_text"
         android:textSize="16sp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/viewPauseRow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewTimeRow" />
 
@@ -192,32 +177,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPauseRow" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/sessionEditText"
-        style="@style/RegistrationEditTextStyle"
-        android:layout_width="wrap_content"
-        android:minWidth="24dp"
-        android:layout_height="24dp"
-        android:hint="0"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:maxLines="1"
-        android:textColor="#1d1d26"
-        android:textSize="16sp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewMin2"
-        app:layout_constraintEnd_toStartOf="@+id/textViewMin2"
-        app:layout_constraintTop_toTopOf="@+id/textViewMin2" />
-
     <TextView
-        android:id="@+id/textViewMin2"
+        android:id="@+id/tvSessionDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="45 мин"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:hint="45 мин"
         android:textColor="@color/black_text"
         android:textSize="16sp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/viewWorkTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPauseRow" />
 

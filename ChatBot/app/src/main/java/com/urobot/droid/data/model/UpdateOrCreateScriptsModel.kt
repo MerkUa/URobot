@@ -3,21 +3,20 @@ package com.urobot.droid.data.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
 data class UpdateOrCreateScriptsModel (
     @SerializedName("buttons")
     @Expose
-    var buttons: List<Any>? = null,
+    var buttons: List<Button>? = null,
     @SerializedName("messages")
     @Expose
     var messages: List<Message>? = null,
     @SerializedName("parent_uid")
     @Expose
     var parentUid: Int? = null,
-    @SerializedName("parent_uid")
+    @SerializedName("level")
     @Expose
     var level: Int? = null,
-    @SerializedName("level")
+    @SerializedName("uid")
     @Expose
     var uid: Int? = null
 )

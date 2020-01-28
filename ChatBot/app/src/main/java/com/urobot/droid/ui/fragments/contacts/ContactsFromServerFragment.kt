@@ -94,7 +94,7 @@ class ContactsFromServerFragment : Fragment(), ContactListAdapter.ItemClickListe
     override fun onItemClick(view: View?, position: Int) {
         var contact = list.get(position)
         val action =
-            ContactsFragmentDirections.action_navigation_contacts_to_navigation_profile2(
+            ContactsFragmentDirections.actionNavigationContactsToNavigationProfile2(
                 contact.name,
                 contact.avatar,
                 contact.phone

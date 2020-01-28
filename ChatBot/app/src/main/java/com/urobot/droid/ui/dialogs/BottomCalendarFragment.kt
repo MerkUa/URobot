@@ -7,14 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.DatePicker
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener
 import com.urobot.droid.R
+import com.urobot.droid.data.model.OnlineRecordModel
+import com.urobot.droid.ui.fragments.ubotservice.ServicesFragment
 import kotlinx.android.synthetic.main.fragment_bottom_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,17 +32,13 @@ private const val ARG_PARAM2 = "param2"
 class BottomCalendarFragment : Fragment() {
 
     var calendars: List<Calendar> = emptyList()
-
-    var listener = OnSelectDateListener() {
+    var listener = OnSelectDateListener {
         calendars = it
         for (calendar in calendars) {
             Log.d("OnSelectDateListener", "calendar " + calendar.timeInMillis)
+            Log.d("OnSelectDateListener", "calendar $calendar")
+            Log.d("OnSelectDateListener", "calendar $calendars")
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -47,9 +50,46 @@ class BottomCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         tvAddDay.setOnClickListener {
             showCalendar()
         }
+
+        tvBreak.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                tvBreak.text = SimpleDateFormat("HH:mm").format(cal.time)
+            }
+            CustomTimePickerDialog(
+                context,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
+
+        tvSessionDuration.setOnClickListener {
+
+           val cal = Calendar.getInstance()
+
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+               cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                tvSessionDuration.text = SimpleDateFormat("HH:mm").format(0)
+            }
+
+            CustomTimePickerDialog(
+                context,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
+
         timePickerFrom.setOnClickListener {
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -81,9 +121,34 @@ class BottomCalendarFragment : Fragment() {
                 true
             ).show()
         }
+
+
+        createBotButton.setOnClickListener {
+                val listDate = ArrayList<String>()
+
+                val name = nameEditText.text.toString()
+                val timeFrom = timePickerFrom.text.toString()
+                val timeTo = timePickerTo.text.toString()
+                val breakTime = tvBreak.text.toString()
+                val session = tvSessionDuration.text.toString()
+
+            for (calendar in calendars) {
+
+                val timeInMillis = calendar.timeInMillis
+                val resultCalendar = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timeInMillis)
+                listDate.add(resultCalendar)
+            }
+
+            val data = OnlineRecordModel(
+                name, timeFrom, timeTo, breakTime , session, listDate)
+
+            val action = BottomCalendarFragmentDirections.actionNavigationCreateCalendarToNavigationServicesFragment().setOnlineRecord(data)
+            Navigation.findNavController(view).navigate(action)
+
+            }
     }
 
-    fun showCalendar() {
+    private fun showCalendar() {
 
         val builder = DatePickerBuilder(context, listener)
             .setPickerType(CalendarView.MANY_DAYS_PICKER)
@@ -112,12 +177,7 @@ class BottomCalendarFragment : Fragment() {
 //            .setNavigationVisibility(int) // Navigation buttons visibility
             .setSelectedDays(calendars) /// List of selected days
 
-
         val datePicker: DatePicker = builder.build()
         datePicker.show()
     }
-
-
-
-
 }

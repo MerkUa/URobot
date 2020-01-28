@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
-import com.urobot.droid.data.model.Service
+import com.urobot.droid.data.model.ServiceModel
 
 class ServiceListAdapter() : RecyclerView.Adapter<ServiceListAdapter.MyItemViewHolder>() {
 
@@ -15,9 +15,9 @@ class ServiceListAdapter() : RecyclerView.Adapter<ServiceListAdapter.MyItemViewH
         return position.toLong()
     }
 
-    private val dataSource: ArrayList<Service> = mutableListOf<Service>() as ArrayList<Service>
+    private val dataSource: ArrayList<ServiceModel> = mutableListOf<ServiceModel>() as ArrayList<ServiceModel>
 
-    fun setData(items: ArrayList<Service>) {
+    fun setData(items: ArrayList<ServiceModel>) {
         dataSource.clear()
         dataSource.addAll(items)
         notifyDataSetChanged()

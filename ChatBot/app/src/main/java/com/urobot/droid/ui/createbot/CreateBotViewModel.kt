@@ -80,12 +80,8 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
         CoroutineScope(Dispatchers.IO).launch {
 
             val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
-
             val apiService: ApiService = Apifactory.create()
-
-
-                val response =  apiService.getAllScripts(token, resultBotId?.botId!!)
-
+            val response =  apiService.getAllScripts(token, resultBotId?.botId!!)
 
             withContext(Dispatchers.Main) {
 
@@ -98,15 +94,9 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
                     getAllScriptsLivaData.value = list
 
                 }
-
-
-
-
             }
-
         }
     }
-
 
     override fun onUpdateResult(user: User) {}
     override fun onUpdateError() {}
