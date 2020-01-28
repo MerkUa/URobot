@@ -66,7 +66,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
                     resultBotId?.botId!!,
                     modelList
                 )
-                val response =  apiService.createScripts(token, listOf(requestMessage))
+                val response =  apiService.createScripts(token, requestMessage)
             }
 
             withContext(Dispatchers.Main) {
