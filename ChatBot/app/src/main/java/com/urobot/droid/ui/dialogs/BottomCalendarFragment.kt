@@ -65,8 +65,8 @@ class BottomCalendarFragment : Fragment() {
             CustomTimePickerDialog(
                 context,
                 timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE),
+             0,
+             0,
                 true
             ).show()
         }
@@ -84,8 +84,8 @@ class BottomCalendarFragment : Fragment() {
             CustomTimePickerDialog(
                 context,
                 timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE),
+             0,
+             0,
                 true
             ).show()
         }

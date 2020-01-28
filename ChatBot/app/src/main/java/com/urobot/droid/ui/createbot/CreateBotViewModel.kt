@@ -39,7 +39,8 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
     val getAllScriptsLivaData: MutableLiveData<List<List<GetAllScriptsModel>>> = MutableLiveData()
 
-    fun createBotContentAndScripts(token:String, botContentItem: BotContentItem) {
+    fun createBotContentAndScripts(token:
+                                   String, botContentItem: BotContentItem) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -65,7 +66,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
                     resultBotId?.botId!!,
                     modelList
                 )
-                val response =  apiService.createScripts(token, requestMessage)
+                val response =  apiService.createScripts(token, listOf(requestMessage))
             }
 
             withContext(Dispatchers.Main) {
