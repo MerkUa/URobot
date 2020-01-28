@@ -37,7 +37,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
         currentUser = repository.User
     }
 
-    val getAllScriptsLivaData : MutableLiveData<List<GetAllScriptsModel>> = MutableLiveData()
+    val getAllScriptsLivaData: MutableLiveData<List<List<GetAllScriptsModel>>> = MutableLiveData()
 
     fun createBotContentAndScripts(token:String, botContentItem: BotContentItem) {
 
@@ -91,9 +91,9 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
                 if(response.body() != null ){
 
-                    val list: List<GetAllScriptsModel>
+                    val list: List<List<GetAllScriptsModel>>
 
-                    list = response.body() as ArrayList<GetAllScriptsModel>
+                    list = response.body() as ArrayList<List<GetAllScriptsModel>>
 
                     getAllScriptsLivaData.value = list
 

@@ -40,7 +40,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
     }
 
 
-    private fun initAdapter(){
+    private fun initAdapter() {
 
         val listContent: ArrayList<BotContentItem> = ArrayList()
         val list: ArrayList<ServiceButtons>? = ArrayList()
@@ -63,33 +63,90 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
 
-         if (result.isEmpty()){
-          listContent.add(BotContentItem(1, 0, null, -1, true, "", list))
-           dataList.add(BotData(listContent)) }
+            if (result.isEmpty()) {
+                listContent.add(BotContentItem(1, 0, 0, null, -1, true, "", list))
+                dataList.add(BotData(listContent))
+                adapter.setData(dataList)
+            }
 
-           for(item in result.indices){
+            for (level in result) {
+                listContent.clear()
+                for (item in level) {
+                    listContent.add(
+                        BotContentItem(
+                            item.uid,
+                            item.parentUid,
+                            item.level,
+                            null,
+                            -1,
+                            false,
+                            item.data!!,
+                            list
+                        )
+                    )
 
+                }
+                dataList.add(BotData(listContent))
+            }
+            adapter.setData(dataList)
 
+//            for (item in result) {
+//                Log.d("merk","getAllScriptsLivaData "+result.toString())
+
+//                if(item.level == 1) {
+//                    listContent.add(
+//                        BotContentItem(
+//                            item.uid,
+//                            item.parentUid,
+//                            null,
+//                            -1,
+//                            false,
+//                            item.messages!![0].data!!,
+//                            list
+//                        )
+//                    )
+//                }
 
 //                   list!!.add(ServiceButtons(result.messages!![item].buttons!![item].serviceId))
 
 //                   listContent.add(BotContentItem(result.uid, result.parentUid, null, -1, true,
 //                       result.messages!![item].data!!,list))
 
-                   dataList.add(BotData(listContent))
-                   adapter.setData(dataList)
+//                   dataList.add(BotData(listContent))
+//                   adapter.setData(dataList)
 
-                   Log.d("dataList", dataList.size.toString())
-                   Log.d("dataList", result.toString())
-
+//                Log.d("dataList", dataList.size.toString())
 
 
-               for(i in result[item].messages!!.indices){
-    adapter.addData(BotContentItem(result[item].uid, result[item].parentUid, null, -1, true,
-        result[item].messages!![i].data!!,list))
-}
+//                for(message in result[item].messages!!){
 
-               }
+//                    adapter.insertData(BotContentItem(result[item].uid, result[item].parentUid, null, -1, false, message.data!!, list))
+
+//                    Log.d("merk", "dataList "+ item)
+//                    Log.d("merk", "parentUid "+ result[item].parentUid)
+//                    listContent.add(
+//                        BotContentItem(result[item].uid, result[item].parentUid, null, -1, false, message.data!!, list)
+//                    )
+//                }
+//                dataList.add(BotData(listContent))
+
+
+//                for (i in result[item].messages!!.indices) {
+//                    adapter.addData(
+//                        BotContentItem(
+//                            result[item].uid, result[item].parentUid, null, -1, false,
+//                            result[item].messages!![i].data!!, list
+//                        )
+//                    )
+//                }
+//                adapter.setData(dataList)
+
+//            }
+
+//            listContent.add(BotContentItem(1, 0, null, -1, true, "", list))
+//            dataList.add(BotData(listContent))
+//            adapter.setData(dataList)
+
 
 
 //        else{
@@ -98,8 +155,6 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 //            adapter.setData(dataList)
 //        }
         })
-
-
 
 
         /** ScrollListener */
@@ -120,11 +175,11 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
     }
 
-    private  fun hideProgressBar(){
+    private fun hideProgressBar() {
         pb_home.visibility = View.GONE
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         pb_home.visibility = View.VISIBLE
     }
 

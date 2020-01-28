@@ -3,6 +3,7 @@ package com.urobot.droid.data.model
 data class BotContentItem(
     var id: Int?,
     var parent_id: Int?,
+    var level: Int?,
     var name: String?,
     var action: Int?,
     var isEmpty: Boolean,

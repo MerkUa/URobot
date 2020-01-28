@@ -12,8 +12,6 @@ import com.urobot.droid.R
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.data.model.ServiceButtons
-import com.urobot.droid.ui.createbot.CreateBotActivity
-import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -80,6 +78,7 @@ class HomeBotAdapter(
                                 BotContentItem(
                                     (bot.parent_id!! + buttons.id!!),
                                     bot.id,
+                                    (data.indexOf(dataList) + 1),
                                     null,
                                     buttons.id,
                                     true,
@@ -97,6 +96,7 @@ class HomeBotAdapter(
                                 BotContentItem(
                                     (bot.parent_id!! + buttons.id!!),
                                     bot.id,
+                                    (data.indexOf(dataList) + 1),
                                     null,
                                     buttons.id,
                                     true,

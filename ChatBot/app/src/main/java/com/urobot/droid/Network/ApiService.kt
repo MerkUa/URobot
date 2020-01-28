@@ -123,7 +123,7 @@ suspend fun updateScripts(
     suspend fun getAllScripts(
         @Header("Authorization") authorization: String,
         @Query("bot_id") botId:Int
-    ): Response<ArrayList<GetAllScriptsModel>>
+    ): Response<ArrayList<ArrayList<GetAllScriptsModel>>>
     
 
     /** Services */

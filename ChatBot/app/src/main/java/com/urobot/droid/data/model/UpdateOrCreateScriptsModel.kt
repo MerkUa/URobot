@@ -14,7 +14,10 @@ data class UpdateOrCreateScriptsModel (
     @SerializedName("parent_uid")
     @Expose
     var parentUid: Int? = null,
-    @SerializedName("uid")
+    @SerializedName("parent_uid")
+    @Expose
+    var level: Int? = null,
+    @SerializedName("level")
     @Expose
     var uid: Int? = null
 )
