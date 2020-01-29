@@ -13,7 +13,7 @@
             android:id="@+id/listSevice"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/sendPhoneButton"
+            app:layout_constraintBottom_toTopOf="@+id/createService"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button

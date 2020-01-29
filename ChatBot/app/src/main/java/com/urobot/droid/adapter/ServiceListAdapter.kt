@@ -1,24 +1,17 @@
 package com.urobot.droid.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
-import com.urobot.droid.data.model.GetAllServicesModel
-import com.urobot.droid.data.model.OnlineRecordModel
-import com.urobot.droid.data.model.PaymentModel
-import com.urobot.droid.data.model.TypeServices
-import com.urobot.droid.ui.dialogs.BottomCalendarFragment
+import com.urobot.droid.data.model.*
 import kotlinx.android.synthetic.main.list_item_calendar_services.view.*
+import kotlinx.android.synthetic.main.list_item_payment_services.view.*
 
 class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val activity = AppCompatActivity()
-
-    private val dataOnlineRecordModel: ArrayList<OnlineRecordModel> = mutableListOf<OnlineRecordModel>() as ArrayList<OnlineRecordModel>
-    private val dataPaymentModel: ArrayList<PaymentModel> = mutableListOf<PaymentModel>() as ArrayList<PaymentModel>
     private val allDataServices: ArrayList<GetAllServicesModel> = mutableListOf<GetAllServicesModel>() as ArrayList<GetAllServicesModel>
 
     private val onlineRecordType = 0
@@ -37,36 +30,44 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
 
-        return when {
-
-            (allDataServices[position].typeId == TypeServices.onlineRecord.type_id) -> {
+            return if (allDataServices[position].typeId == TypeServices.onlineRecord.type_id) {
                 onlineRecordType
-            }
-            else -> {
+            } else {
                 paymentType
             }
-        }
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-    if(getItemViewType(position) == onlineRecordType){
-        holder.itemView.titleCalendarService.text = dataOnlineRecordModel[position].name
-        holder.itemView.descriptionCalendarService.text = dataOnlineRecordModel[position].working_days[position]
 
-        holder.itemView.updateCalendarService.setOnClickListener {
-            val manager = activity.supportFragmentManager
-            activity.supportFragmentManager.beginTransaction()
-//            val newFragment = BottomCalendarFragment.newInstance(botList[position])
-//            newFragment?.setSelectedListener(activity as CreateBotActivity)
-//            newFragment?.show(manager, dataOnlineRecordModel[position])
+    if(getItemViewType(position) == onlineRecordType){
+
+        val temp: List<Datum>?  = allDataServices[position].data
+
+        for( item in temp!!){
+            holder.itemView.titleCalendarService.text = item.name
         }
-    }
+
+          holder.itemView.updateCalendarService.setOnClickListener {
+
+      }
+}
+
+        if(getItemViewType(position) == paymentType){
+
+        val temp:List<Datum>? = allDataServices[position].data
+            for(item in temp!!){
+                holder.itemView.descriptionPaymentService.text = item.cvv
+            }
+        }
     }
 
 
     override fun getItemCount(): Int {
-        return dataOnlineRecordModel.size + dataPaymentModel.size
+        var intSize : Int = 0
+        for (i in allDataServices){
+            intSize +=  i.data!!.size
+        }
+             return intSize
     }
 
 
@@ -83,18 +84,6 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
-    }
-
-    fun setDataOnlineRecord(items: ArrayList<OnlineRecordModel>) {
-        dataOnlineRecordModel.clear()
-        dataOnlineRecordModel.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    fun setDataPaymentService(items: ArrayList<PaymentModel>){
-        dataPaymentModel.clear()
-        dataPaymentModel.addAll(items)
-        notifyDataSetChanged()
     }
 
     fun addData(data : List<GetAllServicesModel>){

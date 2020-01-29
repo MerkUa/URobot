@@ -28,8 +28,8 @@ class BottomPaymentFragment : Fragment() {
 
             val cardName =  ownerPaymentEditText.text.toString()
             val cardNumber = numberPaymentEditText.text.toString()
-            val month = phoneEditText.unmaskedText.subSequence(0, 2).toString()
-            val year = phoneEditText.unmaskedText.subSequence(2, phoneEditText.unmaskedText.length).toString()
+            val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
+            val year = phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length).toString()
             val cvv = cvvPaymentEditText.text.toString()
 
             val dataPayment = PaymentModel(cardNumber,cardName, month, year, cvv, listOf(PaymentTypes.CreditCard.type) )

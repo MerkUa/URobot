@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.urobot.droid.R
 import com.urobot.droid.adapter.ServiceListAdapter
-import com.urobot.droid.data.model.*
+import com.urobot.droid.data.model.TypeServices
 import com.urobot.droid.ui.dialogs.BottomCalendarFragment
 import com.urobot.droid.ui.dialogs.BottomFragment
 import kotlinx.android.synthetic.main.bottom_sheet_service.*
@@ -38,15 +38,6 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
         val createServiceButton: Button = root.findViewById(R.id.createService)
         val listService: RecyclerView = root.findViewById(R.id.listSevice)
 
-
-        val listOnlineRecord = arrayListOf<OnlineRecordModel>()
-        val listPayment = arrayListOf<PaymentModel>()
-        var listGetAllServices = listOf<GetAllServicesModel>()
-
-//        val list = arrayListOf<ServiceModel>()
-//        list.add(ServiceModel("1", "Детский прием", "Режим работы, кол-во дней"))
-//        list.add(ServiceModel("1", "Прием для взрослых и красивых дам", "Режим работы, кол-во дней"))
-
             servicesViewModel = ViewModelProvider(this).get(ServicesViewModel::class.java)
 
         /**Get All Services Request */
@@ -56,56 +47,21 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
             }
         })
 
+        val adapterService = ServiceListAdapter()
+        listService.adapter = adapterService
+        listService.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        listService.layoutManager = linearLayoutManager
+
+
         /**Get All Services Observe LiveData */
         servicesViewModel.getAllServicesLivaData.observe(viewLifecycleOwner, Observer { result->
-
-            listGetAllServices = result
-
-            for(item in result){
-
-             if (item.typeId == TypeServices.onlineRecord.type_id){
-
-                 for(data in item.data!!){
-
-                     listOnlineRecord.add(OnlineRecordModel(
-                         data.name!!,
-                         data.workingHoursFrom!!,
-                         data.workingHoursTo!!,
-                         data.`break`!!,
-                         data.sessionDuration!!,
-                         data.workingDays!!
-                     ))
-
-                 }
-             }else {
-                 for (data in item.data!!){
-                     listPayment.add(PaymentModel(data.cardNumber!!,
-                         data.card_name!!,
-                         data.month!!,
-                         data.year!!,
-                         data.cvv!!,
-                         data.payment_types!!))
-                 }
-             }
-            }
+            adapterService.addData(result)
         })
 
-        val adapterService = ServiceListAdapter()
-        listService.layoutManager = LinearLayoutManager(context)
-        listService.adapter = adapterService
-        adapterService.setDataOnlineRecord(listOnlineRecord)
-        adapterService.setDataPaymentService(listPayment)
-        adapterService.addData(listGetAllServices)
+
 
         return root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -125,7 +81,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
             val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
             val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
 
-            if(calendarArgs !=null ){
+            if(calendarArgs != null ){
                 /**Create Online record Service */
                 servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                     users?.let {
@@ -136,7 +92,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
             }
 
 
-              if(paymentArgs !=null){
+              if(paymentArgs != null){
 
                   /**Create Payment record Service */
                   servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
