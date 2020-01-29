@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class MessageFragment : Fragment() {
 
 
         inputField = root.findViewById(R.id.input)
-        adapter = MessagesListAdapter<ChatMessage>("1", imageLoader)
+        adapter = MessagesListAdapter<ChatMessage>("-1", imageLoader)
 //        adapter.setOnMessageViewClickListener { view, message ->
 //            Log.d("ClickListener","ClickListener "+view)
 
@@ -56,7 +57,8 @@ class MessageFragment : Fragment() {
 //        }
 
 
-        val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
+        val authorMe =
+            Author("-1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
         val authorSender = Author("2", "Sender", "", false)
 
 //        val message1 = Message("1", authorMe, "Hi")
@@ -121,14 +123,27 @@ class MessageFragment : Fragment() {
 
         messageViewModel.messageLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { result ->
 
-            for(item in result.data!!.indices){
-                val message =  result.data?.get(item)?.message
-                val messageId =   result.data?.get(item)?.id
+            for (item in result.data!!) {
+                Log.d("Merk", "message " + item.senderId)
+                val message = item.message
+                val messageId = item.id
 
                 val list: ArrayList<ChatMessage> = ArrayList()
 
-                val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
-                list.add(ChatMessage(messageId, authorMe, message!!))
+
+                var author: Author
+                if (item.senderId == "-1") {
+                    author = Author(
+                        "-1",
+                        "Me",
+                        "http://android.com.ua/images/News/android_logo.png",
+                        false
+                    )
+                } else {
+                    author = Author("2", "Sender", "", false)
+                }
+
+                list.add(ChatMessage(messageId, author, message!!))
                 adapter.addToEnd(list, false)
                 messagesList.setAdapter(adapter)
             }

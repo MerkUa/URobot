@@ -10,7 +10,9 @@ import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.NetModel.Request.RequestBotScripts
-import com.urobot.droid.data.model.*
+import com.urobot.droid.data.model.BotContentItem
+import com.urobot.droid.data.model.GetAllScriptsModel
+import com.urobot.droid.data.model.UpdateOrCreateScriptsModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import com.urobot.droid.ui.fragments.chats.ChatsViewModel
@@ -48,26 +50,27 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
             val apiService: ApiService = Apifactory.create()
 
-            for (item in botContentItem.list_buttons!!.indices){
 
-                val modelList =  listOf(
-                    UpdateOrCreateScriptsModel(listOf(), listOf(Message(
-                        botContentItem.description, 0, "", listOf(
-                            Button(
-                                "",
-                                1,
-                                botContentItem.list_buttons!![item].id
-                            )
-                        )
-                    )), botContentItem.parent_id, botContentItem.id)
+            val modelList = listOf(
+                UpdateOrCreateScriptsModel(
+                    botContentItem.description,
+                    0,
+                    "text",
+                    botContentItem.parent_id,
+                    botContentItem.level,
+                    botContentItem.id,
+                    botContentItem.action,
+                    botContentItem.list_buttons
                 )
 
-                val requestMessage = RequestBotScripts(
-                    resultBotId?.botId!!,
-                    modelList
-                )
-                val response =  apiService.createScripts(token, requestMessage)
-            }
+            )
+
+            val requestMessage = RequestBotScripts(
+                resultBotId?.botId!!,
+                modelList
+            )
+            apiService.createScripts(token, requestMessage)
+
 
             withContext(Dispatchers.Main) {
 

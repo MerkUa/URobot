@@ -76,9 +76,9 @@ class HomeBotAdapter(
 //                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
                             listContent.add(
                                 BotContentItem(
-                                    (bot.parent_id!! + buttons.id!!),
+                                    bot.parent_id!! + buttons.id!!,
                                     bot.id,
-                                    (data.indexOf(dataList) + 1),
+                                    (data.indexOf(dataList) + 2),
                                     null,
                                     buttons.id,
                                     true,
@@ -94,9 +94,9 @@ class HomeBotAdapter(
 //                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
                             nextRow.botContentList.add(
                                 BotContentItem(
-                                    (bot.parent_id!! + buttons.id!!),
+                                    bot.parent_id!! + buttons.id!!,
                                     bot.id,
-                                    (data.indexOf(dataList) + 1),
+                                    (data.indexOf(dataList) + 2),
                                     null,
                                     buttons.id,
                                     true,
