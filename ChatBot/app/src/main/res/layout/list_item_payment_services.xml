@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
 
 
             <TextView
-                android:id="@+id/titleService"
+                android:id="@+id/titlePaymentService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -26,19 +27,20 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/descriptionService"
+                android:id="@+id/descriptionPaymentService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/titleService"
+                android:layout_below="@+id/titlePaymentService"
                 android:layout_marginTop="4dp"
                 android:text="Режим работы, кол-во дней"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/updatePaymentService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/descriptionService"
-                android:layout_alignStart="@+id/descriptionService"
+                android:layout_below="@+id/descriptionPaymentService"
+                android:layout_alignStart="@+id/descriptionPaymentService"
                 android:layout_marginTop="16dp"
                 android:text="Изменить"
                 android:layout_marginEnd="16dp"

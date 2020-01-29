@@ -22,10 +22,10 @@ data class Datum (
     var workingHoursTo: String? = null,
     @SerializedName("break")
     @Expose
-    var `break`: Int? = null,
+    var `break`: String? = null,
     @SerializedName("session_duration")
     @Expose
-    var sessionDuration: Int? = null,
+    var sessionDuration: String? = null,
     @SerializedName("working_days")
     @Expose
     var workingDays: List<String>? = null,

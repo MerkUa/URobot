@@ -28,6 +28,7 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
+
     val getAllServicesLivaData : MutableLiveData<List<GetAllServicesModel>> = MutableLiveData()
 
     init {
@@ -47,11 +48,13 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
             withContext(Dispatchers.Main){
 
+               getAllServicesLivaData.value = response.body()
+
             }
         }
     }
 
-    fun createOnlineRecordService(token: String, dataListModel : List<OnlineRecordModel?>, type_id : Int){
+    fun createOnlineRecordService(nameCalendar:String, token: String, dataListModel : List<OnlineRecordModel?>, type_id : Int){
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -59,8 +62,8 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             val requestServices =
                 RequestBotCalendarService(
                     resultBotId?.botId!!,
-                    "111",
-                    "1111",
+                    nameCalendar,
+                    "description",
                     type_id,
                     dataListModel
                 )
@@ -75,15 +78,15 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
         }
     }
 
-    fun createPaymentService(token: String, dataListModel : List<PaymentModel?>, type_id : Int){
+    fun createPaymentService(namePaymentServices:String ,token: String, dataListModel : List<PaymentModel?>, type_id : Int){
 
         CoroutineScope(Dispatchers.IO).launch {
 
             val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
             val requestServices = RequestBotPaymentService(
                 resultBotId?.botId!!,
-                "111",
-                "1111",
+                namePaymentServices,
+                "description",
                 type_id,
                 dataListModel
             )
