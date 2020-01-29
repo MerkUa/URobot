@@ -81,7 +81,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
         if(arguments != null){
 
             val calendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
-            val list = listOf(calendarArgs)
+            val paymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
 
             /**Create Online record Service */
             servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
@@ -94,7 +94,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
             servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                 users?.let {
                     servicesViewModel.createPaymentService(it.token!!,
-                        listOf(), TypeServices.payment.type_id)
+                        listOf(paymentArgs), TypeServices.payment.type_id)
                 }})
         }
     }

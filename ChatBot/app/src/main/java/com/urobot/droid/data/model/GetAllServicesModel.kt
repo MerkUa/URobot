@@ -34,8 +34,33 @@ data class Datum (
     var createdAt: String? = null,
     @SerializedName("updated_at")
     @Expose
-    var updatedAt: String? = null
-)
+    var updatedAt: String? = null,
+    //for payService
+    @SerializedName("card_number")
+    @Expose
+    var cardNumber: String? = null,
+
+    @SerializedName("card_name")
+    @Expose
+    var card_name: String? = null,
+
+    @SerializedName("month")
+    @Expose
+    var month: String? = null,
+
+    @SerializedName("year")
+    @Expose
+    var year: String? = null,
+
+    @SerializedName("cvv")
+    @Expose
+    var cvv: String? = null,
+
+    @SerializedName("payment_types")
+    @Expose
+    var payment_types: List<String>? = null
+    )
+
 
 data class GetAllServicesModel (
     @SerializedName("id")

@@ -215,7 +215,7 @@
         android:background="@drawable/button_rounded_background"
         android:text="@string/action_add_bot"
         android:textColor="@color/white"
-        android:layout_marginTop="200dp"
+        android:windowSoftInputMode="adjustNothing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

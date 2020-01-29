@@ -34,7 +34,11 @@
         android:id="@+id/navigation_create_payment"
         android:name="com.urobot.droid.ui.dialogs.BottomPaymentFragment"
         android:label="@string/tabs_scripts"
-        tools:layout="@layout/fragment_bottom_payment" />
+        tools:layout="@layout/fragment_bottom_payment" >
+        <action
+            android:id="@+id/action_navigation_create_payment_to_navigation_services_fragment"
+            app:destination="@id/navigation_services_fragment" />
+    </fragment>
 
 
     <fragment
@@ -170,6 +174,15 @@
             android:defaultValue="@null"
             app:nullable="true"
             app:argType="com.urobot.droid.data.model.OnlineRecordModel" />
+        <argument
+            android:name="paymentModel"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.urobot.droid.data.model.PaymentModel" />
+        <argument
+            android:name="namePaymentService"
+            app:argType="string"
+            android:defaultValue="name" />
     </fragment>
 
 
