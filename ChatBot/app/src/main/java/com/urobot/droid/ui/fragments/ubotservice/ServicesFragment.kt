@@ -81,7 +81,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
         /**Get All Services Request */
         servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
             users?.let {
-                servicesViewModel.getAllServices(context, it.token!!)
+                servicesViewModel.getAllServices(it.token!!)
             }
         })
 

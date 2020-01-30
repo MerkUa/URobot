@@ -42,7 +42,7 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
     }
 
-    fun getAllServices(context: Context?, token:String){
+    fun getAllServices(token:String){
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -53,8 +53,9 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
                 withContext(Dispatchers.Main) {
                     if(response.isSuccessful){
                         getAllServicesLivaData.value = response.body()
+
                     } else{
-                        Toast.makeText(context, "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
@@ -80,6 +81,11 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
             withContext(Dispatchers.Main){
 
+                if(response.isSuccessful){
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -101,6 +107,12 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             val response = requestServices.let { apiService.createPaymentServices(token, it) }
 
             withContext(Dispatchers.Main){
+
+                if(response.isSuccessful){
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                }
 
             }
         }
