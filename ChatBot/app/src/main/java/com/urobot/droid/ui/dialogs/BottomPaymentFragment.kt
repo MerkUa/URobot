@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.urobot.droid.R
@@ -28,18 +29,31 @@ class BottomPaymentFragment : Fragment() {
 
             val cardName =  ownerPaymentEditText.text.toString()
             val cardNumber = numberPaymentEditText.text.toString()
-            val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
-            val year = phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length).toString()
             val cvv = cvvPaymentEditText.text.toString()
 
-            val dataPayment = PaymentModel(cardNumber,cardName, month, year, cvv, listOf(PaymentTypes.CreditCard.type) )
+            if(phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
 
-            val action = BottomPaymentFragmentDirections
-                .actionNavigationCreatePaymentToNavigationServicesFragment()
-                .setPaymentModel(dataPayment)
-                .setNamePaymentService(namePaymentService)
+                val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
+                val year = phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length).toString()
 
-            Navigation.findNavController(view).navigate(action)
+                val dataPayment = PaymentModel(
+                    cardNumber,
+                    cardName,
+                    month,
+                    year,
+                    cvv,
+                    listOf(PaymentTypes.CreditCard.type)
+                )
+
+                val action = BottomPaymentFragmentDirections
+                    .actionNavigationCreatePaymentToNavigationServicesFragment()
+                    .setPaymentModel(dataPayment)
+                    .setNamePaymentService(namePaymentService)
+
+                Navigation.findNavController(view).navigate(action)
+            } else{
+                Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
+        }
         }
     }
 }
