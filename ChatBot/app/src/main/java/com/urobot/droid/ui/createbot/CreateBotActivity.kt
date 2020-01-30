@@ -64,15 +64,15 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
 
             if (result.isEmpty()) {
-                listContent.add(BotContentItem(1, 0, 0, null, -1, true, "", list))
+                listContent.add(BotContentItem(1, 0, 1, null, -1, true, "", list))
                 dataList.add(BotData(listContent))
                 adapter.setData(dataList)
             }
 
             for (level in result) {
-                listContent.clear()
+                val listLevelContent: ArrayList<BotContentItem> = ArrayList()
                 for (item in level) {
-                    listContent.add(
+                    listLevelContent.add(
                         BotContentItem(
                             item.uid,
                             item.parentUid,
@@ -86,7 +86,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                     )
 
                 }
-                dataList.add(BotData(listContent))
+                dataList.add(BotData(listLevelContent))
             }
             adapter.setData(dataList)
 
@@ -189,6 +189,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         /** Create New Bot Content */
         createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
             users?.let {
+                Log.d("Merk", "botContentItem " + botContentItem.level)
                 createBotViewModel.createBotContentAndScripts(it.token!!, botContentItem)
             }
         })

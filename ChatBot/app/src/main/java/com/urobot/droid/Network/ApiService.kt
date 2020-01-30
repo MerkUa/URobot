@@ -67,7 +67,7 @@ interface ApiService {
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("promo-codes/create")
     fun getRefCode(
-            @Path("Authorization") token: String
+        @Header("Authorization") token: String
     ): Observable<GetPromoModel>
 
     @POST("bots/create-with-robot")

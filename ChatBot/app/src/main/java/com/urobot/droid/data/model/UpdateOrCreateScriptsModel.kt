@@ -4,12 +4,15 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class UpdateOrCreateScriptsModel (
-    @SerializedName("buttons")
+    @SerializedName("data")
     @Expose
-    var buttons: List<Button>? = null,
-    @SerializedName("messages")
+    var data: String? = null,
+    @SerializedName("delay")
     @Expose
-    var messages: List<Message>? = null,
+    var delay: Int? = null,
+    @SerializedName("type")
+    @Expose
+    var type: String? = null,
     @SerializedName("parent_uid")
     @Expose
     var parentUid: Int? = null,
@@ -18,7 +21,13 @@ data class UpdateOrCreateScriptsModel (
     var level: Int? = null,
     @SerializedName("uid")
     @Expose
-    var uid: Int? = null
+    var uid: Int? = null,
+    @SerializedName("service_id")
+    @Expose
+    var serviceId: Int? = null,
+    @SerializedName("buttons")
+    @Expose
+    var buttons: List<ServiceButtons>? = null
 )
 
 
