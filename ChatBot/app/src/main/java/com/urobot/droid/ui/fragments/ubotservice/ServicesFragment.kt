@@ -27,39 +27,20 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
     private lateinit var servicesViewModel: ServicesViewModel
     private val dialog = BottomFragment()
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private val calendarFragment = BottomCalendarFragment()
-
+    private val adapterService = ServiceListAdapter()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.ubot_service_fragment, container, false)
-        val createServiceButton: Button = root.findViewById(R.id.createService)
         val listService: RecyclerView = root.findViewById(R.id.listSevice)
-
             servicesViewModel = ViewModelProvider(this).get(ServicesViewModel::class.java)
 
-        /**Get All Services Request */
-        servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-            users?.let {
-                servicesViewModel.getAllServices(it.token!!)
-            }
-        })
-
-        val adapterService = ServiceListAdapter()
         listService.adapter = adapterService
         listService.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listService.layoutManager = linearLayoutManager
-
-
-        /**Get All Services Observe LiveData */
-        servicesViewModel.getAllServicesLivaData.observe(viewLifecycleOwner, Observer { result->
-            adapterService.addData(result)
-        })
-
-
 
         return root
     }
@@ -68,40 +49,8 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
         super.onViewCreated(view, savedInstanceState)
         setBottomSheet()
         createService.setOnClickListener {
-            //            val view = layoutInflater.inflate(R.layout.fragment_ubot, null)
             dialog.setSelectedListener(this)
             dialog.show(activity!!.supportFragmentManager, "BottomSheet")
-        }
-
-        if(arguments != null){
-
-            val calendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
-            val paymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
-
-            val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
-            val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
-
-            if(calendarArgs != null ){
-                /**Create Online record Service */
-                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-                    users?.let {
-                        servicesViewModel.createOnlineRecordService(
-                            nameCalendar!!, it.token!!,
-                            listOf(calendarArgs), TypeServices.onlineRecord.type_id)
-                    }})
-            }
-
-
-              if(paymentArgs != null){
-
-                  /**Create Payment record Service */
-                  servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-                      users?.let {
-                          servicesViewModel.createPaymentService( namePayment,it.token!!,
-                              listOf(paymentArgs), TypeServices.payment.type_id)
-                      }})
-              }
-
         }
     }
 
@@ -125,6 +74,55 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener{
         })
     }
 
+
+    override fun onResume() {
+        super.onResume()
+
+        /**Get All Services Request */
+        servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+            users?.let {
+                servicesViewModel.getAllServices(it.token!!)
+            }
+        })
+
+        /**Get All Services Observe LiveData */
+        servicesViewModel.getAllServicesLivaData.observe(viewLifecycleOwner, Observer { result->
+            adapterService.addData(result)
+        })
+
+
+        if(arguments != null){
+
+            val calendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
+            val paymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
+
+            val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
+            val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
+
+            if(calendarArgs != null ){
+                /**Create Online record Service */
+                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+                    users?.let {
+                        servicesViewModel.createOnlineRecordService(
+                            nameCalendar!!, it.token!!,
+                            listOf(calendarArgs), TypeServices.onlineRecord.type_id)
+                    }})
+            }
+
+
+            if(paymentArgs != null){
+
+                /**Create Payment record Service */
+                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+                    users?.let {
+                        servicesViewModel.createPaymentService( namePayment,it.token!!,
+                            listOf(paymentArgs), TypeServices.payment.type_id)
+                    }})
+            }
+
+        }
+
+    }
     override fun onCalendarClick() {
         dialog.dismiss()
         findNavController().navigate(R.id.navigation_create_calendar)

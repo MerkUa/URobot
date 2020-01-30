@@ -2,6 +2,7 @@ package com.urobot.droid.ui.fragments.message
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
@@ -43,7 +44,13 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
             val response =  apiService.getMessage(token, contactId, 1,50)
 
                 withContext(Dispatchers.Main) {
-                   messageLiveData.value = response.body()
+
+                    if(response.isSuccessful){
+                        messageLiveData.value = response.body()
+                    } else{
+                        Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
             }
@@ -57,7 +64,6 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
                 id,
                 message
             )
-
             apiService.sendMessage(token, requestMessage)
         }
     }

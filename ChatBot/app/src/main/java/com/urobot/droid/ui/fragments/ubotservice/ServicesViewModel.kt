@@ -1,6 +1,9 @@
 package com.urobot.droid.ui.fragments.ubotservice
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
@@ -18,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 class ServicesViewModel(application:Application)  : AndroidViewModel(application), IUserContract {
 
@@ -41,16 +45,19 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
     fun getAllServices(token:String){
 
         CoroutineScope(Dispatchers.IO).launch {
+
             val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
-
             val response =  apiService.getAllServices(token,resultBotId?.botId!!)
 
-            withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
+                    if(response.isSuccessful){
+                        getAllServicesLivaData.value = response.body()
 
-               getAllServicesLivaData.value = response.body()
-
-            }
+                    } else{
+                        Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
     }
 
@@ -74,6 +81,11 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
             withContext(Dispatchers.Main){
 
+                if(response.isSuccessful){
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -95,6 +107,12 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             val response = requestServices.let { apiService.createPaymentServices(token, it) }
 
             withContext(Dispatchers.Main){
+
+                if(response.isSuccessful){
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                }
 
             }
         }
