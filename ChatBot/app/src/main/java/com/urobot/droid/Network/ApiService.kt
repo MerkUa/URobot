@@ -127,7 +127,7 @@ interface ApiService {
     suspend fun createCalendarServices(
         @Header("Authorization") authorization: String,
         @Body botScripts : RequestBotCalendarService
-    ) : Response<CreateOrUpdateServicesModel>
+    ) : Response<ResponseBody>
     //Update
     @PUT("services/update")
     suspend fun updateOnlineRecordService(
@@ -137,7 +137,7 @@ interface ApiService {
         @Query("name") name: String,
         @Query("description") description: String,
         @Query("data") data : ArrayList<OnlineRecordModel>
-    ) : Response<CreateOrUpdateServicesModel>
+    ) : Response<ResponseBody>
 
     //Payment
     //Create
@@ -145,7 +145,7 @@ interface ApiService {
     suspend fun createPaymentServices(
         @Header("Authorization") authorization: String,
         @Body botScripts : RequestBotPaymentService
-    ) : Response<CreateOrUpdateServicesModel>
+    ) : Response<ResponseBody>
     //Update
     @PUT("services/update")
     suspend fun updatePayMentService(
@@ -155,7 +155,7 @@ interface ApiService {
         @Query("name") name: String,
         @Query("description") description: String,
         @Query("data") data : ArrayList<PaymentModel>
-    ) : Response<CreateOrUpdateServicesModel>
+    ) : Response<ResponseBody>
 
 
     @GET("services")

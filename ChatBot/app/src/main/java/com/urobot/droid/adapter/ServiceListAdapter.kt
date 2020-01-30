@@ -44,6 +44,7 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val temp: List<Datum>?  = allDataServices[position].data
 
         for( item in temp!!){
+            Log.d("adapter", "temp size"+temp.size.toString())
             holder.itemView.titleCalendarService.text = item.name
         }
 
@@ -55,6 +56,7 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if(getItemViewType(position) == paymentType){
 
         val temp:List<Datum>? = allDataServices[position].data
+
             for(item in temp!!){
                 holder.itemView.descriptionPaymentService.text = item.cvv
             }
@@ -63,11 +65,9 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun getItemCount(): Int {
-        var intSize : Int = 0
-        for (i in allDataServices){
-            intSize +=  i.data!!.size
-        }
-             return intSize
+
+        Log.d("adapter", "initSize: " + allDataServices.size.toString())
+        return allDataServices.size
     }
 
 
@@ -90,5 +90,6 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         allDataServices.clear()
         allDataServices.addAll(data)
         notifyDataSetChanged()
+        Log.d("adapter", "allData size: " + allDataServices.size.toString())
     }
 }
