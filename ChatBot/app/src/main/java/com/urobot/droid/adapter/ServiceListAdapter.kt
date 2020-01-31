@@ -46,16 +46,13 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         if (getItemViewType(position) == onlineRecordType) {
 
-            val temp: List<Datum>? = allDataServices[position].data
+            val temp: Datum? = allDataServices[position].data
 
             if (temp != null) {
-                for (item in temp!!) {
-                    holder.itemView.titleCalendarService.text = item.name
-                    Log.d("Merk", "getItemViewType " + item.name)
+                holder.itemView.titleCalendarService.text = temp.name
+                Log.d("Merk", "getItemViewType " + temp.name)
 
-                }
             } else {
-
                 holder.itemView.titleCalendarService.text = "!!!!!!!"
             }
 
@@ -65,15 +62,10 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         if (getItemViewType(position) == paymentType) {
-            val temp: List<Datum>? = allDataServices[position].data
+            val temp: Datum? = allDataServices[position].data
             if (temp != null) {
                 holder.itemView.descriptionPaymentService.text = "!"
-
-                for (item in temp!!) {
-                    holder.itemView.descriptionPaymentService.text = item.cvv
-                }
-            } else {
-                holder.itemView.titleCalendarService.text = "!!!!!!!"
+                holder.itemView.descriptionPaymentService.text = temp.cvv
             }
         }
     }
