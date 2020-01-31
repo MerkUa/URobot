@@ -80,5 +80,5 @@ data class GetAllServicesModel (
     var typeId: Int? = null,
     @SerializedName("data")
     @Expose
-    var data: List<Datum>? = null
+    var data: Datum? = null
     )
