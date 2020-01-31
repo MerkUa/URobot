@@ -24,7 +24,6 @@ class BottomPaymentFragment : Fragment() {
 
         createPaymentBotButton.setOnClickListener{
 
-
             val namePaymentService = namePaymentEditText.text.toString()
 
             val cardName =  ownerPaymentEditText.text.toString()

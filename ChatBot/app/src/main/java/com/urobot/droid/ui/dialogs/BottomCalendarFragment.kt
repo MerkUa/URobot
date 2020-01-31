@@ -13,7 +13,6 @@ import com.applandeo.materialcalendarview.DatePicker
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener
 import com.urobot.droid.R
-import com.urobot.droid.data.model.GetAllServicesModel
 import com.urobot.droid.data.model.OnlineRecordModel
 import kotlinx.android.synthetic.main.fragment_bottom_calendar.*
 import java.text.SimpleDateFormat
@@ -23,7 +22,7 @@ import kotlin.collections.ArrayList
 
 class BottomCalendarFragment : Fragment() {
 
-    
+
     var calendars: ArrayList<Calendar> = arrayListOf()
     var listener = OnSelectDateListener {
         calendars = it as ArrayList<Calendar>
@@ -80,7 +79,6 @@ class BottomCalendarFragment : Fragment() {
             }
 
         }
-
 
 
         tvAddDay.setOnClickListener {

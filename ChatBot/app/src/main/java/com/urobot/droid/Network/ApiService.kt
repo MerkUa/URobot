@@ -136,19 +136,6 @@ interface ApiService {
         @Body updateOnlineRecord : UpdateBotCalendarService
     ) : Response<ResponseBody>
 
-    data class UpdateBotCalendarService(
-        @field:SerializedName("service_id")
-        val service_id: Int,
-        @field:SerializedName("bot_id")
-        val bot_id: Int,
-        @field:SerializedName("name")
-        val name: String,
-        @field:SerializedName("description")
-        val description: String,
-        @field:SerializedName("data")
-        val data : OnlineRecordModel?
-    )
-
     //Payment
     //Create
     @POST("services/create")
@@ -160,11 +147,7 @@ interface ApiService {
     @PUT("services/update")
     suspend fun updatePayMentService(
         @Header("Authorization") authorization: String,
-        @Query("service_id") service_id:Int,
-        @Query("bot_id") botId:Int,
-        @Query("name") name: String,
-        @Query("description") description: String,
-        @Query("data") data : ArrayList<PaymentModel>
+        @Body updatePayment : UpdatePaymentService
     ) : Response<ResponseBody>
 
 

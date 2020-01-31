@@ -9,9 +9,7 @@ import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.NetModel.Request.RequestBotCalendarService
 import com.urobot.droid.data.NetModel.Request.RequestBotPaymentService
-import com.urobot.droid.data.model.GetAllServicesModel
-import com.urobot.droid.data.model.OnlineRecordModel
-import com.urobot.droid.data.model.PaymentModel
+import com.urobot.droid.data.model.*
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import com.urobot.droid.ui.fragments.chats.ChatsViewModel
@@ -95,7 +93,7 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
             val apiService: ApiService = Apifactory.create()
 
-            val model = ApiService.UpdateBotCalendarService(
+            val model = UpdateBotCalendarService(
                 serviceId,
                 resultBotId?.botId!!,
                 nameCalendar,
@@ -144,11 +142,33 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
         }
     }
 
+    fun updatePaymentServices(namePayment:String, token: String, dataListModel : PaymentModel?, serviceId : Int ){
 
+        CoroutineScope(Dispatchers.IO).launch {
 
+            val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
 
-    fun updatePaymentServices(namePayment:String, token: String, dataListModel : List<PaymentModel?>, type_id : Int){
+            val model = UpdatePaymentService(
+                serviceId,
+                resultBotId?.botId!!,
+                namePayment,
+                "description",
+                dataListModel
+            )
 
+            val apiService: ApiService = Apifactory.create()
+            val response = apiService.updatePayMentService(token, model)
+
+            withContext(Dispatchers.Main){
+
+                if(response.isSuccessful){
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
     }
 
     override fun onUpdateResult(user: User) {}
