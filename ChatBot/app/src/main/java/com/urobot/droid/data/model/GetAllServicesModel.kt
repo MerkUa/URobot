@@ -1,16 +1,13 @@
 package com.urobot.droid.data.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Datum (
-    @SerializedName("id")
-    @Expose
-    var id: Int? = null,
-    @SerializedName("service_id")
-    @Expose
-    var serviceId: Int? = null,
     @SerializedName("name")
     @Expose
     var name: String? = null,
@@ -59,9 +56,9 @@ data class Datum (
     @SerializedName("payment_types")
     @Expose
     var payment_types: List<String>? = null
-    )
+    ):Parcelable
 
-
+@Parcelize
 data class GetAllServicesModel (
     @SerializedName("id")
     @Expose
@@ -81,4 +78,4 @@ data class GetAllServicesModel (
     @SerializedName("data")
     @Expose
     var data: Datum? = null
-    )
+    ):Parcelable

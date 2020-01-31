@@ -7,33 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.DatePicker
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener
 import com.urobot.droid.R
+import com.urobot.droid.data.model.GetAllServicesModel
 import com.urobot.droid.data.model.OnlineRecordModel
-import com.urobot.droid.ui.fragments.ubotservice.ServicesFragment
 import kotlinx.android.synthetic.main.fragment_bottom_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class BottomCalendarFragment : Fragment() {
 
-    var calendars: List<Calendar> = emptyList()
+    
+    var calendars: ArrayList<Calendar> = arrayListOf()
     var listener = OnSelectDateListener {
-        calendars = it
+        calendars = it as ArrayList<Calendar>
         for (calendar in calendars) {
             Log.d("OnSelectDateListener", "calendar " + calendar.timeInMillis)
             Log.d("OnSelectDateListener", "calendar $calendar")
@@ -50,6 +43,45 @@ class BottomCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData != null){
+
+           val calendarData = BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData
+
+
+            createBotButton.visibility = View.GONE
+
+            nameEditText.setText(calendarData?.name)
+            timePickerFrom.text = calendarData?.workingHoursFrom
+            timePickerTo.text = calendarData?.workingHoursTo
+            tvBreak.text = calendarData?.`break`
+            tvSessionDuration.text = calendarData?.sessionDuration
+
+            val calendar = Calendar.getInstance()
+            for (item in calendarData?.workingDays!!){
+                calendar.timeInMillis = item.toLong()
+                calendars.add(calendar)
+                }
+
+            updateBotButton.visibility = View.VISIBLE
+
+
+            updateBotButton.setOnClickListener {
+
+                val data = OnlineRecordModel(
+                    nameEditText.text.toString(), timePickerFrom.text.toString(), timePickerTo.text.toString(), tvBreak.text.toString() ,
+                    tvSessionDuration.text.toString(), listOf(calendar.timeInMillis.toString()))
+
+                val id = BottomCalendarFragmentArgs.fromBundle(arguments!!).serviceId
+
+                val action = BottomCalendarFragmentDirections.actionNavigationCreateCalendarToNavigationServicesFragment()
+                    .setUpdateOnlineRecord(data).setServiceId(id)
+                Navigation.findNavController(view).navigate(action)
+            }
+
+        }
+
+
 
         tvAddDay.setOnClickListener {
             showCalendar()
@@ -133,8 +165,8 @@ class BottomCalendarFragment : Fragment() {
             for (calendar in calendars) {
 
                 val timeInMillis = calendar.timeInMillis
-                val resultCalendar = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timeInMillis)
-                listDate.add(resultCalendar)
+
+                listDate.add(timeInMillis.toString())
             }
 
             val data = OnlineRecordModel(

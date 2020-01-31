@@ -19,3 +19,4 @@ data class OnlineRecordModel(
     @field:SerializedName("working_days")
     val working_days: List<String>
 ) : Parcelable
+

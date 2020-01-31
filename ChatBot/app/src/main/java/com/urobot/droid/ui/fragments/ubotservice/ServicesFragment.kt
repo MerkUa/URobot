@@ -91,33 +91,48 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
 
         if (arguments != null) {
 
-            val calendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
-            val paymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
+            val createCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
+            val createPaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
+
+            val updateCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).updateOnlineRecord
 
             val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
             val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
+            val serviceIdCalendar = ServicesFragmentArgs.fromBundle(arguments!!).serviceId
 
-            if (calendarArgs != null) {
+            if (createCalendarArgs != null ) {
+
                 /**Create Online record Service */
                 servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                     users?.let {
                         servicesViewModel.createOnlineRecordService(
                             nameCalendar!!, it.token!!,
-                            listOf(calendarArgs), TypeServices.onlineRecord.type_id
+                            createCalendarArgs, TypeServices.onlineRecord.type_id
                         )
                     }
                 })
             }
 
+            if(updateCalendarArgs != null){
+                /**Update Online record Service */
+                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+                    users?.let {
+                        servicesViewModel.updateCalendarServices(
+                            updateCalendarArgs.name, it.token!!,
+                            updateCalendarArgs ,serviceIdCalendar
+                        )
+                    }
+                })
+            }
 
-            if (paymentArgs != null) {
+            if (createPaymentArgs != null) {
 
                 /**Create Payment record Service */
                 servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                     users?.let {
                         servicesViewModel.createPaymentService(
                             namePayment, it.token!!,
-                            listOf(paymentArgs), TypeServices.payment.type_id
+                            createPaymentArgs, TypeServices.payment.type_id
                         )
                     }
                 })

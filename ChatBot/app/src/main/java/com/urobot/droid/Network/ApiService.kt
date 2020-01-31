@@ -1,5 +1,6 @@
 package com.urobot.droid.Network
 
+import com.google.gson.annotations.SerializedName
 import com.urobot.droid.NetModel.ResponseLoginModel
 import com.urobot.droid.data.NetModel.Request.*
 import com.urobot.droid.data.NetModel.Response.GetPromoModel
@@ -132,12 +133,21 @@ interface ApiService {
     @PUT("services/update")
     suspend fun updateOnlineRecordService(
         @Header("Authorization") authorization: String,
-        @Query("service_id") service_id:Int,
-        @Query("bot_id") botId:Int,
-        @Query("name") name: String,
-        @Query("description") description: String,
-        @Query("data") data : ArrayList<OnlineRecordModel>
+        @Body updateOnlineRecord : UpdateBotCalendarService
     ) : Response<ResponseBody>
+
+    data class UpdateBotCalendarService(
+        @field:SerializedName("service_id")
+        val service_id: Int,
+        @field:SerializedName("bot_id")
+        val bot_id: Int,
+        @field:SerializedName("name")
+        val name: String,
+        @field:SerializedName("description")
+        val description: String,
+        @field:SerializedName("data")
+        val data : OnlineRecordModel?
+    )
 
     //Payment
     //Create

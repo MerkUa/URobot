@@ -1,8 +1,6 @@
 package com.urobot.droid.ui.fragments.ubotservice
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.urobot.droid.Apifactory
@@ -21,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 
 class ServicesViewModel(application:Application)  : AndroidViewModel(application), IUserContract {
 
@@ -61,7 +58,7 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
         }
     }
 
-    fun createOnlineRecordService(nameCalendar:String, token: String, dataListModel : List<OnlineRecordModel?>, type_id : Int){
+    fun createOnlineRecordService(nameCalendar:String, token: String, dataListModel : OnlineRecordModel?, type_id : Int){
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -90,7 +87,36 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
         }
     }
 
-    fun createPaymentService(namePaymentServices:String ,token: String, dataListModel : List<PaymentModel?>, type_id : Int){
+    fun updateCalendarServices(nameCalendar:String, token: String, dataListModel : OnlineRecordModel?, serviceId : Int){
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
+
+            val apiService: ApiService = Apifactory.create()
+
+            val model = ApiService.UpdateBotCalendarService(
+                serviceId,
+                resultBotId?.botId!!,
+                nameCalendar,
+                "description",
+                dataListModel
+            )
+
+            val response = apiService.updateOnlineRecordService(token,  model)
+
+            withContext(Dispatchers.Main){
+
+                if(response.isSuccessful){
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun createPaymentService(namePaymentServices:String ,token: String, dataListModel : PaymentModel?, type_id : Int){
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -119,9 +145,12 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
     }
 
 
-    fun updateServices(){
+
+
+    fun updatePaymentServices(namePayment:String, token: String, dataListModel : List<PaymentModel?>, type_id : Int){
 
     }
+
     override fun onUpdateResult(user: User) {}
     override fun onUpdateError() {}
 }

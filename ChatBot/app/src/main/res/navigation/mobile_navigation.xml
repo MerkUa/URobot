@@ -32,6 +32,15 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/mobile_navigation"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="calendarData"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.urobot.droid.data.model.Datum" />
+        <argument
+            android:name="serviceId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
     <fragment
@@ -46,6 +55,11 @@
             app:popUpTo="@+id/mobile_navigation"
             app:popUpToInclusive="true"
             />
+        <argument
+            android:name="paymentData"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.urobot.droid.data.model.Datum" />
     </fragment>
 
 
@@ -191,6 +205,15 @@
             android:name="namePaymentService"
             app:argType="string"
             android:defaultValue="name" />
+        <argument
+            android:name="updateOnlineRecord"
+            app:argType="com.urobot.droid.data.model.OnlineRecordModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="serviceId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 

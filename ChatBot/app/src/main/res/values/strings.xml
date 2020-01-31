@@ -121,6 +121,7 @@
     <string name="material_calendar_today_button"></string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Отмена</string>
+    <string name="update_button">ОБНОВИТЬ</string>
 
 
 </resources>

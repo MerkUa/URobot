@@ -13,5 +13,5 @@ data class RequestBotCalendarService(
     @field:SerializedName("type_id")
     val type_id: Int,
     @field:SerializedName("data")
-    val data: List<OnlineRecordModel?>
+    val data: OnlineRecordModel?
 )
