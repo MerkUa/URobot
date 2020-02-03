@@ -19,6 +19,9 @@
             android:id="@+id/action_navigation_ubot_to_navigation_create_bot"
             app:destination="@id/navigation_create_bot"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_ubot_to_navigation_create_payment"
+            app:destination="@id/navigation_create_payment" />
     </fragment>
 
     <fragment
@@ -60,6 +63,10 @@
             android:defaultValue="@null"
             app:nullable="true"
             app:argType="com.urobot.droid.data.model.Datum" />
+        <argument
+            android:name="serviceId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 
@@ -214,6 +221,11 @@
             android:name="serviceId"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="updatePaymentSevice"
+            app:argType="com.urobot.droid.data.model.PaymentModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
 

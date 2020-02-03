@@ -95,6 +95,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
             val createPaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
 
             val updateCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).updateOnlineRecord
+            val updatePaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).updatePaymentSevice
 
             val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
             val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
@@ -127,7 +128,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
 
             if (createPaymentArgs != null) {
 
-                /**Create Payment record Service */
+                /**Create Payment Service */
                 servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                     users?.let {
                         servicesViewModel.createPaymentService(
@@ -138,6 +139,17 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
                 })
             }
 
+            if(updateCalendarArgs != null){
+                /**Update Payment Service */
+                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+                    users?.let {
+                        servicesViewModel.updatePaymentServices(
+                            updateCalendarArgs.name, it.token!!,
+                            updatePaymentArgs ,serviceIdCalendar
+                        )
+                    }
+                })
+            }
 
         }
 

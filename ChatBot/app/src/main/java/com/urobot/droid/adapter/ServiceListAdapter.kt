@@ -68,11 +68,8 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.itemView.updateCalendarService.setOnClickListener {
                 val id = allDataServices[position].id
 
-                val action = RobotFragmentDirections.actionNavigationUbotToNavigationCreateCalendar().setCalendarData(temp).setServiceId(
-                    id!!
-                )
+                val action = RobotFragmentDirections.actionNavigationUbotToNavigationCreateCalendar().setCalendarData(temp).setServiceId(id!!)
                 holder.itemView.findNavController().navigate(action)
-
             }
         }
 
@@ -81,6 +78,13 @@ class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             if (temp != null) {
                 holder.itemView.descriptionPaymentService.text = "!"
                 holder.itemView.descriptionPaymentService.text = temp.cvv
+
+                holder.itemView.updatePaymentService.setOnClickListener {
+                    val id = allDataServices[position].id
+
+                    val action = RobotFragmentDirections.actionNavigationUbotToNavigationCreatePayment().setPaymentData(temp).setServiceId(id!!)
+                    holder.itemView.findNavController().navigate(action)
+                }
             }
         }
     }

@@ -45,10 +45,10 @@ class BottomCalendarFragment : Fragment() {
 
         if(BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData != null){
 
-           val calendarData = BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData
-
-
             createBotButton.visibility = View.GONE
+            updateBotButton.visibility = View.VISIBLE
+
+            val calendarData = BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData
 
             nameEditText.setText(calendarData?.name)
             timePickerFrom.text = calendarData?.workingHoursFrom
@@ -61,9 +61,6 @@ class BottomCalendarFragment : Fragment() {
                 calendar.timeInMillis = item.toLong()
                 calendars.add(calendar)
                 }
-
-            updateBotButton.visibility = View.VISIBLE
-
 
             updateBotButton.setOnClickListener {
 

@@ -22,6 +22,46 @@ class BottomPaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if( BottomPaymentFragmentArgs.fromBundle(arguments!!).paymentData != null ){
+
+            createPaymentBotButton.visibility = View.GONE
+            updatePaymentBotButton.visibility = View.VISIBLE
+
+            val paymentData = BottomPaymentFragmentArgs.fromBundle(arguments!!).paymentData
+
+            ownerPaymentEditText.setText(paymentData?.card_name)
+            numberPaymentEditText.setText(paymentData?.cardNumber)
+            cvvPaymentEditText.setText(paymentData?.cvv)
+
+            val monthAndYearTextFromNet = paymentData?.month + paymentData?.year
+
+            phoneEditText.setText(monthAndYearTextFromNet)
+
+
+            updatePaymentBotButton.setOnClickListener{
+
+                if(phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
+
+                    val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
+                    val year = phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length).toString()
+
+                    val data  = PaymentModel(
+                        ownerPaymentEditText.text.toString(),
+                        numberPaymentEditText.textAlignment.toString(),
+                        month, year,cvvPaymentEditText.text.toString(),
+                        listOf(PaymentTypes.CreditCard.type)
+                    )
+                    val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
+
+                    val action = BottomPaymentFragmentDirections.actionNavigationCreatePaymentToNavigationServicesFragment()
+                        .setServiceId(id)
+                        .setUpdatePaymentSevice(data)
+                    Navigation.findNavController(view).navigate(action)
+                }
+            }
+        }
+
+
         createPaymentBotButton.setOnClickListener{
 
             val namePaymentService = namePaymentEditText.text.toString()
