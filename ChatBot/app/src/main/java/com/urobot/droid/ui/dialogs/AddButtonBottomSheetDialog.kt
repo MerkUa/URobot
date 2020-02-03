@@ -19,13 +19,20 @@ class AddButtonBottomSheetDialog : BottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.bottom_sheet_add_buttons, container, false)
         val writeButton = view.findViewById<Button>(R.id.add_write_button)
         val buttonPayment = view.findViewById<Button>(R.id.add_payment_button)
+        val buttonNewLevel = view.findViewById<Button>(R.id.add_new_level)
+
 
         writeButton.setOnClickListener {
-            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(1))
+            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(1, null))
         }
 
         buttonPayment.setOnClickListener {
-            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(2))
+            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(2, null))
+        }
+
+        buttonNewLevel.setOnClickListener {
+
+            mAddButtonBottomSheetListener?.ButtonClick(ServiceButtons(3, ""))
         }
 
 

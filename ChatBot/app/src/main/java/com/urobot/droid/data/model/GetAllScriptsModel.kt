@@ -32,7 +32,7 @@ data class ButtonMenu (
     var scriptId: Int? = null,
     @SerializedName("service_id")
     @Expose
-    var serviceId: Int? = null,
+    var serviceId: Long? = null,
     @SerializedName("action")
     @Expose
     var action: Action? = null
@@ -44,10 +44,10 @@ data class GetAllScriptsModel (
     var botId: Int? = null,
     @SerializedName("uid")
     @Expose
-    var uid: Int? = null,
+    var uid: Long? = null,
     @SerializedName("parent_uid")
     @Expose
-    var parentUid: Int? = null,
+    var parentUid: Long? = null,
     @SerializedName("level")
     @Expose
     var level: Int? = null,

@@ -1,5 +1,6 @@
 package com.urobot.droid.ui.dialogs
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -7,6 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -103,21 +107,77 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         Log.d("ButtonClick", "list " + list!!.size)
 
         when {
-            button.id == 1 -> {
-                if (!list!!.contains(ServiceButtons(1))) {
-                    write_to_event_button.visibility = View.VISIBLE
-                    list?.add(ServiceButtons(1))
+            button.id == 1.toLong() -> {
+                if (!list!!.contains(ServiceButtons(1, null))) {
+                    val itemView = LinearLayout.inflate(
+                        context,
+                        R.layout.item_botton,
+                        null
+                    )
+                    itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                        .setText(getString(R.string.write_event_and_important))
+                    linearLayout.addView(itemView)
+                    list?.add(ServiceButtons(1, getString(R.string.write_event_and_important)))
                 }
             }
-            button.id == 2 -> {
-                if (!list!!.contains(ServiceButtons(2))) {
-                    payment_button_dialog_fragment.visibility = View.VISIBLE
-                    list?.add(ServiceButtons(2))
+            button.id == 2.toLong() -> {
+                if (!list!!.contains(ServiceButtons(2, null))) {
+                    val itemView = LinearLayout.inflate(
+                        context,
+                        R.layout.item_botton,
+                        null
+                    )
+                    itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                        .setText(getString(R.string.payment))
+                    linearLayout.addView(itemView)
+                    list?.add(ServiceButtons(2, getString(R.string.payment)))
+
                 }
             }
+            button.id == 3.toLong() -> {
+                showDialog()
+            }
+
         }
     }
 
+    fun showDialog() {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Новая кнопка")
+
+        val view = layoutInflater.inflate(R.layout.dialog_edit_text, null)
+
+        val categoryEditText = view.findViewById(R.id.categoryEditText) as EditText
+
+        builder.setView(view);
+
+        // set up the ok button
+        builder.setPositiveButton(android.R.string.ok) { dialog, p1 ->
+            if (categoryEditText.text.isNotEmpty()) {
+                val itemView = LinearLayout.inflate(
+                    context,
+                    R.layout.item_botton,
+                    null
+                )
+                itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                    .setText(categoryEditText.text)
+                linearLayout.addView(itemView)
+                list?.add(
+                    ServiceButtons(
+                        System.currentTimeMillis(),
+                        categoryEditText.text.toString()
+                    )
+                )
+                dialog.cancel()
+            }
+        }
+
+        builder.setNegativeButton(android.R.string.cancel) { dialog, p1 ->
+            dialog.cancel()
+        }
+
+        builder.show()
+    }
     interface ChangeDataListener {
         fun onBotDataChanged(botContentItem: BotContentItem)
     }

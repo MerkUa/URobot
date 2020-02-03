@@ -3,6 +3,8 @@ package com.urobot.droid.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
@@ -58,11 +60,20 @@ class ContentBotAdapter(
 
             if (listButtons != null) {
                 for (item in listButtons) {
-                    if (item.id == 1) {
-                        holder.itemView.write_to_event.visibility = View.VISIBLE
-                    } else {
-                        holder.itemView.payment_button.visibility = View.VISIBLE
-                    }
+                    val itemView = LinearLayout.inflate(
+                        holder.itemView.context,
+                        R.layout.item_botton,
+                        null
+                    )
+                    itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                        .setText(item.name)
+                    holder.itemView.buttonsLinearLayout.addView(itemView)
+
+//                    if (item.id == 1.toLong()) {
+//                        holder.itemView.write_to_event.visibility = View.VISIBLE
+//                    } else {
+//                        holder.itemView.payment_button.visibility = View.VISIBLE
+//                    }
                 }
             }
 

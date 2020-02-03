@@ -60,67 +60,77 @@
 
             </androidx.appcompat.widget.AppCompatTextView>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/payment_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/buttonsLinearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:background="@drawable/button_rounded_with_border_background"
-                android:inputType="textCapSentences"
-                android:text="@string/payment"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/write_to_event"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog"
-                >
-
-            </androidx.appcompat.widget.AppCompatButton>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/write_to_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:background="@drawable/button_rounded_with_border_background"
-                android:inputType="textCapSentences"
-                android:text="@string/write_event_and_important"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:visibility="gone"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog"
-               >
+                app:layout_constraintTop_toBottomOf="@+id/text_from_dialog">
 
-            </androidx.appcompat.widget.AppCompatButton>
+                <!--                <androidx.appcompat.widget.AppCompatButton-->
+                <!--                    android:id="@+id/payment_button"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="10dp"-->
+                <!--                    android:padding="10dp"-->
+                <!--                    android:background="@drawable/button_rounded_with_border_background"-->
+                <!--                    android:inputType="textCapSentences"-->
+                <!--                    android:text="@string/payment"-->
+                <!--                    android:textColor="@color/colorAccent"-->
+                <!--                    android:textSize="15sp"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    >-->
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/count_cards_with_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:background="@drawable/button_rounded_with_border_background"
-                android:inputType="textCapSentences"
-                android:text="+3"
-                android:textColor="@color/colorAccent"
-                android:textSize="15sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/write_to_event"
-                >
+                <!--                </androidx.appcompat.widget.AppCompatButton>-->
 
-            </androidx.appcompat.widget.AppCompatButton>
+                <!--                <androidx.appcompat.widget.AppCompatButton-->
+                <!--                    android:id="@+id/write_to_event"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="10dp"-->
+                <!--                    android:padding="10dp"-->
+                <!--                    android:background="@drawable/button_rounded_with_border_background"-->
+                <!--                    android:inputType="textCapSentences"-->
+                <!--                    android:text="@string/write_event_and_important"-->
+                <!--                    android:textColor="@color/colorAccent"-->
+                <!--                    android:textSize="15sp"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.5"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/text_from_dialog"-->
+                <!--                    >-->
+
+                <!--                </androidx.appcompat.widget.AppCompatButton>-->
+
+                <!--                <androidx.appcompat.widget.AppCompatButton-->
+                <!--                    android:id="@+id/count_cards_with_event"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_margin="10dp"-->
+                <!--                    android:padding="10dp"-->
+                <!--                    android:background="@drawable/button_rounded_with_border_background"-->
+                <!--                    android:inputType="textCapSentences"-->
+                <!--                    android:text="+3"-->
+                <!--                    android:textColor="@color/colorAccent"-->
+                <!--                    android:textSize="15sp"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.5"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/write_to_event"-->
+                <!--                    >-->
+
+                <!--                </androidx.appcompat.widget.AppCompatButton>-->
+
+            </LinearLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

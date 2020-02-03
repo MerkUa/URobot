@@ -15,16 +15,16 @@ data class UpdateOrCreateScriptsModel (
     var type: String? = null,
     @SerializedName("parent_uid")
     @Expose
-    var parentUid: Int? = null,
+    var parentUid: Long? = null,
     @SerializedName("level")
     @Expose
     var level: Int? = null,
     @SerializedName("uid")
     @Expose
-    var uid: Int? = null,
+    var uid: Long? = null,
     @SerializedName("service_id")
     @Expose
-    var serviceId: Int? = null,
+    var serviceId: Long? = null,
     @SerializedName("buttons")
     @Expose
     var buttons: List<ServiceButtons>? = null

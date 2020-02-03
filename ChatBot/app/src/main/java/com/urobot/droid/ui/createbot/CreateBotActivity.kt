@@ -43,7 +43,6 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
     private fun initAdapter() {
 
         val listContent: ArrayList<BotContentItem> = ArrayList()
-        val list: ArrayList<ServiceButtons>? = ArrayList()
 
 
 
@@ -64,6 +63,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
 
             if (result.isEmpty()) {
+                val list: ArrayList<ServiceButtons>? = ArrayList()
                 listContent.add(BotContentItem(1, 0, 1, null, -1, true, "", list))
                 dataList.add(BotData(listContent))
                 adapter.setData(dataList)
@@ -72,10 +72,21 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
             for (level in result) {
                 val listLevelContent: ArrayList<BotContentItem> = ArrayList()
                 for (item in level) {
+                    val list: ArrayList<ServiceButtons>? = ArrayList()
+                    for (button in item.buttons!!) {
+                        list?.add(
+                            ServiceButtons(
+                                button.serviceId,
+                                button.name
+                            )
+                        )
+                    }
+
+
                     listLevelContent.add(
                         BotContentItem(
-                            item.uid,
-                            item.parentUid,
+                            item.uid?.toLong(),
+                            item.parentUid?.toLong(),
                             item.level,
                             null,
                             -1,

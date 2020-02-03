@@ -47,35 +47,7 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/descriptionEditText">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/payment_button_dialog_fragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight=".50"
-            android:background="@drawable/button_rounded_with_border_background"
-            android:inputType="textCapSentences"
-            android:text="@string/payment"
-            android:textColor="@color/colorAccent"
-            android:textSize="15sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/write_to_event_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight=".50"
-            android:background="@drawable/button_rounded_with_border_background"
-            android:inputType="textCapSentences"
-            android:text="@string/write_event"
-            android:textColor="@color/colorAccent"
-            android:visibility="gone"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="visible" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
