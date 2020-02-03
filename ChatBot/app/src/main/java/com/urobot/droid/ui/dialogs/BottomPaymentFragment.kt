@@ -35,7 +35,7 @@ class BottomPaymentFragment : Fragment() {
 
             val monthAndYearTextFromNet = paymentData?.month + paymentData?.year
 
-            phoneEditText.setText(monthAndYearTextFromNet)
+            phoneEditText.setMaskedText( monthAndYearTextFromNet)
 
 
             updatePaymentBotButton.setOnClickListener{
@@ -57,6 +57,8 @@ class BottomPaymentFragment : Fragment() {
                         .setServiceId(id)
                         .setUpdatePaymentSevice(data)
                     Navigation.findNavController(view).navigate(action)
+                } else {
+                    Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
                 }
             }
         }
