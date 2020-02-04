@@ -47,6 +47,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         repository.update(user, fileUri)
     }
 
+    fun sendUpdatePhone(user: User){
+        repository.updatePhone(user)
+    }
+
     fun logout(token: String) {
 
         viewModelScope.launch {

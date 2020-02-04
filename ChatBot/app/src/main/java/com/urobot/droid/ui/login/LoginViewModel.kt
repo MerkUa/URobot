@@ -1,6 +1,7 @@
 package com.urobot.droid.ui.login
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Patterns
 import androidx.lifecycle.AndroidViewModel
@@ -34,8 +35,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
-        loginRepository.login(username, password)
+    fun login(username: String, password: String, context: Context) {
+        loginRepository.login(username, password, context)
     }
 
     fun signUp(email: String, password: String, name: String, lastname: String) {

@@ -130,6 +130,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_navigation_settings_support"
             app:destination="@id/navigation_settings_support" />
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_industry_fragment"
+            app:destination="@id/navigation_industry_fragment" />
     </fragment>
 
 
@@ -228,6 +231,11 @@
             android:defaultValue="@null" />
     </fragment>
 
-
+    <fragment
+        android:id="@+id/navigation_industry_fragment"
+        android:name="com.urobot.droid.ui.fragments.industry.IndustryFragment"
+        android:label="Industry"
+        tools:layout="@layout/fragment_industry">
+    </fragment>
 </navigation>
 

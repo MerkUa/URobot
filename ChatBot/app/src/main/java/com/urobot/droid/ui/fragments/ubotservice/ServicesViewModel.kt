@@ -157,7 +157,7 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             )
 
             val apiService: ApiService = Apifactory.create()
-            val response = apiService.updatePayMentService(token, model)
+            val response = apiService.updatePaymentService(token, model)
 
             withContext(Dispatchers.Main){
 

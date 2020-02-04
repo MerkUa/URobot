@@ -20,7 +20,7 @@ import com.urobot.droid.ui.fragments.ubotservice.ServicesFragmentArgs
 import kotlinx.android.synthetic.main.list_item_calendar_services.view.*
 import kotlinx.android.synthetic.main.list_item_payment_services.view.*
 
-class ServiceListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ServiceListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val allDataServices: ArrayList<GetAllServicesModel> =
         mutableListOf<GetAllServicesModel>() as ArrayList<GetAllServicesModel>

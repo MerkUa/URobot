@@ -1,6 +1,5 @@
 package com.urobot.droid.Network
 
-import com.google.gson.annotations.SerializedName
 import com.urobot.droid.NetModel.ResponseLoginModel
 import com.urobot.droid.data.NetModel.Request.*
 import com.urobot.droid.data.NetModel.Response.GetPromoModel
@@ -47,8 +46,8 @@ interface ApiService {
     fun updateUser(
         @Header("Authorization") login: String,
         @PartMap phot: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part file: MultipartBody.Part,
-        @Part("photo") photo: RequestBody
+        @Part file: MultipartBody.Part?,
+        @Part("photo") photo: RequestBody?
 
     ): Observable<ResponseLoginModel>
 
@@ -145,7 +144,7 @@ interface ApiService {
     ) : Response<ResponseBody>
     //Update
     @PUT("services/update")
-    suspend fun updatePayMentService(
+    suspend fun updatePaymentService(
         @Header("Authorization") authorization: String,
         @Body updatePayment : UpdatePaymentService
     ) : Response<ResponseBody>
@@ -156,5 +155,9 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Query("bot_id") botId:Int
     ) : Response<List<GetAllServicesModel>>
+
+    @GET("industry")
+    suspend fun getAllIndustry(
+        @Header("Authorization") authorization: String) : Response<List<GetAllIndustryModel>>
 
 }

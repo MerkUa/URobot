@@ -256,7 +256,8 @@ class LoginActivity : AppCompatActivity() {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
                                 username.text.toString(),
-                                password.text.toString()
+                                password.text.toString(),
+                            context
                         )
                 }
                 false
@@ -264,7 +265,7 @@ class LoginActivity : AppCompatActivity() {
 
             loginButton.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                loginViewModel.login(username.text.toString(), password.text.toString(), context)
             }
         }
 

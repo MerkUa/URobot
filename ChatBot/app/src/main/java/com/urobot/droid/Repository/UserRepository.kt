@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.contracts.IUserContract
-import com.urobot.droid.db.BotInfo
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserDao
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -70,6 +69,35 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
         } catch (e: Throwable) {
             Log.d("Result", "Error " + e.localizedMessage)
         }
+    }
+
+
+    fun updatePhone(user: User ){
+
+        val apiService: ApiService = Apifactory.create()
+        val description: RequestBody =
+            toRequestBody(user.fName!!)
+        val place: RequestBody = toRequestBody(user.lName!!)
+        val time: RequestBody = toRequestBody(user.cellPhone!!)
+
+        val map: HashMap<String, RequestBody> = HashMap()
+        map["first_name"] = description
+        map["last_name"] = place
+        map["phone"] = time
+
+        apiService.updateUser(user.token!!, map, null, null)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({ result ->
+                var user = User(
+                    result.userId!!, result.firstName, result.lastName!!, user.token,
+                    result.phone!!, result.photo)
+                userContract.onUpdateResult(user)
+
+            }, { error ->
+                Log.d("Result", "Error ")
+                error.printStackTrace()
+            })
     }
 
     fun logout(token: String) {

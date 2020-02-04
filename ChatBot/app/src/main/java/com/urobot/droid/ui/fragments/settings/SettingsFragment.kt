@@ -65,6 +65,8 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
                 textViewPhone.text = if (currentUser != null) currentUser.cellPhone else ""
                 Log.d("currentUser", "id " + currentUser.id)
                 Picasso.get().load(Uri.parse(currentUser.photoURL)).into(photoView)
+                Log.d("currentUser", "id " + currentUser.photoURL)
+
             }
         })
         settingsViewModel.setListener(this)
@@ -127,6 +129,11 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
         logOutTextView.setOnClickListener {
             settingsViewModel.logout(currentUser.token!!)
         }
+
+
+        industry.setOnClickListener {
+            view.findNavController().navigate(R.id.action_navigation_settings_to_navigation_industry_fragment)
+        }
     }
 
 
@@ -143,7 +150,9 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
             currentUser.cellPhone = editText.text.toString()
             textViewPhone.text = editText.text
             settingsViewModel.update(currentUser)
-//                settingsViewModel.sendUpdate(currentUser,null)
+            // TODO save text only
+//            settingsViewModel.sendUpdate(currentUser, )
+                settingsViewModel.sendUpdatePhone(currentUser)
         }
         builder.show()
     }
