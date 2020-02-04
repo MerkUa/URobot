@@ -24,8 +24,7 @@ public abstract class UserRoomDatabase : RoomDatabase() {
         private var INSTANCE: UserRoomDatabase? = null
 
         fun getDatabase(
-                context: Context,
-                scope: CoroutineScope
+                context: Context
         ): UserRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
@@ -36,7 +35,7 @@ public abstract class UserRoomDatabase : RoomDatabase() {
                         context.applicationContext,
                         UserRoomDatabase::class.java,
                         "user_database"
-                ).addCallback(UserDatabaseCallback(scope)).build()
+                ).addCallback(UserDatabaseCallback()).build()
                 INSTANCE = instance
                 return instance
             }
@@ -44,19 +43,17 @@ public abstract class UserRoomDatabase : RoomDatabase() {
     }
 
     private class UserDatabaseCallback(
-            private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             INSTANCE?.let { database ->
-                scope.launch {
                     populateDatabase(database.userDao())
-                }
+
             }
         }
 
-        suspend fun populateDatabase(userDao: UserDao) {
+         fun populateDatabase(userDao: UserDao) {
             // Delete all content here.
 //            userDao.deleteAll()
 //            Log.d("populateDatabase","populateDatabase ")

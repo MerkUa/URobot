@@ -34,7 +34,7 @@ data class ResponseLoginModel(
 
         @SerializedName("industries")
         @Expose
-        var industries: List<Industry>? = null
+        var industries: List<Industries>? = null
 
 )
 
@@ -73,14 +73,14 @@ data class ResponseLoginModel(
 //
 //}
 //
-//class Industry {
-//        @SerializedName("id")
-//        @Expose
-//        var id: Int? = null
-//        @SerializedName("name")
-//        @Expose
-//        var name: String? = null
-//
-//}
+class Industries {
+        @SerializedName("id")
+        @Expose
+        var id: Int? = null
+        @SerializedName("name")
+        @Expose
+        var name: String? = null
+
+}
 
 

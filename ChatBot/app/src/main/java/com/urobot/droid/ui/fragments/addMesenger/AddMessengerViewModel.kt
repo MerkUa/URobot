@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class AddMessengerViewModel(application: Application) : AndroidViewModel(application),
     IUserContract {
 
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
@@ -52,17 +52,17 @@ class AddMessengerViewModel(application: Application) : AndroidViewModel(applica
 
                 CoroutineScope(Dispatchers.IO).launch {
 
-      val dataBaseBotResult =  UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getById(result.bot_id)
+      val dataBaseBotResult =  UserRoomDatabase.getDatabase(getApplication()).botDao().getById(result.bot_id)
 
       if( dataBaseBotResult?.botId == result.bot_id){
 
-      UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().updateBot(
+      UserRoomDatabase.getDatabase(getApplication()).botDao().updateBot(
           BotInfo(1, result.bot_id, Messenger.Telegram.messengerId,
               Messenger.Telegram.toString()))
 
          } else {
 
-          UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().insertBot(
+          UserRoomDatabase.getDatabase(getApplication()).botDao().insertBot(
               BotInfo(1, result.bot_id, Messenger.Telegram.messengerId,
                   Messenger.Telegram.toString()))
       }

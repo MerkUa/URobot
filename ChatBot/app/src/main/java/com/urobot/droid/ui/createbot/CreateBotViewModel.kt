@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 
 class CreateBotViewModel(application:Application) : AndroidViewModel(application), IUserContract{
 
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     private var listener: ChatsViewModel.IChatsContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.
@@ -46,7 +46,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
+            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val apiService: ApiService = Apifactory.create()
 
@@ -83,7 +83,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
+            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
             val response =  apiService.getAllScripts(token, resultBotId?.botId!!)
 

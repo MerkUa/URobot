@@ -1,5 +1,6 @@
 package com.urobot.droid.contracts
 
+import com.urobot.droid.NetModel.Industries
 import com.urobot.droid.db.User
 
 interface ILoginContract {
@@ -9,6 +10,7 @@ interface ILoginContract {
     fun onSignUpResult()
     fun onForgotPassError()
     fun onForgotPassSuccess()
+    fun insertIndustryDB(result: List<Industries>?)
 
 
 }

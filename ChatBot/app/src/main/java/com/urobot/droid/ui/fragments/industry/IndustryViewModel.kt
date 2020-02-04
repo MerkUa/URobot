@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 
 class IndustryViewModel(application: Application) : AndroidViewModel(application), IUserContract  {
 
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     private var listener: SettingsViewModel.ISettingsContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.

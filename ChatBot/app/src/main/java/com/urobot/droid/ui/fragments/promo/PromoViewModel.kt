@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 
 class PromoViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     private var listener: IPromoContract? = null
 
 

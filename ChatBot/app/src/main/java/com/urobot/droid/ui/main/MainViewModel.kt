@@ -10,7 +10,7 @@ import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 
 class MainViewModel(application: Application) : AndroidViewModel(application), IUserContract {
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
 
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: UserRepository

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class ChatsViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     private var listener: IChatsContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.
@@ -43,7 +43,7 @@ CoroutineScope(Dispatchers.IO).launch {
 
 //    val token = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).userDao().getUser()
 
-    val resultBotId = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).botDao().getTelegramBotId()
+    val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
     if (resultBotId != null) {
 

@@ -10,13 +10,9 @@ import com.urobot.droid.data.NetModel.Request.RequestLogin
 import com.urobot.droid.data.NetModel.Request.RequestSignInSocial
 import com.urobot.droid.data.NetModel.Request.RequestSignUp
 import com.urobot.droid.data.model.LoggedInUser
-import com.urobot.droid.db.Industry
 import com.urobot.droid.db.User
-import com.urobot.droid.db.UserRoomDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -64,10 +60,8 @@ class LoginRepository(val loginContract: ILoginContract) {
                                 result.phone!!, result.photo)
                         loginContract.onLoginResult(user)
 
-                        for(item in result.industries!!){
-                        UserRoomDatabase.getDatabase(context, CoroutineScope(Dispatchers.IO)).industryDao().insertIndustry(
-                            Industry(item.id, item.name))
-                        }
+                        loginContract.insertIndustryDB(result.industries)
+
                     }, { error ->
                         Log.d("Result", "Error!! " + error.localizedMessage)
                         loginContract.onLoginError()

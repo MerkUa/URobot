@@ -8,13 +8,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.urobot.droid.NetModel.Industries
 import com.urobot.droid.R
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.ILoginContract
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.LoginRepository
+import com.urobot.droid.db.Industry
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application), ILoginContract,
@@ -102,6 +106,16 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
         _forgotPass.value = ForgotPassFormState(successForgotPass = R.string.forgotPass_success)
     }
 
+    override fun insertIndustryDB(result: List<Industries>?) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            for (item in result!!){
+                UserRoomDatabase.getDatabase(getApplication()).industryDao().insertIndustry(
+                    Industry(item.id, item.name))
+            }
+        }
+    }
+
 
     // Show Error
     fun sigInDataChanged(username: String, password: String, name: String, lastName: String) {
@@ -134,7 +148,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
         editor.putBoolean("isLoged", true)
         editor.apply()
 
-        val userDao = UserRoomDatabase.getDatabase(app, viewModelScope).userDao()
+        val userDao = UserRoomDatabase.getDatabase(app).userDao()
         val repository = UserRepository(userDao, this)
         viewModelScope.launch {
             userDao.deleteAll()

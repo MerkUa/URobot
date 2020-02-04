@@ -13,7 +13,7 @@ import java.io.File
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
-    private val userDao = UserRoomDatabase.getDatabase(application, viewModelScope).userDao()
+    private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     private var listener: ISettingsContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.
