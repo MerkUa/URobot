@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listBot"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/sendPhoneButton"
+        app:layout_constraintBottom_toTopOf="@+id/createBotButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -23,6 +23,7 @@
         android:layout_marginBottom="64dp"
         android:background="@drawable/button_rounded_background"
         android:text="@string/action_add_bot"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

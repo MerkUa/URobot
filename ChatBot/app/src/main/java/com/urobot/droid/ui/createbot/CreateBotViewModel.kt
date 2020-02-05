@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
@@ -80,7 +79,6 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
     }
 
     fun getAllContentAndScripts(token:String){
-
         CoroutineScope(Dispatchers.IO).launch {
 
             val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()

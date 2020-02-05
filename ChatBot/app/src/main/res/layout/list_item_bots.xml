@@ -4,7 +4,8 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/botView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp">
 
@@ -27,7 +28,7 @@
 
         <TextView
             android:id="@+id/descriptionBot"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/titleBot"
             android:layout_marginTop="4dp"
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
+            android:visibility="gone"
             android:src="@drawable/instagram" />
 
         <ImageView
@@ -49,6 +51,7 @@
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
             android:layout_toRightOf="@+id/iconInstagram"
+            android:visibility="gone"
             android:src="@drawable/whatsapp" />
 
         <ImageView
@@ -58,6 +61,7 @@
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
             android:layout_toRightOf="@+id/iconWhatsApp"
+            android:visibility="gone"
             android:src="@drawable/viber" />
 
         <ImageView
@@ -67,16 +71,18 @@
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
             android:layout_toRightOf="@+id/iconViber"
+            android:visibility="gone"
             android:src="@drawable/telegram" />
 
         <TextView
+            android:id="@+id/tvChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/descriptionBot"
             android:layout_alignEnd="@+id/descriptionBot"
             android:layout_marginTop="16dp"
-            android:text="Изменить"
             android:layout_marginEnd="16dp"
+            android:text="Изменить"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
             android:textStyle="bold" />

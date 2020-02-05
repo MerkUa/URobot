@@ -6,6 +6,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatEditText

@@ -3,8 +3,8 @@ package com.urobot.droid.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
@@ -65,7 +65,7 @@ class ContentBotAdapter(
                         R.layout.item_botton,
                         null
                     )
-                    itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                    itemView.findViewById<TextView>(R.id.payment_button_dialog_fragment)
                         .setText(item.name)
                     holder.itemView.buttonsLinearLayout.addView(itemView)
 
