@@ -1,7 +1,6 @@
 package com.urobot.droid.ui.fragments.ubot
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -38,25 +37,26 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
     val getAllScriptsLivaData: MutableLiveData<List<List<GetAllScriptsModel>>> = MutableLiveData()
 
     fun getAllContentAndScripts(token: String) {
-        Log.d("Merk", "getAllContentAndScripts")
 
         CoroutineScope(Dispatchers.IO).launch {
 
             val resultBotId =
                 UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
-            val response = apiService.getAllScripts(token, resultBotId?.botId!!)
+            if (resultBotId != null) {
+                val response = apiService.getAllScripts(token, resultBotId?.botId!!)
 
-            withContext(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
 
-                if (response.body() != null) {
+                    if (response.body() != null) {
 
-                    val list: List<List<GetAllScriptsModel>>
+                        val list: List<List<GetAllScriptsModel>>
 
-                    list = response.body() as ArrayList<List<GetAllScriptsModel>>
+                        list = response.body() as ArrayList<List<GetAllScriptsModel>>
 
-                    getAllScriptsLivaData.value = list
+                        getAllScriptsLivaData.value = list
 
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
@@ -37,7 +38,7 @@ class BotListAdapter(private val context: Context,
         holder.title.text = dataSource[position].title
         holder.description.text = dataSource[position].description
         holder.iconTelegram.visibility = View.VISIBLE
-        holder.change.setOnClickListener(View.OnClickListener { view ->
+        holder.botView.setOnClickListener(View.OnClickListener { view ->
             mOnBotClickListener?.onItemClick(
                 view, position
             )
@@ -50,12 +51,14 @@ class BotListAdapter(private val context: Context,
         var description: TextView
         var change: TextView
         var iconTelegram: ImageView
+        var botView: RelativeLayout
 
         init {
             title = itemView.findViewById(R.id.titleBot)
             description = itemView.findViewById(R.id.descriptionBot)
             change = itemView.findViewById(R.id.tvChange)
             iconTelegram = itemView.findViewById(R.id.iconTelegram)
+            botView = itemView.findViewById(R.id.botView)
         }
 
 

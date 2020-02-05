@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_create_bot.*
 class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeDataListener {
 
     companion object {
+        const val EXTRA_BOT_ID = "BOTID"
         private const val TAG = "MainActivity"
     }
 
@@ -37,6 +38,9 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
 
         initAdapter()
         hideProgressBar()
+
+        val botId = intent.getStringExtra(EXTRA_BOT_ID)
+        createBotViewModel.setBotId(botId.toInt())
     }
 
 

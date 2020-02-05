@@ -30,6 +30,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
+    var resultBotId: Int = -1
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -45,7 +46,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            //            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val apiService: ApiService = Apifactory.create()
 
@@ -65,7 +66,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
             )
 
             val requestMessage = RequestBotScripts(
-                resultBotId?.botId!!,
+                resultBotId,
                 modelList
             )
             apiService.createScripts(token, requestMessage)
@@ -76,6 +77,10 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
             }
 
         }
+    }
+
+    fun setBotId(id: Int) {
+        resultBotId = id
     }
 
     fun getAllContentAndScripts(token:String){

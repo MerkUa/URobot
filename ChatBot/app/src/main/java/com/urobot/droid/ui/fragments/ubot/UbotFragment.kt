@@ -17,12 +17,14 @@ import com.urobot.droid.adapter.BotListAdapter
 
 import com.urobot.droid.data.model.Bot
 import com.urobot.droid.ui.createbot.CreateBotActivity
+import com.urobot.droid.ui.createbot.CreateBotActivity.Companion.EXTRA_BOT_ID
 import kotlinx.android.synthetic.main.fragment_ubot.*
 
 
 class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
 
     private lateinit var ubotViewModel: UbotViewModel
+    private val list = arrayListOf<Bot>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,8 +61,15 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
                 createBotButton.isEnabled = true
 
             } else {
-                val list = arrayListOf<Bot>()
-                list.add(Bot("1", "test", "testDescription", emptyList(), ""))
+                list.add(
+                    Bot(
+                        result[0][0].botId.toString(),
+                        "test",
+                        "testDescription",
+                        emptyList(),
+                        ""
+                    )
+                )
 
                 val adapterChats = BotListAdapter(context!!, list)
                 adapterChats.addClickListener(this)
@@ -72,7 +81,9 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(view: View?, position: Int) {
+        var bot = list.get(position)
         val intent = Intent(activity, CreateBotActivity::class.java)
+        intent.putExtra(EXTRA_BOT_ID, bot.botId)
         startActivityForResult(intent, 1)
     }
 }
