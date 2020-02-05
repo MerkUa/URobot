@@ -1,8 +1,8 @@
 package com.urobot.droid.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Update
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import retrofit2.http.DELETE
 
 
 @Dao
@@ -13,5 +13,11 @@ interface IndustryDao {
 
     @Update
     fun updateBot(industry: Industry?)
+
+    @Query("SELECT * FROM industry_table ")
+    fun getAllIndustry(): List<Industry>
+
+    @Delete
+    fun delete(industry: List<Industry?>)
 
 }

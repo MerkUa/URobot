@@ -111,7 +111,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
         CoroutineScope(Dispatchers.IO).launch {
             for (item in result!!){
                 UserRoomDatabase.getDatabase(getApplication()).industryDao().insertIndustry(
-                    Industry(item.id, item.name))
+                    Industry(item.id.toString()))
             }
         }
     }

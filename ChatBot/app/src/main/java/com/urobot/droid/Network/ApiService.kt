@@ -160,4 +160,11 @@ interface ApiService {
     suspend fun getAllIndustry(
         @Header("Authorization") authorization: String) : Response<List<GetAllIndustryModel>>
 
+    @PUT("users/update/industry")
+    suspend fun updateIndustry(
+        @Header("Authorization") authorization: String,
+        @Body ids: ArrayList<IdsModel>
+    ) : Response<ResponseBody>
+
+
 }

@@ -1,17 +1,17 @@
 package com.urobot.droid.ui.fragments.industry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.urobot.droid.R
-import com.urobot.droid.adapter.HomeBotAdapter
 import com.urobot.droid.adapter.IndustryAdapter
-import kotlinx.android.synthetic.main.activity_create_bot.*
 import kotlinx.android.synthetic.main.fragment_industry.*
 
 
@@ -32,11 +32,48 @@ class IndustryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
 
+        /** Get all available industries from server */
         industryViewModel.User.observe(viewLifecycleOwner, Observer { users ->
+
             users?.let {
-                industryViewModel.getAllIndustry(it.token!!)
+                industryViewModel.getAllIndustryFromNet(it.token!!)
+
+                /** Get all industries from Local DB */
+                industryViewModel.getAllIndustryFromLocalDB()
             }
         })
+
+        /** Observe and set all industries from server */
+        industryViewModel.getAllIndustryFromNetLivaData.observe(
+            viewLifecycleOwner,
+            Observer { result ->
+                adapter.addDataFromServer(result)
+            })
+        /** Observe and set all industries from Local DB */
+        industryViewModel.getUserIndustryFromLocalDbLivaData.observe(
+            viewLifecycleOwner,
+            Observer { result ->
+                adapter.addDataFromLocalDB(result)
+            })
+
+        updateIndustryButton.setOnClickListener {
+            /** Update industries */
+            industryViewModel.User.observe(viewLifecycleOwner, Observer { users ->
+                users?.let {
+                val list = adapter.getUpdateIndustryData()
+                        industryViewModel.updateIndustry(
+                            it.token!!,
+                            list
+                        )
+                }
+            })
+            /** Observe response(isSuccess) update industries */
+            industryViewModel.boolLiveData.observe(viewLifecycleOwner, Observer { result ->
+                if(result){
+                    activity?.onBackPressed()
+                }
+            })
+        }
     }
 
     private fun initAdapter(){

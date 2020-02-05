@@ -6,10 +6,9 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "industry_table")
-data class Industry (
+data class Industry(
     @PrimaryKey
-    @ColumnInfo(name = "id") var id: Int?,
-    @ColumnInfo(name = "name") var name: String?
+    @ColumnInfo(name = "id") var id: String
 
 )
 

@@ -236,6 +236,11 @@
         android:name="com.urobot.droid.ui.fragments.industry.IndustryFragment"
         android:label="Industry"
         tools:layout="@layout/fragment_industry">
+        <argument
+            android:name="updateListIndusty"
+            app:argType="com.urobot.droid.data.model.IdsModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
 
