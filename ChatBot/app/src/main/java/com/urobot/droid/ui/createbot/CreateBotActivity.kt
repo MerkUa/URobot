@@ -198,7 +198,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         pb_home.visibility = View.VISIBLE
     }
 
-    override fun onBotDataChanged(botContentItem: BotContentItem) {
+    override fun onBotDataCreated(botContentItem: BotContentItem) {
         adapter.addData(botContentItem)
 
         /** Create New Bot Content */
@@ -208,5 +208,9 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                 createBotViewModel.createBotContentAndScripts(it.token!!, botContentItem)
             }
         })
+    }
+
+    override fun onBotDataChanged(botContentItem: BotContentItem) {
+
     }
 }

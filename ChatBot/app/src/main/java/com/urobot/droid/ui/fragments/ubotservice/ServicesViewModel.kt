@@ -2,7 +2,9 @@ package com.urobot.droid.ui.fragments.ubotservice
 
 import android.app.Application
 import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
@@ -43,16 +45,22 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
             val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
-            val response =  apiService.getAllServices(token,resultBotId?.botId!!)
+            if (resultBotId != null) {
+                val response = apiService.getAllServices(token, resultBotId?.botId!!)
 
                 withContext(Dispatchers.Main) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         getAllServicesLivaData.value = response.body()
 
-                    } else{
-                        Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
+            }
         }
     }
 

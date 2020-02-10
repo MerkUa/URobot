@@ -8,7 +8,7 @@ import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
-import com.urobot.droid.data.model.GetAllScriptsModel
+import com.urobot.droid.data.model.GetAllRobotsModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import com.urobot.droid.ui.fragments.chats.ChatsViewModel
@@ -34,31 +34,29 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
         currentUser = repository.User
     }
 
-    val getAllScriptsLivaData: MutableLiveData<List<List<GetAllScriptsModel>>> = MutableLiveData()
+    val getAllScriptsLivaData: MutableLiveData<List<GetAllRobotsModel>> = MutableLiveData()
 
     fun getAllContentAndScripts(token: String) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId =
-                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            //            val resultBotId =
+//                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
-            if (resultBotId != null) {
-                val response = apiService.getAllScripts(token, resultBotId?.botId!!)
+            val response = apiService.getAllRobots(token)
 
                 withContext(Dispatchers.Main) {
 
                     if (response.body() != null) {
 
-                        val list: List<List<GetAllScriptsModel>>
+                        val list: List<GetAllRobotsModel>
 
-                        list = response.body() as ArrayList<List<GetAllScriptsModel>>
+                        list = response.body() as ArrayList<GetAllRobotsModel>
 
                         getAllScriptsLivaData.value = list
 
                     }
                 }
-            }
         }
     }
 

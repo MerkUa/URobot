@@ -60,6 +60,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
                     botContentItem.level,
                     botContentItem.id,
                     botContentItem.action,
+                    botContentItem.isEmpty,
                     botContentItem.list_buttons
                 )
 
@@ -86,9 +87,9 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
     fun getAllContentAndScripts(token:String){
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            //            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
-            val response =  apiService.getAllScripts(token, resultBotId?.botId!!)
+            val response = apiService.getAllScripts(token, resultBotId)
 
             withContext(Dispatchers.Main) {
 

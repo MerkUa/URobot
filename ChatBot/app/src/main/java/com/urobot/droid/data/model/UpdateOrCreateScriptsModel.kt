@@ -25,6 +25,9 @@ data class UpdateOrCreateScriptsModel (
     @SerializedName("service_id")
     @Expose
     var serviceId: Long? = null,
+    @SerializedName("empty")
+    @Expose
+    var empty: Boolean? = null,
     @SerializedName("buttons")
     @Expose
     var buttons: List<ServiceButtons>? = null
