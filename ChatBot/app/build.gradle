@@ -12,6 +12,8 @@ apply plugin: 'io.fabric'
 
 apply plugin: 'androidx.navigation.safeargs'
 
+apply plugin: 'com.google.gms.google-services'
+
 
 android {
     signingConfigs {
@@ -135,6 +137,8 @@ dependencies {
     /**Koin*/
     implementation 'org.koin:koin-android:2.0.0'
     implementation 'org.koin:koin-androidx-viewmodel:1.0.1'
+
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

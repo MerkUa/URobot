@@ -3,16 +3,17 @@ package com.urobot.droid
 import android.app.Application
 import android.util.Log
 import com.facebook.stetho.Stetho
+import com.google.firebase.iid.FirebaseInstanceId
 import com.twitter.sdk.android.core.DefaultLogger
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
-import com.urobot.droid.di.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 
 
 class ChatBotApplication : Application() {
+
+    /* Firebase Instance */
+    private var firebaseInstanceId: FirebaseInstanceId? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -33,6 +34,12 @@ class ChatBotApplication : Application() {
 //            androidContext(this@ChatBotApplication)
 //            modules(appModule)
 //        }
+
+         firebaseInstanceId = FirebaseInstanceId.getInstance()
+
     }
 
+    fun getFirebaseInstance(): FirebaseInstanceId? {
+        return firebaseInstanceId
+    }
 }

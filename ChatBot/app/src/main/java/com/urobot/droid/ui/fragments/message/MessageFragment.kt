@@ -17,15 +17,13 @@ import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessageInput.InputListener
 import com.stfalcon.chatkit.messages.MessagesList
 import com.stfalcon.chatkit.messages.MessagesListAdapter
+import com.urobot.droid.ChatBotApplication
 import com.urobot.droid.Helper.Utils
 import com.urobot.droid.R
 import com.urobot.droid.data.NetModel.Request.Type
 import com.urobot.droid.data.model.Author
 import com.urobot.droid.data.model.ChatMessage
 import kotlinx.android.synthetic.main.message_fragment.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,6 +51,7 @@ class MessageFragment : Fragment() {
 
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
+//        Log.d("resultFireB", ChatBotApplication().getFirebaseInstance()!!.instanceId.result!!.token)
 
         inputField = root.findViewById(R.id.input)
         adapter = MessagesListAdapter<ChatMessage>("-1", imageLoader)

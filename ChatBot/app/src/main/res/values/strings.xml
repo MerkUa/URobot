@@ -124,6 +124,7 @@
     <string name="material_calendar_negative_button">Отмена</string>
     <string name="update_button">ОБНОВИТЬ</string>
     <string name="industry">Индустрии</string>
+    <string name="default_notification_channel_id">0</string>
 
 
 </resources>
