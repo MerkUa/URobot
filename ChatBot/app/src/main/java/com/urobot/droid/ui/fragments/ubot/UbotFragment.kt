@@ -61,15 +61,17 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
                 createBotButton.isEnabled = true
 
             } else {
-                list.add(
-                    Bot(
-                        result[0][0].botId.toString(),
-                        "test",
-                        "testDescription",
-                        emptyList(),
-                        ""
+                for (bot in result) {
+                    list.add(
+                        Bot(
+                            bot.id!!,
+                            bot.name!!,
+                            bot.description!!,
+                            emptyList(),
+                            ""
+                        )
                     )
-                )
+                }
 
                 val adapterChats = BotListAdapter(context!!, list)
                 adapterChats.addClickListener(this)

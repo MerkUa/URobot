@@ -126,9 +126,13 @@ interface ApiService {
     @GET("scripts")
     suspend fun getAllScripts(
         @Header("Authorization") authorization: String,
-        @Query("bot_id") botId:Int
+        @Query("robot_id") botId: Int
     ): Response<ArrayList<ArrayList<GetAllScriptsModel>>>
-    
+
+    @GET("users/robots")
+    suspend fun getAllRobots(
+        @Header("Authorization") authorization: String
+    ): Response<ArrayList<GetAllRobotsModel>>
 
     /** Services */
     //Calendar

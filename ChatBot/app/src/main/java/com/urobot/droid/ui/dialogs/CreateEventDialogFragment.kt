@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -20,14 +19,15 @@ import com.urobot.droid.data.model.ServiceButtons
 import kotlinx.android.synthetic.main.dialog_fragment_create_event.*
 
 
-class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddButtonBottomSheetDialog.AddButtonBottomSheetListener {
+class CreateEventDialogFragment : DialogFragment(), View.OnClickListener,
+    AddButtonBottomSheetDialog.AddButtonBottomSheetListener {
 
     private var addButtonDialog = AddButtonBottomSheetDialog()
     private var changeDataListener: ChangeDataListener? = null
-    private var list : ArrayList<ServiceButtons>? = ArrayList()
+    private var list: ArrayList<ServiceButtons>? = ArrayList()
     private var botContentItem: BotContentItem? = null
 
-    companion object{
+    companion object {
         private var instanceFragment: CreateEventDialogFragment? = null
 
         fun newInstance(botItem: BotContentItem): CreateEventDialogFragment? {
@@ -43,9 +43,13 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
         botContentItem = botItem
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-         val view = inflater.inflate(R.layout.dialog_fragment_create_event, null)
+        val view = inflater.inflate(R.layout.dialog_fragment_create_event, null)
 
         view.findViewById<View>(R.id.add_buttons_tv).setOnClickListener(this)
         view.findViewById<TextView>(R.id.save_button).setOnClickListener(this)
@@ -58,7 +62,18 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         descriptionEditText.setText(botContentItem!!.description)
+        for (button in botContentItem!!.list_buttons!!) {
 
+            val itemView = LinearLayout.inflate(
+                context,
+                R.layout.item_botton,
+                null
+            )
+            itemView.findViewById<TextView>(R.id.payment_button_dialog_fragment)
+                .setText(button.name)
+            linearLayout.addView(itemView)
+
+        }
     }
 
     override fun onStart() {
@@ -84,8 +99,8 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                     botContentItem!!.description = descriptionEditText.text.toString()
                     botContentItem!!.list_buttons = list
 
-                    if(botContentItem!!.parent_id != null){
-                       botContentItem!!.parent_id = botContentItem!!.id
+                    if (botContentItem!!.parent_id != null) {
+                        botContentItem!!.parent_id = botContentItem!!.id
                     }
 
 
@@ -114,7 +129,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                         R.layout.item_botton,
                         null
                     )
-                    itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                    itemView.findViewById<TextView>(R.id.payment_button_dialog_fragment)
                         .setText(getString(R.string.write_event_and_important))
                     linearLayout.addView(itemView)
                     list?.add(ServiceButtons(1, getString(R.string.write_event_and_important)))
@@ -127,7 +142,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                         R.layout.item_botton,
                         null
                     )
-                    itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                    itemView.findViewById<TextView>(R.id.payment_button_dialog_fragment)
                         .setText(getString(R.string.payment))
                     linearLayout.addView(itemView)
                     list?.add(ServiceButtons(2, getString(R.string.payment)))
@@ -159,7 +174,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
                     R.layout.item_botton,
                     null
                 )
-                itemView.findViewById<Button>(R.id.payment_button_dialog_fragment)
+                itemView.findViewById<TextView>(R.id.payment_button_dialog_fragment)
                     .setText(categoryEditText.text)
                 linearLayout.addView(itemView)
                 list?.add(
@@ -178,7 +193,9 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener, AddBut
 
         builder.show()
     }
+
     interface ChangeDataListener {
+        fun onBotDataCreated(botContentItem: BotContentItem)
         fun onBotDataChanged(botContentItem: BotContentItem)
     }
 
