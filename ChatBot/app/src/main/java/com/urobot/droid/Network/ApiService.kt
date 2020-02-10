@@ -90,13 +90,23 @@ interface ApiService {
         @Query("limit") limit : Int?
     ): Response<GetMessageModel>
 
+    /** Send Message Text */
     @POST("bots/send-message")
     suspend fun sendMessage(
         @Header("Authorization") authorization: String,
         @Body message: RequestMessage
     ): Response<ResponseBody>
 
-
+    /** Send Message Image */
+    @Multipart
+    @POST("bots/send-message")
+    suspend fun sendImageMessage(
+        @Header("Authorization") authorization: String,
+        @Query("type") type:String,
+        @Query("contact_id") contact_id:String,
+        @Part file: MultipartBody.Part?,
+        @Part("data") data: RequestBody?
+    ): Response<ResponseBody>
 
     /** bot Scripts */
 

@@ -17,10 +17,16 @@ import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessageInput.InputListener
 import com.stfalcon.chatkit.messages.MessagesList
 import com.stfalcon.chatkit.messages.MessagesListAdapter
+import com.urobot.droid.Helper.Utils
 import com.urobot.droid.R
+import com.urobot.droid.data.NetModel.Request.Type
 import com.urobot.droid.data.model.Author
 import com.urobot.droid.data.model.ChatMessage
 import kotlinx.android.synthetic.main.message_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -87,7 +93,7 @@ class MessageFragment : Fragment() {
 
                 users?.let {
                     if (recipientId != null) {
-                        messageViewModel.sendMessage(it.token!!, recipientId, inputField.inputEditText.text.toString())
+                        messageViewModel.sendTextMessage(it.token!!, recipientId, inputField.inputEditText.text.toString())
                     }
                 }
             })
@@ -125,27 +131,53 @@ class MessageFragment : Fragment() {
 
             for (item in result.data!!) {
                 Log.d("Merk", "message " + item.senderId)
-                val message = item.message
-                val messageId = item.id
+                if(item.type == Type.Text.type){
 
-                val list: ArrayList<ChatMessage> = ArrayList()
+                    val message = item.data
+                    val messageId = item.id
+
+                    val list: ArrayList<ChatMessage> = ArrayList()
 
 
-                var author: Author
-                if (item.senderId == "-1") {
-                    author = Author(
-                        "-1",
-                        "Me",
-                        "http://android.com.ua/images/News/android_logo.png",
-                        false
-                    )
-                } else {
-                    author = Author("2", "Sender", "", false)
+                    var author: Author
+                    if (item.senderId == "-1") {
+                        author = Author(
+                            "-1",
+                            "Me",
+                            "http://android.com.ua/images/News/android_logo.png",
+                            false
+                        )
+                    } else {
+                        author = Author("2", "Sender", "", false)
+                    }
+                    list.add(ChatMessage(messageId, author, message!!))
+                    adapter.addToEnd(list, false)
+                    messagesList.setAdapter(adapter)
                 }
 
-                list.add(ChatMessage(messageId, author, message!!))
-                adapter.addToEnd(list, false)
-                messagesList.setAdapter(adapter)
+                if(item.type == Type.Image.type){
+                    val message = item.data
+
+                    var author: Author
+                    if (item.senderId == "-1") {
+                        author = Author(
+                            "-1",
+                            "Me",
+                            "http://android.com.ua/images/News/android_logo.png",
+                            false
+                        )
+                    } else {
+                        author = Author("2", "Sender", "", false)
+                    }
+                    val listImage: ArrayList<ChatMessage> = ArrayList()
+
+                    val message1 = ChatMessage(1, author, "")
+                    listImage.add(message1)
+                    message1.setImage(ChatMessage.Image(message!!))
+                    adapter.addToEnd(listImage, true)
+
+                }
+
             }
 
         })
@@ -162,6 +194,15 @@ class MessageFragment : Fragment() {
                 message1.setImage(ChatMessage.Image(data?.data.toString()))
                 adapter.addToStart(message1, true)
 
+                messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
+                    users?.let {
+                        val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
+                        if (recipientId != null) {
+                            val file = File(Utils.getRealPath(context!!, data?.data!!))
+                            messageViewModel.sendImageMessage(it.token!!, recipientId, file )
+                        }
+                    }
+                })
             }
         }
     }

@@ -2,6 +2,7 @@ package com.urobot.droid.data.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import retrofit2.http.Query
 
 data class GetMessageModel(
     @SerializedName("current_page")
@@ -42,7 +43,6 @@ data class GetMessageModel(
     var total: Int? = null
 )
 
-
 data class DatumMessage (
     @SerializedName("id")
     @Expose
@@ -50,11 +50,14 @@ data class DatumMessage (
     @SerializedName("sender_id")
     @Expose
     var senderId: String? = null,
-    @SerializedName("message")
+    @SerializedName("data")
     @Expose
-    var message: String? = null,
+    var data: String? = null,
     @SerializedName("created_at")
     @Expose
-    var createdAt: String? = null
+    var createdAt: String? = null,
+    @SerializedName("type")
+    @Expose
+    var type : String? = null
 )
 

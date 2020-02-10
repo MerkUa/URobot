@@ -9,6 +9,7 @@ import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.NetModel.Request.RequestMessage
+import com.urobot.droid.data.NetModel.Request.Type
 import com.urobot.droid.data.model.GetMessageModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
@@ -17,6 +18,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class MessageViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
@@ -38,6 +43,7 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getMessage(token:String, contactId: Int?){
+
         CoroutineScope(Dispatchers.IO).launch {
 
             val apiService: ApiService = Apifactory.create()
@@ -56,15 +62,31 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
             }
     }
 
-    fun sendMessage(token:String, id:Int, message:String){
+    fun sendTextMessage(token:String, id:Int, message:String){
         CoroutineScope(Dispatchers.IO).launch {
             val apiService: ApiService = Apifactory.create()
 
             val requestMessage = RequestMessage(
                 id,
-                message
+                message,
+                Type.Text.type
             )
             apiService.sendMessage(token, requestMessage)
+        }
+    }
+
+    fun sendImageMessage(token:String, id:Int, file: File){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val requestBody: RequestBody =
+                RequestBody.create(MediaType.parse("image/*"), file)
+
+            val fileUpload =
+                MultipartBody.Part.createFormData("data", file.name, requestBody)
+
+            val apiService: ApiService = Apifactory.create()
+            apiService.sendImageMessage(token,Type.Image.type,
+                id.toString(), fileUpload, requestBody)
         }
     }
 

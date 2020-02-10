@@ -42,7 +42,8 @@ object Apifactory {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(provideOkHttpClientBuilder(provideLoggingInterceptor()).build())
-                .baseUrl("https://urobot.ml/api/v1/")
+//              .baseUrl("https://urobot.ml/api/v1/")
+                .baseUrl("https://c2321713.eu.ngrok.io/api/v1/")
                 .build()
 
         return retrofit.create(ApiService::class.java);

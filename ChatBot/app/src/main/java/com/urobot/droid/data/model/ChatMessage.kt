@@ -1,5 +1,6 @@
 package com.urobot.droid.data.model
 
+import android.graphics.Bitmap
 import com.stfalcon.chatkit.commons.models.IMessage
 import com.stfalcon.chatkit.commons.models.MessageContentType
 import java.util.*
@@ -40,7 +41,6 @@ class ChatMessage(private val id: Int?, user: Author, private var text: String, 
     override fun getImageUrl(): String? {
         return if (image == null) null else image!!.url
     }
-
     val status: String
         get() = "Sent"
 
