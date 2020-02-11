@@ -11,6 +11,7 @@ import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.NetModel.Request.RequestBotScripts
 import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.GetAllScriptsModel
+import com.urobot.droid.data.model.ServiceButtons
 import com.urobot.droid.data.model.UpdateOrCreateScriptsModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
@@ -49,9 +50,10 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
             //            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val apiService: ApiService = Apifactory.create()
+            val listscripts: ArrayList<UpdateOrCreateScriptsModel> = ArrayList()
 
 
-            val modelList = listOf(
+            listscripts.add(
                 UpdateOrCreateScriptsModel(
                     botContentItem.description,
                     0,
@@ -63,8 +65,27 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
                     botContentItem.isEmpty,
                     botContentItem.list_buttons
                 )
-
             )
+
+            for (buttons in botContentItem.list_buttons!!) {
+                val list: ArrayList<ServiceButtons>? = ArrayList()
+
+                listscripts.add(
+                    UpdateOrCreateScriptsModel(
+                        "",
+                        0,
+                        "text",
+                        botContentItem.id,
+                        botContentItem.level!! + 1,
+                        botContentItem.parent_id!! + buttons.id!!,
+                        botContentItem.action,
+                        true,
+                        list
+                    )
+                )
+            }
+
+            val modelList = listscripts.toList()
 
             val requestMessage = RequestBotScripts(
                 resultBotId,

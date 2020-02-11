@@ -13,8 +13,6 @@ import com.urobot.droid.data.model.BotContentItem
 import com.urobot.droid.data.model.BotData
 import com.urobot.droid.data.model.ServiceButtons
 import kotlinx.android.synthetic.main.horizontal_layout_home.view.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeBotAdapter(
     private val activity: AppCompatActivity
@@ -87,7 +85,6 @@ class HomeBotAdapter(
                                 )
                             )
                         }
-                        UUID.randomUUID().toString()
                     } else {
                         val nextRow = data[(data.indexOf(dataList) + 1)]
                         for (buttons in bot.list_buttons!!) {
