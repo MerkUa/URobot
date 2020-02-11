@@ -68,6 +68,8 @@ class LoginRepository(val loginContract: ILoginContract) {
                         error.printStackTrace()
                     })
 
+
+
         } catch (e: Throwable) {
             Log.d("Result", "Error " + e.localizedMessage)
         }

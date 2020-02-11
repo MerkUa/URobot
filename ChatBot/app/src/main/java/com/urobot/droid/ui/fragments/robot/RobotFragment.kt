@@ -1,17 +1,14 @@
 package com.urobot.droid.ui.fragments.robot
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TabHost
-import android.widget.Toast
 import androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 import com.urobot.droid.R
@@ -20,13 +17,14 @@ import kotlinx.android.synthetic.main.robot_fragment.*
 
 class RobotFragment : Fragment() {
 
-    private lateinit var viewModel: RobotViewModel
+    private lateinit var robotViewModel: RobotViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
         Log.d("fragment", "onCreateView")
+        robotViewModel = ViewModelProvider(this).get(RobotViewModel::class.java)
         val root = inflater.inflate(R.layout.robot_fragment, container, false)
 
 
@@ -35,8 +33,7 @@ class RobotFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RobotViewModel::class.java)
-        // TODO: Use the ViewModel
+
         Log.d("fragment", "onActivityCreated")
 
     }
@@ -80,6 +77,12 @@ class RobotFragment : Fragment() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {
 
+            }
+        })
+
+        robotViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+            users?.let {
+                robotViewModel.registerDeviceId(context!!, it.token!!)
             }
         })
 

@@ -85,7 +85,7 @@ interface ApiService {
     @GET("bots/get-messages")
     suspend fun getMessage(
         @Header("Authorization") authorization: String,
-        @Query("contact_id")contact_id: Int?,
+        @Query("contact_id")contact_id: String?,
         @Query("page") page : Int?,
         @Query("limit") limit : Int?
     ): Response<GetMessageModel>
@@ -180,5 +180,12 @@ interface ApiService {
         @Body ids: ArrayList<IdsModel>
     ) : Response<ResponseBody>
 
+
+    @PUT("devices/registration-token")
+    suspend fun registerDeviceId(
+        @Header("Authorization") authorization: String,
+        @Query("token") deviceId: String,
+        @Query("type") type:String
+    ) : Response<ResponseBody>
 
 }

@@ -42,7 +42,7 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         currentUser = repository.User
     }
 
-    fun getMessage(token:String, contactId: Int?){
+    fun getMessage(token:String, contactId: String?){
 
         CoroutineScope(Dispatchers.IO).launch {
 

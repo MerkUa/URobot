@@ -1,19 +1,23 @@
 package com.urobot.droid
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.util.Log
+import android.widget.Toast
 import com.facebook.stetho.Stetho
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.twitter.sdk.android.core.DefaultLogger
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
+import com.urobot.droid.data.SharedManager
 
 
 class ChatBotApplication : Application() {
 
     /* Firebase Instance */
-    private var firebaseInstanceId: FirebaseInstanceId? = null
+//    private var firebaseInstanceId: FirebaseInstanceId? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -35,11 +39,14 @@ class ChatBotApplication : Application() {
 //            modules(appModule)
 //        }
 
-         firebaseInstanceId = FirebaseInstanceId.getInstance()
-
-    }
-
-    fun getFirebaseInstance(): FirebaseInstanceId? {
-        return firebaseInstanceId
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+                // Get new Instance ID token
+                val token = task.result?.token
+                SharedManager(baseContext).tokenFb = token!!
+            })
     }
 }

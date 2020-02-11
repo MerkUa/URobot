@@ -40,9 +40,6 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application), 
 CoroutineScope(Dispatchers.IO).launch {
 
     val apiService: ApiService = Apifactory.create()
-
-//    val token = UserRoomDatabase.getDatabase(getApplication(), CoroutineScope(Dispatchers.IO)).userDao().getUser()
-
     val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
     if (resultBotId != null) {
@@ -69,14 +66,6 @@ CoroutineScope(Dispatchers.IO).launch {
 
     }
 }
-
-
-
-
-
-
-//        resultBotId?.let { apiService.getContacts(User.value!!.token!!, it) }
-
 }
 
     fun setListener(listener: IChatsContract) {
