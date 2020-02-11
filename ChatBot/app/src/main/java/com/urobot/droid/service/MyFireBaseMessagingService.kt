@@ -23,19 +23,6 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
         val data = remoteMessage.data
         val result = data["chat_id"]
 
-//        val intent = Intent("ActionChatId")
-//        intent.action = "ActionChatId"
-//        intent.putExtra("chat_id", result)
-//        Log.d("intent", intent.toString())
-//        Log.d("intent", result.toString())
-//        this.sendBroadcast(intent.setAction("chat_id"))
-//        broadcaster!!.sendBroadcast(intent)
-
-//        val myIntent = Intent("ActionChatId")
-//        myIntent.putExtra("action", result)
-//        Log.d("ROCK", myIntent.toString())
-//        this.sendBroadcast(myIntent)
-
         Intent().also { intent ->
             intent.action = "com.example.broadcast.MY_NOTIFICATION"
             intent.putExtra("data", result)

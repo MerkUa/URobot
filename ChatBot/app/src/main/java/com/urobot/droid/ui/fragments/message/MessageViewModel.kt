@@ -42,23 +42,29 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         currentUser = repository.User
     }
 
-    fun getMessage(token:String, contactId: String?){
+    fun getMessage(token:String, contactId: String?, page: Int){
 
         CoroutineScope(Dispatchers.IO).launch {
 
             val apiService: ApiService = Apifactory.create()
-            val response =  apiService.getMessage(token, contactId, 1,50)
+            val response =  apiService.getMessage(token, contactId, page,50)
 
-                withContext(Dispatchers.Main) {
+            val lastPage =response.body()!!.lastPage!!
 
-                    if(response.isSuccessful){
-                        messageLiveData.value = response.body()
-                    } else{
-                        Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
-                    }
+            if(lastPage >1){
+                for(i in 2..lastPage ){
+        apiService.getMessage(token, contactId, i,50)
+        }
+    }
+            withContext(Dispatchers.Main) {
 
+                if(response.isSuccessful){
+                    messageLiveData.value = response.body()
+
+                } else{
+                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
                 }
-
+            }
             }
     }
 

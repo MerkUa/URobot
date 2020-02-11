@@ -112,22 +112,19 @@ class MessageFragment : Fragment() {
 
 //        listChat.click
 
-        //Get Message
+//        Get Message
         messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
 
             users?.let {
-                messageViewModel.getMessage(it.token!!, recipientId.toString())
+
+                messageViewModel.getMessage(it.token!!, recipientId.toString(), 1)
+
             }
         })
 
-//        val filter = IntentFilter().apply {
-//            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-//        }
-//        context!!.registerReceiver(br, filter)
         val filter = IntentFilter().apply {
             addAction("com.example.broadcast.MY_NOTIFICATION")
         }
-//        LocalBroadcastManager.getInstance(context!!).registerReceiver(br, IntentFilter())
         context!!.registerReceiver(br, filter)
 
         return root
@@ -136,7 +133,9 @@ class MessageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         messageViewModel.messageLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { result ->
+
 
             for (item in result.data!!) {
                 Log.d("Merk", "message " + item.senderId)
@@ -190,6 +189,7 @@ class MessageFragment : Fragment() {
             }
 
         })
+
     }
 
     //handle result of picked image
@@ -216,41 +216,37 @@ class MessageFragment : Fragment() {
         }
     }
 
-//    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-//        override fun onReceive(context: Context?, intent: Intent) {
-//
-//            val id = intent.extras!!.getString("chat_id")
-//            val idD= activity?.intent?.getStringExtra("chat_id")
-//            val chatId = intent.getStringExtra("chat_id")
-//            Log.d("idD", idD)
-//            Log.d("receive", id)
-//            Log.d("receive", chatId.toString())
-//
-//
-//        }
-//    }
-//      var myReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-//    override fun onReceive(context: Context, intent: Intent) {
-//        Log.d("ROCK", "TUT BLYA")
-//        val action = intent.getStringExtra("action")
-//        if(action != null) {
-//            Log.d("ROCK", action)
-//        }
-//
-//
-//    }
-//}
+//    private val messagesReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+////        override fun onReceive(context: Context, intent: Intent) {
+////
+////        }
+////    }
 
-
-    class MyBroadcastReceiver : BroadcastReceiver() {
+    inner class MyBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            val data = intent.getStringExtra("data")
-            Log.e("x_prt", "onReceive: $data")
+            val dataId = intent.getStringExtra("data")
+            Log.e("x_prt", "onReceive: $dataId")
 
+            val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
+
+            if(dataId == recipientId.toString()){
+
+                messageViewModel.messageLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { result ->
+
+                        messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
+
+                            users?.let {
+                                messageViewModel.getMessage(it.token!!, recipientId.toString(),
+                                   result.lastPage!!
+                                )
+
+                            }
+                        })
+                    })
+
+            }
         }
-
-
     }
 
 
