@@ -6,18 +6,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.ConnectivityManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.messages.MessageInput
@@ -128,11 +124,11 @@ class MessageFragment : Fragment() {
 //            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
 //        }
 //        context!!.registerReceiver(br, filter)
-//        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
-//            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-//        }
+        val filter = IntentFilter().apply {
+            addAction("com.example.broadcast.MY_NOTIFICATION")
+        }
 //        LocalBroadcastManager.getInstance(context!!).registerReceiver(br, IntentFilter())
-        context!!.registerReceiver(br, IntentFilter())
+        context!!.registerReceiver(br, filter)
 
         return root
 
@@ -249,47 +245,12 @@ class MessageFragment : Fragment() {
     class MyBroadcastReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            val pendingResult: PendingResult = goAsync()
-            val asyncTask = Task(pendingResult, intent)
-            asyncTask.execute()
-            Log.d(TAG, "tut")
-
+            val data = intent.getStringExtra("data")
+            Log.e("x_prt", "onReceive: $data")
 
         }
 
-        private class Task(
-            private val pendingResult: PendingResult,
-            private val intent: Intent
-        ) : AsyncTask<String, Int, String>() {
 
-            override fun doInBackground(vararg params: String?): String {
-                val id = intent.getStringExtra("data")
-                val idD = intent.extras?.getString("data")
-                Log.d(TAG, "tut")
-                if(id != null  ) {
-                    Log.d(TAG, id)
-
-                }
-                if(idD!=null){
-                    Log.d(TAG, idD)
-                }
-//                val sb = StringBuilder()
-//                Log.d(TAG, "tut")
-//                sb.append("Action: ${intent.action}\n")
-//                sb.append("URI: ${intent.toUri(Intent.URI_INTENT_SCHEME)}\n")
-                return toString().also { log ->
-                    Log.d(TAG, log)
-                }
-
-            }
-
-            override fun onPostExecute(result: String?) {
-                super.onPostExecute(result)
-                // Must call finish() so the BroadcastReceiver can be recycled.
-                pendingResult.finish()
-                Log.d(TAG, "tut")
-            }
-        }
     }
 
 
