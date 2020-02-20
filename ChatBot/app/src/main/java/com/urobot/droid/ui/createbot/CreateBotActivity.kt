@@ -94,8 +94,8 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                             item.level,
                             null,
                             -1,
-                            false,
-                            item.data!!,
+                            item.empty!!,
+                            item.data,
                             list
                         )
                     )
@@ -211,6 +211,14 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
     }
 
     override fun onBotDataChanged(botContentItem: BotContentItem) {
+        adapter.addData(botContentItem)
 
+        /** Create New Bot Content */
+        createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
+            users?.let {
+                Log.d("Merk", "botContentItem " + botContentItem.level)
+                createBotViewModel.createBotContentAndScripts(it.token!!, botContentItem)
+            }
+        })
     }
 }

@@ -52,7 +52,7 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
             users?.let {
                 Log.d("Merk", "users")
 
-                ubotViewModel.getAllContentAndScripts(it.token!!)
+                ubotViewModel.getAllContentAndScripts(it.token!!, context!!)
             }
         })
 

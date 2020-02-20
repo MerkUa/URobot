@@ -110,7 +110,7 @@ interface ApiService {
 
     /** bot Scripts */
 
-    @POST("scripts/create")
+    @POST("scripts/create-update")
     suspend fun createScripts(
     @Header("Authorization") authorization: String,
     @Body botScripts : RequestBotScripts

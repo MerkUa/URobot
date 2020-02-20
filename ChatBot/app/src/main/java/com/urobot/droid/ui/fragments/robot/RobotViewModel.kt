@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.urobot.droid.Apifactory
+import com.urobot.droid.Helper.Utils.isNetworkConected
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
@@ -34,12 +35,14 @@ class RobotViewModel(application: Application) : AndroidViewModel(application), 
 
     fun registerDeviceId(context: Context, token:String){
 
-        CoroutineScope(Dispatchers.IO).launch {
+        if (isNetworkConected(context)) {
+            CoroutineScope(Dispatchers.IO).launch {
 
-            val tokenFb = SharedManager(context).tokenFb
-            val apiService: ApiService = Apifactory.create()
-            val type = "android"
-            apiService.registerDeviceId(token, tokenFb , type)
+                val tokenFb = SharedManager(context).tokenFb
+                val apiService: ApiService = Apifactory.create()
+                val type = "android"
+                apiService.registerDeviceId(token, tokenFb, type)
+            }
         }
     }
 

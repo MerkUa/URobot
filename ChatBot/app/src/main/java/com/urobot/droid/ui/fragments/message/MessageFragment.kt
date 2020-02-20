@@ -1,24 +1,29 @@
 package com.urobot.droid.ui.fragments.message
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessageInput.InputListener
-import com.stfalcon.chatkit.messages.MessagesList
 import com.stfalcon.chatkit.messages.MessagesListAdapter
 import com.urobot.droid.Helper.Utils
 import com.urobot.droid.R
@@ -34,11 +39,10 @@ import kotlin.collections.ArrayList
 class MessageFragment : Fragment() {
 
     companion object {
-
-        private  val TAG = "MyBroadcastReceiver"
-        fun newInstance() = MessageFragment()
         //image pick code
         private val IMAGE_PICK_CODE = 1000
+        //Permission code
+        private val PERMISSION_CODE = 1001;
     }
 
     private lateinit var messageViewModel: MessageViewModel
@@ -46,10 +50,13 @@ class MessageFragment : Fragment() {
     private lateinit var adapter: MessagesListAdapter<ChatMessage>
     val br: BroadcastReceiver = MyBroadcastReceiver()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val root = inflater.inflate(R.layout.message_fragment, container, false)
 
-        val listChat: MessagesList = root.findViewById(R.id.messagesList)
         val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
 
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
@@ -67,36 +74,25 @@ class MessageFragment : Fragment() {
             Author("-1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
         val authorSender = Author("2", "Sender", "", false)
 
-//        val message1 = Message("1", authorMe, "Hi")
-//        val message2 = Message("2", authorSender, "Hi!")
-//        val message3 = Message("1", authorMe, "text")
-//        val message4 = Message("2", authorSender, "text")
-
-//        list.add(message1)
-//        list.add(message2)
-//        list.add(message3)
-//        list.add(message3)
-//        list.add(message3)
-//        list.add(message4)
-//
-//        adapter.addToEnd(list, false)
-//        listChat.setAdapter(adapter)
-
-
-
-
         inputField.setInputListener(InputListener {
 
             val inputMessage = ChatMessage(1, authorMe, it.toString(), Date())
 
-            messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
 
-                users?.let {
-                    if (recipientId != null) {
-                        messageViewModel.sendTextMessage(it.token!!, recipientId, inputField.inputEditText.text.toString())
+            messageViewModel.currentUser.observe(
+                viewLifecycleOwner,
+                androidx.lifecycle.Observer { users ->
+
+                    users?.let {
+                        if (recipientId != null) {
+                            messageViewModel.sendTextMessage(
+                                it.token!!,
+                                recipientId,
+                                inputField.inputEditText.text.toString()
+                            )
+                        }
                     }
-                }
-            })
+                })
 
             //validate and send message
 
@@ -113,83 +109,132 @@ class MessageFragment : Fragment() {
 //        listChat.click
 
 //        Get Message
-        messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
+        messageViewModel.currentUser.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { users ->
+                users?.let {
+                    messageViewModel.getMessage(it.token!!, recipientId.toString(), 1)
 
-            users?.let {
-
-                messageViewModel.getMessage(it.token!!, recipientId.toString(), 1)
-
-            }
-        })
+                }
+            })
 
         val filter = IntentFilter().apply {
             addAction("com.example.broadcast.MY_NOTIFICATION")
         }
         context!!.registerReceiver(br, filter)
-
+        checkPermission()
         return root
 
+    }
+
+    fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (PermissionChecker.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) ==
+                PermissionChecker.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE);
+            }
+            if (PermissionChecker.checkSelfPermission(context!!, Manifest.permission.CAMERA) ==
+                PermissionChecker.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(Manifest.permission.CAMERA);
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE);
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        messageViewModel.messageLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { result ->
+        messageViewModel.messageLiveData.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { result ->
+
+                for (item in result.data!!) {
+                    Log.d("Merk", "message " + item.senderId)
+                    if (item.type == Type.Text.type) {
+
+                        val message = item.data
+                        val messageId = item.id
+
+                        val list: ArrayList<ChatMessage> = ArrayList()
 
 
-            for (item in result.data!!) {
-                Log.d("Merk", "message " + item.senderId)
-                if(item.type == Type.Text.type){
-
-                    val message = item.data
-                    val messageId = item.id
-
-                    val list: ArrayList<ChatMessage> = ArrayList()
-
-
-                    var author: Author
-                    if (item.senderId == "-1") {
-                        author = Author(
-                            "-1",
-                            "Me",
-                            "http://android.com.ua/images/News/android_logo.png",
-                            false
-                        )
-                    } else {
-                        author = Author("2", "Sender", "", false)
+                        var author: Author
+                        if (item.senderId == "-1") {
+                            author = Author(
+                                "-1",
+                                "Me",
+                                "http://android.com.ua/images/News/android_logo.png",
+                                false
+                            )
+                        } else {
+                            author = Author("2", "Sender", "", false)
+                        }
+                        if (message != null) {
+                            list.add(ChatMessage(messageId, author, message))
+                        }
+                        adapter.addToEnd(list, false)
+                        messagesList.setAdapter(adapter)
                     }
-                    list.add(ChatMessage(messageId, author, message!!))
-                    adapter.addToEnd(list, false)
-                    messagesList.setAdapter(adapter)
+
+                    if (item.type == Type.Image.type) {
+                        val message = item.data
+
+                        var author: Author
+                        if (item.senderId == "-1") {
+                            author = Author(
+                                "-1",
+                                "Me",
+                                "http://android.com.ua/images/News/android_logo.png",
+                                false
+                            )
+                        } else {
+                            author = Author("2", "Sender", "", false)
+                        }
+                        val listImage: ArrayList<ChatMessage> = ArrayList()
+
+                        val message1 = ChatMessage(1, author, "")
+                        listImage.add(message1)
+                        message1.setImage(ChatMessage.Image(message!!))
+                        adapter.addToEnd(listImage, true)
+
+                    }
+
                 }
 
-                if(item.type == Type.Image.type){
-                    val message = item.data
+            })
+        setRecyclerViewScrollListener()
 
-                    var author: Author
-                    if (item.senderId == "-1") {
-                        author = Author(
-                            "-1",
-                            "Me",
-                            "http://android.com.ua/images/News/android_logo.png",
-                            false
-                        )
-                    } else {
-                        author = Author("2", "Sender", "", false)
-                    }
-                    val listImage: ArrayList<ChatMessage> = ArrayList()
+    }
 
-                    val message1 = ChatMessage(1, author, "")
-                    listImage.add(message1)
-                    message1.setImage(ChatMessage.Image(message!!))
-                    adapter.addToEnd(listImage, true)
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PermissionChecker.PERMISSION_GRANTED
+                ) {
+                } else {
+                    //permission from popup denied
+                    Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
-
             }
-
-        })
-
+        }
     }
 
     //handle result of picked image
@@ -197,21 +242,25 @@ class MessageFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == MessageFragment.IMAGE_PICK_CODE) {
-                val authorMe = Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
+                val authorMe =
+                    Author("1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
 
                 val message1 = ChatMessage(1, authorMe, "")
                 message1.setImage(ChatMessage.Image(data?.data.toString()))
                 adapter.addToStart(message1, true)
 
-                messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
-                    users?.let {
-                        val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
-                        if (recipientId != null) {
-                            val file = File(Utils.getRealPath(context!!, data?.data!!))
-                            messageViewModel.sendImageMessage(it.token!!, recipientId, file )
+                messageViewModel.currentUser.observe(
+                    viewLifecycleOwner,
+                    androidx.lifecycle.Observer { users ->
+                        users?.let {
+                            val recipientId =
+                                arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
+                            if (recipientId != null) {
+                                val file = File(Utils.getRealPath(context!!, data?.data!!))
+                                messageViewModel.sendImageMessage(it.token!!, recipientId, file)
+                            }
                         }
-                    }
-                })
+                    })
             }
         }
     }
@@ -226,24 +275,29 @@ class MessageFragment : Fragment() {
 
         override fun onReceive(context: Context, intent: Intent) {
             val dataId = intent.getStringExtra("data")
-            Log.e("x_prt", "onReceive: $dataId")
+            Log.e("merk", "onReceive: $dataId")
 
             val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
 
-            if(dataId == recipientId.toString()){
+            if (dataId == recipientId.toString()) {
 
-                messageViewModel.messageLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { result ->
+//                messageViewModel.messageLiveData.observe(
+//                    viewLifecycleOwner,
+//                    androidx.lifecycle.Observer { result ->
 
-                        messageViewModel.currentUser.observe(viewLifecycleOwner, androidx.lifecycle.Observer { users ->
-
-                            users?.let {
-                                messageViewModel.getMessage(it.token!!, recipientId.toString(),
-                                   result.lastPage!!
-                                )
-
-                            }
-                        })
-                    })
+//                        messageViewModel.currentUser.observe(
+//                            viewLifecycleOwner,
+//                            androidx.lifecycle.Observer { users ->
+//                                Log.d("merk", "lastPage: $result.lastPage")
+//                                users?.let {
+//                                    messageViewModel.getMessage(
+//                                        it.token!!, recipientId.toString(),
+//                                        result.lastPage!!
+//                                    )
+//
+//                                }
+//                            })
+//                    })
 
             }
         }
@@ -260,6 +314,25 @@ class MessageFragment : Fragment() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, MessageFragment.IMAGE_PICK_CODE)
+    }
+
+    private fun setRecyclerViewScrollListener() {
+
+        messagesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val totalItemCount = recyclerView.layoutManager!!.itemCount
+                val ll = recyclerView.layoutManager as LinearLayoutManager
+                val firstVisibleItemPos = ll.findFirstVisibleItemPosition()
+                if (firstVisibleItemPos > totalItemCount / 2) {
+                    Log.d(
+                        "Merk",
+                        "Load " + ll.findFirstVisibleItemPosition() + " - " + totalItemCount
+                    )
+
+                }
+            }
+        })
     }
 
 }

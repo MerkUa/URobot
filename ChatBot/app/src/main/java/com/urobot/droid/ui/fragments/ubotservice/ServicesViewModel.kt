@@ -1,11 +1,13 @@
 package com.urobot.droid.ui.fragments.ubotservice
 
 import android.app.Application
+import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.urobot.droid.Apifactory
+import com.urobot.droid.Helper.Utils
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
@@ -39,25 +41,27 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
 
     }
 
-    fun getAllServices(token:String){
+    fun getAllServices(token: String, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            CoroutineScope(Dispatchers.IO).launch {
 
-        CoroutineScope(Dispatchers.IO).launch {
+                val resultBotId =
+                    UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+                val apiService: ApiService = Apifactory.create()
+                if (resultBotId != null) {
+                    val response = apiService.getAllServices(token, resultBotId?.botId!!)
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
-            val apiService: ApiService = Apifactory.create()
-            if (resultBotId != null) {
-                val response = apiService.getAllServices(token, resultBotId?.botId!!)
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            getAllServicesLivaData.value = response.body()
 
-                withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
-                        getAllServicesLivaData.value = response.body()
-
-                    } else {
-                        Toast.makeText(
-                            getApplication(),
-                            "Ooops: Something else went wrong",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        } else {
+                            Toast.makeText(
+                                getApplication(),
+                                "Ooops: Something else went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }

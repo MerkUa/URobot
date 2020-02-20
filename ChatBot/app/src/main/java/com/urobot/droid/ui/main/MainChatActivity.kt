@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.urobot.droid.R
 import com.urobot.droid.db.User
+import com.urobot.droid.ui.fragments.chats.ChatsFragmentDirections
 
 
 class MainChatActivity : AppCompatActivity() {
@@ -43,6 +44,18 @@ class MainChatActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+//        getIntent().getExtras()
+
+
+        val intent = intent
+        val id = intent.getStringExtra("message")
+        if (!id.isNullOrEmpty()) {
+            val action = ChatsFragmentDirections.actionNavigationChatsToNavigationMessages()
+                .setIdRecipient(id.toInt())
+            navController.navigate(action)
+        }
+
     }
 
     fun onBackStackChanged() {

@@ -1,9 +1,10 @@
 package com.urobot.droid.ui.fragments.message
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
@@ -42,33 +43,56 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         currentUser = repository.User
     }
 
-    fun getMessage(token:String, contactId: String?, page: Int){
+    fun getMessage(token: String, contactId: String?, page: Int) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
             val apiService: ApiService = Apifactory.create()
-            val response =  apiService.getMessage(token, contactId, page,50)
+            val response = apiService.getMessage(token, contactId, 1, 50)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
 
-            val lastPage =response.body()!!.lastPage!!
+                    if (response.isSuccessful) {
+                        messageLiveData.value = response.body()
 
-            if(lastPage >1){
-                for(i in 2..lastPage ){
-        apiService.getMessage(token, contactId, i,50)
-        }
-    }
-            withContext(Dispatchers.Main) {
-
-                if(response.isSuccessful){
-                    messageLiveData.value = response.body()
-
-                } else{
-                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
-            }
+        }
     }
 
-    fun sendTextMessage(token:String, id:Int, message:String){
+    fun getOldMessage(token: String, contactId: String?, page: Int) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val apiService: ApiService = Apifactory.create()
+            val response = apiService.getMessage(token, contactId, page, 50)
+            withContext(Dispatchers.Main) {
+
+                if (response.isSuccessful) {
+                    messageLiveData.value = response.body()
+
+                    response.message()
+
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Ooops: Something else went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        }
+    }
+
+    fun sendTextMessage(token: String, id: Int, message: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val apiService: ApiService = Apifactory.create()
 
@@ -81,7 +105,7 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun sendImageMessage(token:String, id:Int, file: File){
+    fun sendImageMessage(token: String, id: Int, file: File) {
         CoroutineScope(Dispatchers.IO).launch {
 
             val requestBody: RequestBody =
@@ -91,8 +115,10 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
                 MultipartBody.Part.createFormData("data", file.name, requestBody)
 
             val apiService: ApiService = Apifactory.create()
-            apiService.sendImageMessage(token,Type.Image.type,
-                id.toString(), fileUpload, requestBody)
+            apiService.sendImageMessage(
+                token, Type.Image.type,
+                id.toString(), fileUpload, requestBody
+            )
         }
     }
 

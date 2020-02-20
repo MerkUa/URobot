@@ -1,10 +1,12 @@
 package com.urobot.droid.ui.fragments.ubot
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.urobot.droid.Apifactory
+import com.urobot.droid.Helper.Utils
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
@@ -36,14 +38,15 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
 
     val getAllScriptsLivaData: MutableLiveData<List<GetAllRobotsModel>> = MutableLiveData()
 
-    fun getAllContentAndScripts(token: String) {
+    fun getAllContentAndScripts(token: String, context: Context) {
 
-        CoroutineScope(Dispatchers.IO).launch {
+        if (Utils.isNetworkConected(context)) {
+            CoroutineScope(Dispatchers.IO).launch {
 
-            //            val resultBotId =
+                //            val resultBotId =
 //                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
-            val apiService: ApiService = Apifactory.create()
-            val response = apiService.getAllRobots(token)
+                val apiService: ApiService = Apifactory.create()
+                val response = apiService.getAllRobots(token)
 
                 withContext(Dispatchers.Main) {
 
@@ -57,6 +60,7 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
 
                     }
                 }
+            }
         }
     }
 

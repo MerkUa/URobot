@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.urobot.droid.Helper.Utils
 import com.urobot.droid.NetModel.Industries
 import com.urobot.droid.R
 import com.urobot.droid.Repository.UserRepository
@@ -40,19 +41,27 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(username: String, password: String, context: Context) {
-        loginRepository.login(username, password, context)
+        if (Utils.isNetworkConected(context)) {
+            loginRepository.login(username, password, context)
+        }
     }
 
-    fun signUp(email: String, password: String, name: String, lastname: String) {
-        loginRepository.signUp(email, password, name, lastname)
+    fun signUp(email: String, password: String, name: String, lastname: String, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            loginRepository.signUp(email, password, name, lastname)
+        }
     }
 
-    fun signInSocial(type: String, token: String, secret: String?) {
-        loginRepository.signInSocial(type, token, secret)
+    fun signInSocial(type: String, token: String, secret: String?, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            loginRepository.signInSocial(type, token, secret)
+        }
     }
 
-    fun forgotPass(email: String) {
-        loginRepository.forgotPass(email)
+    fun forgotPass(email: String, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            loginRepository.forgotPass(email)
+        }
     }
 
     // Show Error

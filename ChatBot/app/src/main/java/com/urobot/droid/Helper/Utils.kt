@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -15,31 +17,26 @@ import androidx.loader.content.CursorLoader
 
 object Utils {
 
-//    fun getImageFilePath(context: Context, uri: Uri): String? {
-//        var path: String? = null
-//        var image_id: String? = null
-//        var cursor: Cursor? = null
-//        cursor = context.contentResolver.query(uri, null, null, null, null)
-//        if (cursor != null) {
-//            cursor.moveToFirst()
-//            image_id = cursor.getString(0)
-//            image_id = image_id.substring(image_id.lastIndexOf(":") + 1)
-//            cursor.close()
-//        }
-//        cursor= context.contentResolver.query(
-//            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//            null,
-//            MediaStore.Images.Media._ID + " = ? ",
-//            arrayOf(image_id),
-//            null
-//        )
-//        if (cursor != null) {
-//            cursor.moveToFirst()
-//            path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
-//            cursor.close()
-//        }
-//        return path
-//    }
+    fun isNetworkConected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nw = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+            return when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                //for other device how are able to connect with Ethernet
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                //for check internet over Bluetooth
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+                else -> false
+            }
+        } else {
+            val nwInfo = connectivityManager.activeNetworkInfo ?: return false
+            return nwInfo.isConnected
+        }
+    }
 
     fun getRealPath(context: Context, fileUri: Uri): String? {
         // SDK >= 11 && SDK < 19

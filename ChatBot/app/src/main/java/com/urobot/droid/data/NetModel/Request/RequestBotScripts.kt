@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.urobot.droid.data.model.UpdateOrCreateScriptsModel
 
 data class RequestBotScripts(
-    @field:SerializedName("bot_id")
+    @field:SerializedName("robot_id")
     val bot_id : Int? = null,
     @field:SerializedName("scripts")
     val scripts: List<UpdateOrCreateScriptsModel>
