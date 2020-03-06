@@ -18,7 +18,7 @@ interface ApiService {
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("auth/login/")
     fun login(
-            @Body login: RequestLogin
+        @Body login: RequestLogin
     ): Observable<ResponseLoginModel>
 
 
@@ -32,13 +32,13 @@ interface ApiService {
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("auth/registration/")
     fun signUp(
-            @Body login: RequestSignUp
+        @Body login: RequestSignUp
     ): Observable<ResponseLoginModel>
 
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("auth/social/")
     fun signinSocial(
-            @Body login: RequestSignInSocial
+        @Body login: RequestSignInSocial
     ): Observable<ResponseLoginModel>
 
     @Multipart
@@ -55,13 +55,13 @@ interface ApiService {
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @GET("users/{uuid}")
     fun getUserById(
-            @Path("uuid") login: String
+        @Path("uuid") login: String
     ): Observable<GetUserResponseModel>
 
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
     @POST("auth/reset-password/")
     fun forgotPass(
-            @Query("email") email: String
+        @Query("email") email: String
     ): Observable<ResponseBody>
 
     @Headers("accept: application/json", "Content-Type: application/json-patch+json")
@@ -79,15 +79,15 @@ interface ApiService {
     @GET("bots/get-contacts")
     fun getContacts(
         @Header("Authorization") authorization: String,
-        @Query("bot_id")botID: Int?
+        @Query("bot_id") botID: Int?
     ): Observable<List<GetContactsModel>>
 
     @GET("bots/get-messages")
     suspend fun getMessage(
         @Header("Authorization") authorization: String,
-        @Query("contact_id")contact_id: String?,
-        @Query("page") page : Int?,
-        @Query("limit") limit : Int?
+        @Query("contact_id") contact_id: String?,
+        @Query("page") page: Int?,
+        @Query("limit") limit: Int?
     ): Response<GetMessageModel>
 
     /** Send Message Text */
@@ -102,8 +102,8 @@ interface ApiService {
     @POST("bots/send-message")
     suspend fun sendImageMessage(
         @Header("Authorization") authorization: String,
-        @Query("type") type:String,
-        @Query("contact_id") contact_id:String,
+        @Query("type") type: String,
+        @Query("contact_id") contact_id: String,
         @Part file: MultipartBody.Part?,
         @Part("data") data: RequestBody?
     ): Response<ResponseBody>
@@ -112,16 +112,16 @@ interface ApiService {
 
     @POST("scripts/create-update")
     suspend fun createScripts(
-    @Header("Authorization") authorization: String,
-    @Body botScripts : RequestBotScripts
+        @Header("Authorization") authorization: String,
+        @Body botScripts: RequestBotScripts
     ): Response<ResponseBody>
 
     @PUT("scripts/update")
     suspend fun updateScripts(
         @Header("Authorization") authorization: String,
-        @Query("bot_id") botId:Int,
+        @Query("bot_id") botId: Int,
         @Query("scripts") scripts: UpdateOrCreateScriptsModel
-    ) : Response<ResponseBody>
+    ): Response<ResponseBody>
 
     @GET("scripts")
     suspend fun getAllScripts(
@@ -134,57 +134,68 @@ interface ApiService {
         @Header("Authorization") authorization: String
     ): Response<ArrayList<GetAllRobotsModel>>
 
+    // create robot
+    @POST("robots/create")
+    suspend fun createRobot(
+        @Header("Authorization") authorization: String,
+        @Query("name") name: String?,
+        @Query("description") description: String?
+    ) : Response<GetRobotModel>
+
     /** Services */
     //Calendar
     //Create
     @POST("services/create")
     suspend fun createCalendarServices(
         @Header("Authorization") authorization: String,
-        @Body botScripts : RequestBotCalendarService
-    ) : Response<ResponseBody>
+        @Body botScripts: RequestBotCalendarService
+    ): Response<ResponseBody>
+
     //Update
     @PUT("services/update")
     suspend fun updateOnlineRecordService(
         @Header("Authorization") authorization: String,
-        @Body updateOnlineRecord : UpdateBotCalendarService
-    ) : Response<ResponseBody>
+        @Body updateOnlineRecord: UpdateBotCalendarService
+    ): Response<ResponseBody>
 
     //Payment
     //Create
     @POST("services/create")
     suspend fun createPaymentServices(
         @Header("Authorization") authorization: String,
-        @Body botScripts : RequestBotPaymentService
-    ) : Response<ResponseBody>
+        @Body botScripts: RequestBotPaymentService
+    ): Response<ResponseBody>
+
     //Update
     @PUT("services/update")
     suspend fun updatePaymentService(
         @Header("Authorization") authorization: String,
-        @Body updatePayment : UpdatePaymentService
-    ) : Response<ResponseBody>
+        @Body updatePayment: UpdatePaymentService
+    ): Response<ResponseBody>
 
 
     @GET("services")
     suspend fun getAllServices(
         @Header("Authorization") authorization: String
-    ) : Response<List<GetAllServicesModel>>
+    ): Response<List<GetAllServicesModel>>
 
     @GET("industry")
     suspend fun getAllIndustry(
-        @Header("Authorization") authorization: String) : Response<List<GetAllIndustryModel>>
+        @Header("Authorization") authorization: String
+    ): Response<List<GetAllIndustryModel>>
 
     @PUT("users/update/industry")
     suspend fun updateIndustry(
         @Header("Authorization") authorization: String,
         @Body ids: ArrayList<IdsModel>
-    ) : Response<ResponseBody>
+    ): Response<ResponseBody>
 
 
     @PUT("devices/registration-token")
     suspend fun registerDeviceId(
         @Header("Authorization") authorization: String,
         @Query("token") deviceId: String,
-        @Query("type") type:String
-    ) : Response<ResponseBody>
+        @Query("type") type: String
+    ): Response<ResponseBody>
 
 }

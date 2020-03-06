@@ -42,6 +42,7 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         createBotButton.setOnClickListener {
             findNavController().navigate(R.id.navigation_create_bot)
         }
@@ -77,7 +78,7 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
                 adapterChats.addClickListener(this)
                 listBot.layoutManager = LinearLayoutManager(context)
                 listBot.adapter = adapterChats
-                createBotButton.isEnabled = false
+//                createBotButton.isEnabled = false
             }
         })
     }

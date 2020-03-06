@@ -187,6 +187,7 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
                 Log.d("photoURL", "photoURL " + data?.data)
 
                 photoView.setImageURI(data?.data)
+
                 currentUser.photoURL = data?.data.toString()
                 val file = File(Utils.getRealPath(context!!, data?.data!!))
 

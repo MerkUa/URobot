@@ -1,14 +1,12 @@
 package com.urobot.droid.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import retrofit2.http.DELETE
 
 
 @Dao
 interface IndustryDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertIndustry(data: Industry?)
 
     @Update

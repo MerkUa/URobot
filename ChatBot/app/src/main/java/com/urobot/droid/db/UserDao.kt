@@ -5,15 +5,13 @@ import androidx.room.*
 import io.reactivex.Completable
 
 
-
-
 @Dao
 interface UserDao {
 
     @Query("SELECT * from user_table LIMIT 1")
     fun getUser(): LiveData<User>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: User)
 
     @Query("DELETE FROM user_table")

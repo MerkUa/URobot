@@ -126,6 +126,10 @@
     <string name="update_button">ОБНОВИТЬ</string>
     <string name="industry">Индустрии</string>
     <string name="default_notification_channel_id">0</string>
+    <string name="add_messenger">Привязать мессенджер</string>
+    <string name="create">Создать</string>
+    <string name="token">Токен</string>
+    <string name="code">Код</string>
 
 
 </resources>
