@@ -166,8 +166,7 @@ interface ApiService {
 
     @GET("services")
     suspend fun getAllServices(
-        @Header("Authorization") authorization: String,
-        @Query("bot_id") botId:Int
+        @Header("Authorization") authorization: String
     ) : Response<List<GetAllServicesModel>>
 
     @GET("industry")

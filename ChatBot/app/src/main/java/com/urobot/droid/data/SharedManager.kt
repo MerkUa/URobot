@@ -7,6 +7,8 @@ class SharedManager(val context: Context) {
 
     private  val PREFERENCES_NAME = "ChatBot"
     private  val USER_TOKEN = "TokenFb"
+    private val PAYMENTISBUY = "PaymentIsBuy"
+    private val CRMISBUY = "CRMIsBuy"
     private  val DEFAULT = "DEFAULT"
 
 
@@ -16,6 +18,19 @@ class SharedManager(val context: Context) {
         get() = get().getString(USER_TOKEN, DEFAULT)!!
         set(value) = get().edit()
             .putString(USER_TOKEN, value)
+            .apply()
+
+
+    var paymentIsBuy: Boolean
+        get() = get().getBoolean(PAYMENTISBUY, false)
+        set(value) = get().edit()
+            .putBoolean(PAYMENTISBUY, value)
+            .apply()
+
+    var crmIsBuy: Boolean
+        get() = get().getBoolean(PAYMENTISBUY, false)
+        set(value) = get().edit()
+            .putBoolean(PAYMENTISBUY, value)
             .apply()
 
 }

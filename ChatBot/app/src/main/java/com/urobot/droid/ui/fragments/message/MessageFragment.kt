@@ -49,6 +49,7 @@ class MessageFragment : Fragment() {
     private lateinit var inputField: MessageInput
     private lateinit var adapter: MessagesListAdapter<ChatMessage>
     val br: BroadcastReceiver = MyBroadcastReceiver()
+    var listOfMessage: ArrayList<Int> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,7 +96,6 @@ class MessageFragment : Fragment() {
                 })
 
             //validate and send message
-
             adapter.addToStart(inputMessage, true)
             true
         })
@@ -113,7 +113,7 @@ class MessageFragment : Fragment() {
             viewLifecycleOwner,
             androidx.lifecycle.Observer { users ->
                 users?.let {
-                    messageViewModel.getMessage(it.token!!, recipientId.toString(), 1)
+                    messageViewModel.getMessages(it.token!!, recipientId.toString(), 1)
 
                 }
             })
@@ -156,11 +156,11 @@ class MessageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        messagesList.setAdapter(adapter)
 
         messageViewModel.messageLiveData.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { result ->
-
                 for (item in result.data!!) {
                     Log.d("Merk", "message " + item.senderId)
                     if (item.type == Type.Text.type) {
@@ -183,10 +183,13 @@ class MessageFragment : Fragment() {
                             author = Author("2", "Sender", "", false)
                         }
                         if (message != null) {
-                            list.add(ChatMessage(messageId, author, message))
+                            if (!listOfMessage.contains(messageId)) {
+                                listOfMessage.add(messageId!!)
+                                list.add(ChatMessage(messageId, author, message))
+                                adapter.addToEnd(list, false)
+                            }
                         }
-                        adapter.addToEnd(list, false)
-                        messagesList.setAdapter(adapter)
+
                     }
 
                     if (item.type == Type.Image.type) {
@@ -205,13 +208,78 @@ class MessageFragment : Fragment() {
                         }
                         val listImage: ArrayList<ChatMessage> = ArrayList()
 
-                        val message1 = ChatMessage(1, author, "")
-                        listImage.add(message1)
-                        message1.setImage(ChatMessage.Image(message!!))
-                        adapter.addToEnd(listImage, true)
+                        val message1 = ChatMessage(item.id, author, "")
+                        if (!listOfMessage.contains(item.id)) {
+                            listOfMessage.add(item.id!!)
+                            message1.setImage(ChatMessage.Image(message!!))
+                            listImage.add(message1)
+                            adapter.addToEnd(listImage, true)
+
+                        }
+                    }
+
+                }
+
+            })
+        messageViewModel.pushMessageLiveData.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { result ->
+                for (item in result.data!!) {
+                    Log.d("Merk", "message " + item.senderId)
+                    if (item.type == Type.Text.type) {
+
+                        val message = item.data
+                        val messageId = item.id
+
+                        val list: ArrayList<ChatMessage> = ArrayList()
+
+
+                        var author: Author
+                        if (item.senderId == "-1") {
+                            author = Author(
+                                "-1",
+                                "Me",
+                                "http://android.com.ua/images/News/android_logo.png",
+                                false
+                            )
+                        } else {
+                            author = Author("2", "Sender", "", false)
+                        }
+                        if (message != null) {
+                            if (!listOfMessage.contains(messageId)) {
+                                listOfMessage.add(messageId!!)
+                                list.add(ChatMessage(messageId, author, message))
+                                adapter.addToStart(ChatMessage(messageId, author, message), true)
+                            }
+                        }
 
                     }
 
+                    if (item.type == Type.Image.type) {
+                        val message = item.data
+
+                        var author: Author
+                        if (item.senderId == "-1") {
+                            author = Author(
+                                "-1",
+                                "Me",
+                                "http://android.com.ua/images/News/android_logo.png",
+                                false
+                            )
+                        } else {
+                            author = Author("2", "Sender", "", false)
+                        }
+                        val listImage: ArrayList<ChatMessage> = ArrayList()
+
+                        val message1 = ChatMessage(item.id, author, "")
+                        if (!listOfMessage.contains(item.id)) {
+                            listOfMessage.add(item.id!!)
+                            message1.setImage(ChatMessage.Image(message!!))
+                            listImage.add(message1)
+                            adapter.addToStart(message1, true)
+
+                        }
+                    }
                 }
 
             })
@@ -275,29 +343,13 @@ class MessageFragment : Fragment() {
 
         override fun onReceive(context: Context, intent: Intent) {
             val dataId = intent.getStringExtra("data")
-            Log.e("merk", "onReceive: $dataId")
+            Log.e("merkR", "onReceive: $dataId")
 
             val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
 
             if (dataId == recipientId.toString()) {
 
-//                messageViewModel.messageLiveData.observe(
-//                    viewLifecycleOwner,
-//                    androidx.lifecycle.Observer { result ->
-
-//                        messageViewModel.currentUser.observe(
-//                            viewLifecycleOwner,
-//                            androidx.lifecycle.Observer { users ->
-//                                Log.d("merk", "lastPage: $result.lastPage")
-//                                users?.let {
-//                                    messageViewModel.getMessage(
-//                                        it.token!!, recipientId.toString(),
-//                                        result.lastPage!!
-//                                    )
-//
-//                                }
-//                            })
-//                    })
+                messageViewModel.getNewMessages()
 
             }
         }
@@ -329,6 +381,7 @@ class MessageFragment : Fragment() {
                         "Merk",
                         "Load " + ll.findFirstVisibleItemPosition() + " - " + totalItemCount
                     )
+                    messageViewModel.getOldMessage()
 
                 }
             }

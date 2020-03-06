@@ -22,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ServicesViewModel(application:Application)  : AndroidViewModel(application), IUserContract {
+class ServicesViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
     private val userDao = UserRoomDatabase.getDatabase(application).userDao()
     private var listener: ChatsViewModel.IChatsContract? = null
@@ -32,7 +32,7 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
 
-    val getAllServicesLivaData : MutableLiveData<List<GetAllServicesModel>> = MutableLiveData()
+    val getAllServicesLivaData: MutableLiveData<List<GetAllServicesModel>> = MutableLiveData()
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -45,34 +45,36 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
 
-                val resultBotId =
-                    UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
                 val apiService: ApiService = Apifactory.create()
-                if (resultBotId != null) {
-                    val response = apiService.getAllServices(token, resultBotId?.botId!!)
+                val response = apiService.getAllServices(token)
 
-                    withContext(Dispatchers.Main) {
-                        if (response.isSuccessful) {
-                            getAllServicesLivaData.value = response.body()
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        getAllServicesLivaData.value = response.body()
 
-                        } else {
-                            Toast.makeText(
-                                getApplication(),
-                                "Ooops: Something else went wrong",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
     }
 
-    fun createOnlineRecordService(nameCalendar:String, token: String, dataListModel : OnlineRecordModel?, type_id : Int){
+    fun createOnlineRecordService(
+        nameCalendar: String,
+        token: String,
+        dataListModel: OnlineRecordModel?,
+        type_id: Int
+    ) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            val resultBotId =
+                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val requestServices =
                 RequestBotCalendarService(
                     resultBotId?.botId!!,
@@ -86,22 +88,32 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             val apiService: ApiService = Apifactory.create()
             val response = requestServices.let { apiService.createCalendarServices(token, it) }
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
 
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
 
-                } else{
-                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Ooops: Something else went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
-    fun updateCalendarServices(nameCalendar:String, token: String, dataListModel : OnlineRecordModel?, serviceId : Int){
+    fun updateCalendarServices(
+        nameCalendar: String,
+        token: String,
+        dataListModel: OnlineRecordModel?,
+        serviceId: Int
+    ) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            val resultBotId =
+                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val apiService: ApiService = Apifactory.create()
 
@@ -113,24 +125,34 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
                 dataListModel
             )
 
-            val response = apiService.updateOnlineRecordService(token,  model)
+            val response = apiService.updateOnlineRecordService(token, model)
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
 
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
 
-                } else{
-                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Ooops: Something else went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
-    fun createPaymentService(namePaymentServices:String ,token: String, dataListModel : PaymentModel?, type_id : Int){
+    fun createPaymentService(
+        namePaymentServices: String,
+        token: String,
+        dataListModel: PaymentModel?,
+        type_id: Int
+    ) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            val resultBotId =
+                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val requestServices = RequestBotPaymentService(
                 resultBotId?.botId!!,
                 namePaymentServices,
@@ -142,23 +164,33 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             val apiService: ApiService = Apifactory.create()
             val response = requestServices.let { apiService.createPaymentServices(token, it) }
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
 
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
 
-                } else{
-                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Ooops: Something else went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
         }
     }
 
-    fun updatePaymentServices(namePayment:String, token: String, dataListModel : PaymentModel?, serviceId : Int ){
+    fun updatePaymentServices(
+        namePayment: String,
+        token: String,
+        dataListModel: PaymentModel?,
+        serviceId: Int
+    ) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            val resultBotId =
+                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val model = UpdatePaymentService(
                 serviceId,
@@ -171,12 +203,16 @@ class ServicesViewModel(application:Application)  : AndroidViewModel(application
             val apiService: ApiService = Apifactory.create()
             val response = apiService.updatePaymentService(token, model)
 
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
 
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
 
-                } else{
-                    Toast.makeText(getApplication(), "Ooops: Something else went wrong", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Ooops: Something else went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }

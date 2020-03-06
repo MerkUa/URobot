@@ -88,6 +88,12 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
 
         }
 
+        tariffsTextView.setOnClickListener {
+
+            view.findNavController().navigate(R.id.navigation_settings_tariffs)
+
+        }
+
         messengerTextView.setOnClickListener {
 
             view.findNavController().navigate(R.id.navigation_settings_add_messenger)

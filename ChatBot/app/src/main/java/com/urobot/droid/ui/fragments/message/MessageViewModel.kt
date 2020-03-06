@@ -33,8 +33,14 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
+    var userId: String = ""
+    var userToken: String = ""
+    var page: Int = 1
+    var inProcess: Boolean = false
 
     var messageLiveData: MutableLiveData<GetMessageModel> = MutableLiveData()
+    var pushMessageLiveData: MutableLiveData<GetMessageModel> = MutableLiveData()
+
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -43,8 +49,9 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         currentUser = repository.User
     }
 
-    fun getMessage(token: String, contactId: String?, page: Int) {
-
+    fun getMessages(token: String, contactId: String, page: Int) {
+        userId = contactId
+        userToken = token
         CoroutineScope(Dispatchers.IO).launch {
 
             val apiService: ApiService = Apifactory.create()
@@ -67,28 +74,53 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun getOldMessage(token: String, contactId: String?, page: Int) {
-
+    fun getNewMessages() {
         CoroutineScope(Dispatchers.IO).launch {
 
             val apiService: ApiService = Apifactory.create()
-            val response = apiService.getMessage(token, contactId, page, 50)
-            withContext(Dispatchers.Main) {
+            val response = apiService.getMessage(userToken, userId, 1, 50)
+            if (response.isSuccessful) {
+                withContext(Dispatchers.Main) {
 
-                if (response.isSuccessful) {
-                    messageLiveData.value = response.body()
+                    if (response.isSuccessful) {
+                        pushMessageLiveData.value = response.body()
 
-                    response.message()
-
-                } else {
-                    Toast.makeText(
-                        getApplication(),
-                        "Ooops: Something else went wrong",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
+        }
+    }
 
+    fun getOldMessage() {
+        if (!inProcess) {
+            CoroutineScope(Dispatchers.IO).launch {
+                page = page + 1
+                inProcess = true
+                val apiService: ApiService = Apifactory.create()
+                val response = apiService.getMessage(userToken, userId, page, 50)
+                withContext(Dispatchers.Main) {
+
+                    if (response.isSuccessful) {
+                        messageLiveData.value = response.body()
+//                        response.message()
+                        inProcess = false
+
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            }
         }
     }
 

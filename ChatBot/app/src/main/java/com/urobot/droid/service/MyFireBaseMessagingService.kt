@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.urobot.droid.ChatBotApplication
 import com.urobot.droid.R
 import com.urobot.droid.ui.main.MainChatActivity
 
@@ -37,27 +38,24 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
             sendBroadcast(intent)
             Log.d("ROCK", result.toString())
         }
-        Log.d("Merk", "result: " + result)
-
-//        val intent = Intent(this, MainChatActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        intent.putExtra("message", result)
-//        startActivity(intent)
 
 
-        remoteMessage.notification.let {
-            sendNotification(it?.body, result)
+
+        if (!(applicationContext as ChatBotApplication).isInForeground()) {
+            sendNotification(data, result)
         }
+
     }
 
-    private fun sendNotification(messageBody: String?, result: String?) {
+    private fun sendNotification(messageBody: MutableMap<String, String>, result: String?) {
         val intent = Intent(this, MainChatActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("message", result)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.app_name))
             .setSmallIcon(R.drawable.chat_selector)
-            .setContentText(messageBody)
+            .setContentTitle(messageBody["title"])
+            .setContentText(messageBody["body"])
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
         val notificationManager =

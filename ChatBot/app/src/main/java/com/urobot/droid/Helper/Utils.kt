@@ -1,6 +1,7 @@
 package com.urobot.droid.Helper
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
@@ -217,5 +218,24 @@ object Utils {
      */
     private fun isGooglePhotosUri(uri: Uri): Boolean {
         return "com.google.android.apps.photos.content" == uri.authority
+    }
+
+
+    fun isAppRunning(
+        context: Context,
+        packageName: String
+    ): Boolean {
+        val activityManager =
+            context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val procInfos =
+            activityManager.runningAppProcesses
+        if (procInfos != null) {
+            for (processInfo in procInfos) {
+                if (processInfo.processName == packageName) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

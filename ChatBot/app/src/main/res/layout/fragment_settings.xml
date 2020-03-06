@@ -150,6 +150,18 @@
                 android:textColor="@color/black_text"
                 android:text="Промокод" />
 
+            <TextView
+                android:id="@+id/tariffsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:textColor="@color/black_text"
+                android:text="Тарифы и сервисы" />
+
 
             <TextView
                 android:id="@+id/logOutTextView"

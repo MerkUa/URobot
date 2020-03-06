@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_navigation_ubot_to_navigation_create_payment"
             app:destination="@id/navigation_create_payment" />
+        <action
+            android:id="@+id/action_navigation_ubot_to_navigation_messages"
+            app:destination="@id/navigation_messages" />
     </fragment>
 
     <fragment
@@ -153,6 +156,12 @@
         tools:layout="@layout/promo_fragment" />
 
     <fragment
+        android:id="@+id/navigation_settings_tariffs"
+        android:name="com.urobot.droid.ui.fragments.tariffs.TariffsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_tariffs" />
+
+    <fragment
         android:id="@+id/navigation_settings_support"
         android:name="com.urobot.droid.ui.fragments.support.SupportFragment"
         android:label="@string/title_settings"
@@ -177,6 +186,7 @@
     <fragment
         android:id="@+id/navigation_messages"
         android:name="com.urobot.droid.ui.fragments.message.MessageFragment"
+        android:label="@string/title_chats"
         tools:layout="@layout/message_fragment">
         <argument
             android:name="IdRecipient"

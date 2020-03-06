@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
 import com.urobot.droid.R
+import com.urobot.droid.data.SharedManager
 
 class BottomFragment : BottomSheetDialogFragment() {
 
@@ -28,6 +28,16 @@ class BottomFragment : BottomSheetDialogFragment() {
         buttonPayment.setOnClickListener {
             mBottomSheetListener?.onPaymentClick()
         }
+        val buttonPaymentCustom = root.findViewById<Button>(R.id.paymentCustomButton)
+        val isPayment = SharedManager(context!!).paymentIsBuy
+        if (isPayment) {
+            buttonPaymentCustom.visibility = View.VISIBLE
+        }
+        buttonPayment.setOnClickListener {
+            mBottomSheetListener?.onPaymentCustomClick()
+        }
+
+
         return root
     }
 
@@ -43,6 +53,8 @@ class BottomFragment : BottomSheetDialogFragment() {
     interface BottomSheetListener {
         fun onCalendarClick()
         fun onPaymentClick()
+        fun onPaymentCustomClick()
+
     }
 
 }

@@ -167,6 +167,9 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
         findNavController().navigate(R.id.navigation_create_payment)
         sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
+
+    override fun onPaymentCustomClick() {
+    }
 }
 
 

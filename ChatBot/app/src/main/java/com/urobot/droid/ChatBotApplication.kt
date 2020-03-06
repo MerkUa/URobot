@@ -7,6 +7,9 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.facebook.stetho.Stetho
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
@@ -17,13 +20,14 @@ import com.twitter.sdk.android.core.TwitterConfig
 import com.urobot.droid.data.SharedManager
 
 
-class ChatBotApplication : Application() {
+class ChatBotApplication : Application(), LifecycleObserver {
 
     /* Firebase Instance */
 //    private var firebaseInstanceId: FirebaseInstanceId? = null
 
     override fun onCreate() {
         super.onCreate()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         createNotificationChannel(
             this,
             NotificationManagerCompat.IMPORTANCE_DEFAULT, false,
@@ -42,10 +46,6 @@ class ChatBotApplication : Application() {
         //finally initialize twitter with created configs
         Twitter.initialize(config)
         Stetho.initializeWithDefaults(this)
-//        startKoin {
-//            androidContext(this@ChatBotApplication)
-//            modules(appModule)
-//        }
 
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
@@ -56,6 +56,11 @@ class ChatBotApplication : Application() {
                 val token = task.result?.token
                 SharedManager(baseContext).tokenFb = token!!
             })
+    }
+
+
+    fun isInForeground(): Boolean {
+        return ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
     }
 
     fun createNotificationChannel(
