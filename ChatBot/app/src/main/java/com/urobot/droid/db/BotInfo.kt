@@ -20,7 +20,21 @@ enum class Messenger(val messengerId: Int) {
     Facebook(3),
     Instagram(4),
     Vk(5),
-    WhatsApp(6)
+    WhatsApp(6);
+
+    companion object {
+        fun fromValue(x: Int): Messenger {
+            return when (x) {
+                1 -> Telegram
+                2 -> Viber
+                3 -> Facebook
+                4 -> Instagram
+                5 -> Vk
+                6 -> WhatsApp
+                else -> throw IllegalStateException()
+            }
+        }
+    }
 }
 
 

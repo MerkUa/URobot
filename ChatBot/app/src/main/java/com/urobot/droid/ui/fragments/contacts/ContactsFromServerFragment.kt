@@ -30,6 +30,7 @@ class ContactsFromServerFragment : Fragment(), ContactListAdapter.ItemClickListe
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        list.clear()
         contactsViewModel =
             ViewModelProvider(this).get(ContactsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_list_contacts, container, false)

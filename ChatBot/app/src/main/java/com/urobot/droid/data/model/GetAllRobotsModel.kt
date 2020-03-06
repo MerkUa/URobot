@@ -12,7 +12,11 @@ data class GetAllRobotsModel(
     var name: String? = null,
     @SerializedName("description")
     @Expose
-    var description: String? = null
+    var description: String? = null,
+    @SerializedName("list_of_messengers")
+    @Expose
+    var list: List<Int>? = null
+
 )
 
 

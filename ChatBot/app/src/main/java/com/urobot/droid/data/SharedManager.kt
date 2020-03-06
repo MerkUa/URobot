@@ -10,6 +10,11 @@ class SharedManager(val context: Context) {
     private val PAYMENTISBUY = "PaymentIsBuy"
     private val CRMISBUY = "CRMIsBuy"
     private  val DEFAULT = "DEFAULT"
+    private val TELEGRAM = "Telegram"
+    private val FACEBOOK = "Facebook"
+    private val VIBER = "Viber"
+    private val VK = "vk"
+    private val WHATSUP = "Whatsup"
 
 
     private fun get(): SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -31,6 +36,33 @@ class SharedManager(val context: Context) {
         get() = get().getBoolean(PAYMENTISBUY, false)
         set(value) = get().edit()
             .putBoolean(PAYMENTISBUY, value)
+            .apply()
+
+    var telegramIsConnected: Boolean
+        get() = get().getBoolean(TELEGRAM, false)
+        set(value) = get().edit()
+            .putBoolean(TELEGRAM, value)
+            .apply()
+
+    var facebookIsConnected: Boolean
+        get() = get().getBoolean(FACEBOOK, false)
+        set(value) = get().edit()
+            .putBoolean(FACEBOOK, value)
+            .apply()
+    var viberIsConnected: Boolean
+        get() = get().getBoolean(VIBER, false)
+        set(value) = get().edit()
+            .putBoolean(VIBER, value)
+            .apply()
+    var vkIsConnected: Boolean
+        get() = get().getBoolean(VK, false)
+        set(value) = get().edit()
+            .putBoolean(VK, value)
+            .apply()
+    var whatsupIsConnected: Boolean
+        get() = get().getBoolean(WHATSUP, false)
+        set(value) = get().edit()
+            .putBoolean(WHATSUP, value)
             .apply()
 
 }

@@ -10,10 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.Bot
+import com.urobot.droid.db.Messenger
 
 
-class BotListAdapter(private val context: Context,
-                     private val dataSource: ArrayList<Bot>
+class BotListAdapter(
+    private val context: Context,
+    private val dataSource: ArrayList<Bot>
 ) : RecyclerView.Adapter<BotListAdapter.BotItemViewHolder>() {
 
     private var mOnBotClickListener: ItemClickListener? = null
@@ -37,7 +39,39 @@ class BotListAdapter(private val context: Context,
     override fun onBindViewHolder(holder: BotItemViewHolder, position: Int) {
         holder.title.text = dataSource[position].title
         holder.description.text = dataSource[position].description
-        holder.iconTelegram.visibility = View.VISIBLE
+
+        if (dataSource[position].listMessengers.isEmpty()) {
+            holder.addBot.visibility = View.VISIBLE
+        }
+        for (id in dataSource[position].listMessengers) {
+            when (Messenger.Companion.fromValue(id)) {
+                Messenger.Telegram -> {
+                    holder.iconTelegram.visibility = View.VISIBLE
+                }
+                Messenger.Viber -> {
+                    holder.iconViber.visibility = View.VISIBLE
+                }
+                Messenger.Facebook -> {
+                    holder.iconFacabook.visibility = View.VISIBLE
+                }
+                Messenger.Vk -> {
+                    holder.iconVk.visibility = View.VISIBLE
+                }
+                Messenger.WhatsApp -> {
+                    holder.iconWhatsUp.visibility = View.VISIBLE
+                }
+                Messenger.Instagram -> {
+                    holder.iconInstagramm.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        holder.addBot.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
         holder.botView.setOnClickListener(View.OnClickListener { view ->
             mOnBotClickListener?.onItemClick(
                 view, position
@@ -50,7 +84,13 @@ class BotListAdapter(private val context: Context,
         var title: TextView
         var description: TextView
         var change: TextView
+        var addBot: TextView
         var iconTelegram: ImageView
+        var iconFacabook: ImageView
+        var iconViber: ImageView
+        var iconVk: ImageView
+        var iconInstagramm: ImageView
+        var iconWhatsUp: ImageView
         var botView: RelativeLayout
 
         init {
@@ -59,6 +99,13 @@ class BotListAdapter(private val context: Context,
             change = itemView.findViewById(R.id.tvChange)
             iconTelegram = itemView.findViewById(R.id.iconTelegram)
             botView = itemView.findViewById(R.id.botView)
+            iconFacabook = itemView.findViewById(R.id.iconFacebook)
+            iconViber = itemView.findViewById(R.id.iconViber)
+            iconVk = itemView.findViewById(R.id.iconVk)
+            iconInstagramm = itemView.findViewById(R.id.iconInstagram)
+            iconWhatsUp = itemView.findViewById(R.id.iconWhatsApp)
+            addBot = itemView.findViewById(R.id.tvAddBot)
+
         }
 
 
@@ -66,6 +113,7 @@ class BotListAdapter(private val context: Context,
 
     interface ItemClickListener {
         fun onItemClick(view: View?, position: Int)
+        fun onAddBotClick(view: View?, position: Int)
     }
 
     fun addClickListener(itemClickListener: ItemClickListener) {

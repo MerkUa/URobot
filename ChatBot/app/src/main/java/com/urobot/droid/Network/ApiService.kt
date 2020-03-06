@@ -134,6 +134,12 @@ interface ApiService {
         @Header("Authorization") authorization: String
     ): Response<ArrayList<GetAllRobotsModel>>
 
+    @POST("bots/create")
+    suspend fun addBots(
+        @Header("Authorization") authorization: String,
+        @Body message: RequestAddBot
+    ): Response<ResponseBody>
+
     // create robot
     @POST("robots/create")
     suspend fun createRobot(

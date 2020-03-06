@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
     tools:context=".ui.fragments.support.SupportFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:id="@+id/linearLayoutMessengers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="top"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -215,6 +218,18 @@
 
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:paddingTop="8dp">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tokenLayout"
             style="@style/RegistrationTextInputLayoutStyle"
@@ -240,11 +255,7 @@
             android:id="@+id/codeLayout"
             style="@style/RegistrationTextInputLayoutStyle"
             android:layout_marginTop="16dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tokenLayout"
-            tools:ignore="MissingConstraints">
+            android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/codeEditText"
@@ -255,6 +266,21 @@
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/addBotButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button_rounded_background"
+            android:text="привязать"
+            android:textColor="@color/white"
+            android:windowSoftInputMode="adjustNothing" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

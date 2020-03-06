@@ -1,16 +1,25 @@
 package com.urobot.droid.ui.fragments.addMesenger
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.NetModel.Request.RequestCreateBot
-import com.urobot.droid.db.*
+import com.urobot.droid.data.SharedManager
+import com.urobot.droid.db.BotInfo
+import com.urobot.droid.db.Messenger
+import com.urobot.droid.db.User
+import com.urobot.droid.db.UserRoomDatabase
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.FACEBOOK
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.TELEGTAM
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VIBER
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VK
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.WHATSAPP
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
@@ -33,15 +42,17 @@ class AddMessengerViewModel(application: Application) : AndroidViewModel(applica
         currentUser = repository.User
     }
 
-    fun sendToken(messengerToken: String, chatId: String) {
+    @SuppressLint("CheckResult")
+    fun sendToken(messengerToken: String, code: String, messenger: Messenger) {
         val apiService: ApiService = Apifactory.create()
         val request = RequestCreateBot(
             messengerToken,
-            chatId
+            code,
+            messenger.messengerId
         )
         Log.d("Result", "token " + currentUser.value!!.token!!)
 
-        Log.d("Result", "chatId " + chatId)
+        Log.d("Result", "chatId " + messenger.messengerId)
         Log.d("Result", "messengerToken " + messengerToken)
 
 
@@ -52,20 +63,51 @@ class AddMessengerViewModel(application: Application) : AndroidViewModel(applica
 
                 CoroutineScope(Dispatchers.IO).launch {
 
-      val dataBaseBotResult =  UserRoomDatabase.getDatabase(getApplication()).botDao().getById(result.bot_id)
+                    var messenger = Messenger.Telegram
+                    when (messenger.toString()) {
+                        TELEGTAM -> {
+                            messenger = Messenger.Telegram
+                            SharedManager(getApplication()!!).telegramIsConnected = true
+                        }
+                        VIBER -> {
+                            messenger = Messenger.Viber
+                            SharedManager(getApplication()!!).viberIsConnected = true
+                        }
+                        FACEBOOK -> {
+                            messenger = Messenger.Facebook
+                            SharedManager(getApplication()!!).facebookIsConnected = true
+                        }
+                        VK -> {
+                            messenger = Messenger.Vk
+                            SharedManager(getApplication()!!).vkIsConnected = true
+                        }
+                        WHATSAPP -> {
+                            messenger = Messenger.WhatsApp
+                            SharedManager(getApplication()!!).paymentIsBuy = true
+                        }
+                    }
 
-      if( dataBaseBotResult?.botId == result.bot_id){
+                    val dataBaseBotResult = UserRoomDatabase.getDatabase(getApplication()).botDao()
+                        .getById(result.bot_id)
 
-      UserRoomDatabase.getDatabase(getApplication()).botDao().updateBot(
-          BotInfo(1, result.bot_id, Messenger.Telegram.messengerId,
-              Messenger.Telegram.toString()))
+                    if (dataBaseBotResult?.botId == result.bot_id) {
 
-         } else {
+                        UserRoomDatabase.getDatabase(getApplication()).botDao().updateBot(
+                            BotInfo(
+                                result.bot_id, result.bot_id, messenger.messengerId,
+                                messenger.toString()
+                            )
+                        )
 
-          UserRoomDatabase.getDatabase(getApplication()).botDao().insertBot(
-              BotInfo(1, result.bot_id, Messenger.Telegram.messengerId,
-                  Messenger.Telegram.toString()))
-      }
+                    } else {
+
+                        UserRoomDatabase.getDatabase(getApplication()).botDao().insertBot(
+                            BotInfo(
+                                result.bot_id, result.bot_id, messenger.messengerId,
+                                messenger.toString()
+                            )
+                        )
+                    }
                 }
 
                 Log.d("Result", result.bot_id.toString())

@@ -16,8 +16,11 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.urobot.droid.R
+import com.urobot.droid.data.SharedManager
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.FACEBOOK
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.TELEGTAM
-import kotlinx.android.synthetic.main.activity_login.*
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VIBER
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VK
 import kotlinx.android.synthetic.main.activity_login.FBLayout
 import kotlinx.android.synthetic.main.activity_login.loginButtonFacebook
 import kotlinx.android.synthetic.main.add_messenger_fragment.*
@@ -64,11 +67,27 @@ class AddMessengerFragment : Fragment() {
         val isLoggedIn = accessToken != null && !accessToken.isExpired
         if (isLoggedIn) {
             imageFacebookLogin.visibility = View.VISIBLE
-            textConnect.visibility = View.INVISIBLE
+            textConnect.visibility = View.GONE
+        }
+        if (SharedManager(context!!).facebookIsConnected) {
+            imageFacebookLogin.visibility = View.VISIBLE
+            textConnect.visibility = View.GONE
+        }
+        if (SharedManager(context!!).telegramIsConnected) {
+            imageTelegramLogin.visibility = View.VISIBLE
+            textConnectTelegram.visibility = View.GONE
+        }
+        if (SharedManager(context!!).viberIsConnected) {
+            imageViberLogin.visibility = View.VISIBLE
+            textConnectViber.visibility = View.GONE
+        }
+        if (SharedManager(context!!).vkIsConnected) {
+            imageVKLogin.visibility = View.VISIBLE
+            textConnectVK.visibility = View.GONE
         }
         FBLayout.setOnClickListener {
-            Log.d("performClick", "imFacebook")
-            loginButtonFacebook.performClick()
+            val action = AddMessengerFragmentDirections.navigationToAddMessenger(FACEBOOK)
+            view.findNavController().navigate(action)
         }
         loginButtonFacebook.setFragment(this)
         loginButtonFacebook.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
@@ -94,6 +113,14 @@ class AddMessengerFragment : Fragment() {
         })
         textConnectTelegram.setOnClickListener {
             val action = AddMessengerFragmentDirections.navigationToAddMessenger(TELEGTAM)
+            view.findNavController().navigate(action)
+        }
+        textConnectViber.setOnClickListener {
+            val action = AddMessengerFragmentDirections.navigationToAddMessenger(VIBER)
+            view.findNavController().navigate(action)
+        }
+        textConnectVK.setOnClickListener {
+            val action = AddMessengerFragmentDirections.navigationToAddMessenger(VK)
             view.findNavController().navigate(action)
         }
 

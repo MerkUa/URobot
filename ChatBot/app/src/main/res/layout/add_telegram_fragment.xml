@@ -40,6 +40,33 @@
                 android:text="1052862410:AAFWJekfeab9Q3WhME03Kd9i9at-jRq6h7c"
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
+            <!--
+                            android:text="1052862410:AAFWJekfeab9Q3WhME03Kd9i9at-jRq6h7c"
+
+            -->
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/codeView"
+            style="@style/RegistrationTextInputLayoutStyle"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tokenView"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/codeEditText"
+                style="@style/RegistrationEditTextStyle"
+                android:hint="@string/hint_code"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="#1d1d26"
+                android:textSize="16sp" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -54,7 +81,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tokenView" />
+            app:layout_constraintTop_toBottomOf="@+id/codeView" />
 
 
         <Button

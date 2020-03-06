@@ -2,7 +2,6 @@ package com.urobot.droid.ui.fragments.ubot
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.urobot.droid.R
 import com.urobot.droid.adapter.BotListAdapter
-
 import com.urobot.droid.data.model.Bot
 import com.urobot.droid.ui.createbot.CreateBotActivity
 import com.urobot.droid.ui.createbot.CreateBotActivity.Companion.EXTRA_BOT_ID
+import com.urobot.droid.ui.dialogs.ChooseMessengerDialogFragment
 import kotlinx.android.synthetic.main.fragment_ubot.*
 
 
-class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
+class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
+    ChooseMessengerDialogFragment.OnMessengerClickListener {
 
     private lateinit var ubotViewModel: UbotViewModel
     private val list = arrayListOf<Bot>()
@@ -51,13 +50,13 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
     fun init() {
         ubotViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
             users?.let {
-                Log.d("Merk", "users")
-
                 ubotViewModel.getAllContentAndScripts(it.token!!, context!!)
             }
         })
 
         ubotViewModel.getAllScriptsLivaData.observe(viewLifecycleOwner, Observer { result ->
+
+            list.clear()
             if (result.isEmpty()) {
                 createBotButton.isEnabled = true
 
@@ -68,7 +67,7 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
                             bot.id!!,
                             bot.name!!,
                             bot.description!!,
-                            emptyList(),
+                            bot.list!!,
                             ""
                         )
                     )
@@ -88,5 +87,17 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener {
         val intent = Intent(activity, CreateBotActivity::class.java)
         intent.putExtra(EXTRA_BOT_ID, bot.botId)
         startActivityForResult(intent, 1)
+    }
+
+    override fun onAddBotClick(view: View?, position: Int) {
+        var bot = list.get(position)
+        val dialog = ChooseMessengerDialogFragment()
+        dialog.setRobotId(bot.botId)
+        dialog.setSelectedListener(this)
+        dialog.show(activity!!.supportFragmentManager, "TAG")
+    }
+
+    override fun onClickListener(robotId: String, messengerId: Int, token: String, code: String) {
+        ubotViewModel.addBot(robotId, messengerId, token, code, context!!)
     }
 }

@@ -71,6 +71,7 @@ class ContactsMyFragment : Fragment(), ContactListAdapter.ItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        list.clear()
         checkPermissions()
         editTextSearch!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}

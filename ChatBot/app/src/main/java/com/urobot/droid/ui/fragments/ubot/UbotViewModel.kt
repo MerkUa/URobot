@@ -2,6 +2,7 @@ package com.urobot.droid.ui.fragments.ubot
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,6 +29,7 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
+    var userToken: String = ""
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -39,7 +41,7 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
     val getAllScriptsLivaData: MutableLiveData<List<GetAllRobotsModel>> = MutableLiveData()
 
     fun getAllContentAndScripts(token: String, context: Context) {
-
+        userToken = token
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
 
@@ -47,11 +49,10 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
 //                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
                 val apiService: ApiService = Apifactory.create()
                 val response = apiService.getAllRobots(token)
-
+                Log.d("Merk", "getAllRobots")
                 withContext(Dispatchers.Main) {
-
+                    Log.d("Merk", "Dispatchers")
                     if (response.body() != null) {
-
                         val list: List<GetAllRobotsModel>
 
                         list = response.body() as ArrayList<GetAllRobotsModel>
@@ -66,4 +67,30 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
 
     override fun onUpdateResult(user: User) {}
     override fun onUpdateError() {}
+    fun addBot(robotId: String, messengerId: Int, token: String, code: String, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            getAllContentAndScripts(userToken, context)
+//            CoroutineScope(Dispatchers.IO).launch {
+//
+//                val apiService: ApiService = Apifactory.create()
+//
+//                val config = AddBotConfig(
+//                    token,
+//                    code
+//                )
+//                val requstAddBot = RequestAddBot(
+//                    robotId, messengerId, config
+//                )
+//
+//                val response = apiService.addBots(userToken, requstAddBot)
+//
+//                withContext(Dispatchers.Main) {
+//
+//                    if (response.isSuccessful) {
+//                        getAllContentAndScripts(userToken, context)
+//                    }
+//                }
+//            }
+        }
+    }
 }

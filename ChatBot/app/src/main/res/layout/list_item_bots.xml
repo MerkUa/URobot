@@ -36,18 +36,28 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/iconInstagram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iconFacebook"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
+            android:visibility="gone"
+            android:src="@drawable/facebook" />
+
+        <ImageView
+            android:id="@+id/iconInstagram"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_toRightOf="@+id/iconFacebook"
             android:visibility="gone"
             android:src="@drawable/instagram" />
 
         <ImageView
             android:id="@+id/iconWhatsApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
             android:layout_toRightOf="@+id/iconInstagram"
@@ -56,8 +66,8 @@
 
         <ImageView
             android:id="@+id/iconViber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
             android:layout_toRightOf="@+id/iconWhatsApp"
@@ -66,13 +76,37 @@
 
         <ImageView
             android:id="@+id/iconTelegram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="4dp"
             android:layout_below="@+id/descriptionBot"
             android:layout_toRightOf="@+id/iconViber"
             android:visibility="gone"
             android:src="@drawable/telegram" />
+
+        <ImageView
+            android:id="@+id/iconVk"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_toRightOf="@+id/iconTelegram"
+            android:visibility="gone"
+            android:src="@drawable/vklogo" />
+
+        <TextView
+            android:id="@+id/tvAddBot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descriptionBot"
+            android:layout_alignStart="@+id/descriptionBot"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone"
+            android:text="Привязать бота"
+            android:textColor="@color/colorAccentDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvChange"

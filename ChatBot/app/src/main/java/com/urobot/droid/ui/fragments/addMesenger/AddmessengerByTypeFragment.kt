@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.urobot.droid.R
-import com.urobot.droid.data.NetModel.Request.RequestCreateBot.Companion.TELEGRAM
+import com.urobot.droid.db.Messenger
 import com.urobot.droid.db.User
 import kotlinx.android.synthetic.main.add_telegram_fragment.*
 
@@ -18,7 +18,9 @@ class AddmessengerByTypeFragment : Fragment() {
 
     companion object {
         const val TELEGTAM = "Telegram"
+        const val FACEBOOK = "Facebook"
         const val VIBER = "Viber"
+        const val VK = "Vk"
         const val WHATSAPP = "Whatsapp"
     }
 
@@ -31,8 +33,8 @@ class AddmessengerByTypeFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(AddMessengerViewModel::class.java)
 
@@ -55,20 +57,37 @@ class AddmessengerByTypeFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         val type = arguments?.let { AddmessengerByTypeFragmentArgs.fromBundle(it).type }
+        var messenger = Messenger.Telegram
         when (type) {
             TELEGTAM -> {
-                Log.d("Swich", "TELEGTAM")
                 MessengerImage.setImageDrawable(context?.getDrawable(R.drawable.telegram))
+                messenger = Messenger.Telegram
             }
-            VIBER ->
-                Log.d("Swich", "VIBER")
+            VIBER -> {
+                MessengerImage.setImageDrawable(context?.getDrawable(R.drawable.viber))
+                messenger = Messenger.Viber
+            }
+            FACEBOOK -> {
+                MessengerImage.setImageDrawable(context?.getDrawable(R.drawable.facebook))
+                messenger = Messenger.Facebook
+            }
+            VK -> {
+                MessengerImage.setImageDrawable(context?.getDrawable(R.drawable.vklogo))
+                codeView.visibility = View.VISIBLE
+                messenger = Messenger.Vk
+
+            }
 
             WHATSAPP ->
                 Log.d("Swich", "WHATSAPP")
 
         }
         sendTokenButton.setOnClickListener {
-            viewModel.sendToken(tokenEditText.text.toString(), TELEGRAM)
+            viewModel.sendToken(
+                tokenEditText.text.toString(),
+                codeEditText.text.toString(),
+                messenger
+            )
         }
     }
 
