@@ -95,7 +95,7 @@ interface ApiService {
     suspend fun sendMessage(
         @Header("Authorization") authorization: String,
         @Body message: RequestMessage
-    ): Response<ResponseBody>
+    ): Response<SendMessageResponseModel>
 
     /** Send Message Image */
     @Multipart
@@ -106,7 +106,7 @@ interface ApiService {
         @Query("contact_id") contact_id: String,
         @Part file: MultipartBody.Part?,
         @Part("data") data: RequestBody?
-    ): Response<ResponseBody>
+    ): Response<SendMessageResponseModel>
 
     /** bot Scripts */
 

@@ -3,7 +3,6 @@ package com.urobot.droid.ui.fragments.chats
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.urobot.droid.Apifactory
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
@@ -12,7 +11,6 @@ import com.urobot.droid.data.model.Chat
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,7 +43,6 @@ CoroutineScope(Dispatchers.IO).launch {
     if (resultBotId != null) {
 
             apiService.getContacts(token, resultBotId.botId)
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     val list = arrayListOf<Chat>()

@@ -11,6 +11,8 @@ import com.urobot.droid.Helper.Utils
 import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
+import com.urobot.droid.data.NetModel.Request.AddBotConfig
+import com.urobot.droid.data.NetModel.Request.RequestAddBot
 import com.urobot.droid.data.model.GetAllRobotsModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
@@ -69,28 +71,28 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
     override fun onUpdateError() {}
     fun addBot(robotId: String, messengerId: Int, token: String, code: String, context: Context) {
         if (Utils.isNetworkConected(context)) {
-            getAllContentAndScripts(userToken, context)
-//            CoroutineScope(Dispatchers.IO).launch {
-//
-//                val apiService: ApiService = Apifactory.create()
-//
-//                val config = AddBotConfig(
-//                    token,
-//                    code
-//                )
-//                val requstAddBot = RequestAddBot(
-//                    robotId, messengerId, config
-//                )
-//
-//                val response = apiService.addBots(userToken, requstAddBot)
-//
-//                withContext(Dispatchers.Main) {
-//
-//                    if (response.isSuccessful) {
-//                        getAllContentAndScripts(userToken, context)
-//                    }
-//                }
-//            }
+//            getAllContentAndScripts(userToken, context)
+            CoroutineScope(Dispatchers.IO).launch {
+
+                val apiService: ApiService = Apifactory.create()
+
+                val config = AddBotConfig(
+                    token,
+                    code
+                )
+                val requstAddBot = RequestAddBot(
+                    robotId, messengerId, config
+                )
+
+                val response = apiService.addBots(userToken, requstAddBot)
+
+                withContext(Dispatchers.Main) {
+
+                    if (response.isSuccessful) {
+                        getAllContentAndScripts(userToken, context)
+                    }
+                }
+            }
         }
     }
 }

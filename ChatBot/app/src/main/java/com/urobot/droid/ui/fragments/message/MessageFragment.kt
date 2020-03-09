@@ -36,7 +36,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MessageFragment : Fragment() {
+class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
 
     companion object {
         //image pick code
@@ -64,6 +64,7 @@ class MessageFragment : Fragment() {
 
         inputField = root.findViewById(R.id.input)
         adapter = MessagesListAdapter<ChatMessage>("-1", imageLoader)
+        messageViewModel.setListener(this)
 //        adapter.setOnMessageViewClickListener { view, message ->
 //            Log.d("ClickListener","ClickListener "+view)
 
@@ -386,6 +387,10 @@ class MessageFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onMessageSent(messageId: Int) {
+        listOfMessage.add(messageId)
     }
 
 }

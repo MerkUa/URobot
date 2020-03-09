@@ -35,9 +35,9 @@ android {
 
         /** change SDK to 24 in release version
          * 23 only for testing in device */
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 29
-        versionCode 12
+        versionCode 13
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

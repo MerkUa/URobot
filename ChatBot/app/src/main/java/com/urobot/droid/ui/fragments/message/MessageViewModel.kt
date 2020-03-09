@@ -14,7 +14,6 @@ import com.urobot.droid.data.NetModel.Request.Type
 import com.urobot.droid.data.model.GetMessageModel
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
-import com.urobot.droid.ui.fragments.chats.ChatsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +26,7 @@ import java.io.File
 class MessageViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
     private val userDao = UserRoomDatabase.getDatabase(application).userDao()
-    private var listener: ChatsViewModel.IChatsContract? = null
+    private var listener: IChatMessageContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: UserRepository
@@ -133,7 +132,15 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
                 message,
                 Type.Text.type
             )
-            apiService.sendMessage(token, requestMessage)
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = apiService.sendMessage(token, requestMessage)
+                withContext(Dispatchers.Main) {
+
+                    if (response.isSuccessful) {
+                        response.body()?.id?.let { listener?.onMessageSent(it) }
+                    }
+                }
+            }
         }
     }
 
@@ -147,11 +154,29 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
                 MultipartBody.Part.createFormData("data", file.name, requestBody)
 
             val apiService: ApiService = Apifactory.create()
-            apiService.sendImageMessage(
-                token, Type.Image.type,
-                id.toString(), fileUpload, requestBody
-            )
+
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = apiService.sendImageMessage(
+                    token, Type.Image.type,
+                    id.toString(), fileUpload, requestBody
+                )
+                withContext(Dispatchers.Main) {
+
+                    if (response.isSuccessful) {
+                        response.body()?.id?.let { listener?.onMessageSent(it) }
+                    }
+                }
+            }
         }
+    }
+
+    fun setListener(listener: IChatMessageContract) {
+        this.listener = listener
+    }
+
+    interface IChatMessageContract {
+        fun onMessageSent(messageId: Int)
     }
 
     override fun onUpdateResult(user: User) {
