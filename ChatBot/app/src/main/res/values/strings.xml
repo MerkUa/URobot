@@ -58,12 +58,12 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="title_fragment_3">Оплата прямо в чате с клиентом</string>
+    <!--    <string name="description_fragment_1">Общайся с друзьями и клиентами из разных мессенждеров в одном приложении.</string>-->
+    <string name="title_fragment_2">Подходит для любой сферы</string>
+    <!--    <string name="description_fragment_2">Общайся с друзьями и клиентами из разных мессенждеров в одном приложении.</string>-->
     <string name="title_fragment_1">Все сообщения в одном приложении</string>
-    <string name="description_fragment_1">Общайся с друзьями и клиентами из разных мессенждеров в одном приложении.</string>
-    <string name="title_fragment_2">Все сообщения в одном приложении</string>
-    <string name="description_fragment_2">Общайся с друзьями и клиентами из разных мессенждеров в одном приложении.</string>
-    <string name="title_fragment_3">Все сообщения в одном приложении</string>
-    <string name="description_fragment_3">Общайся с друзьями и клиентами из разных мессенждеров в одном приложении.</string>
+    <!--    <string name="description_fragment_3">Общайся с друзьями и клиентами из разных мессенждеров в одном приложении.</string>-->
 
     <string name="button_skip">ПРОПУСТИТЬ</string>
     <string name="button_create_acc">СОЗДАТЬ КАБИНЕТ</string>
@@ -121,7 +121,7 @@
         <item>Декабрь</item>
     </array>
 
-    <string name="material_calendar_today_button"></string>
+    <string name="material_calendar_todaaqdescriptionn"></string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Отмена</string>
     <string name="update_button">ОБНОВИТЬ</string>
@@ -131,6 +131,48 @@
     <string name="create">Создать</string>
     <string name="token">Токен</string>
     <string name="code">Код</string>
+    <string name="faqtitle1">Что такое U-robot?</string>
+    <string name="faqtitle2">U-robot - мобильная платформа, а какие телефоны поддерживаются?</string>
+    <string name="faqtitle3">Можно ли работать с платформой на ПК?</string>
+    <string name="faqtitle4">Какие мессенджеры и соцсети поддерживает U-robot?</string>
+    <string name="faqtitle5">Зачем нужен сайт в мессенджерах и соцсетях?</string>
+    <string name="faqtitle6">Чем U-robot отличается от конкурентов?</string>
+    <string name="faqtitle7">С чего начать?</string>
+    <string name="faqtitle8">Как создать своего робота?</string>
+    <string name="faqtitle9">Что такое сервисы в U-robot?</string>
+    <string name="faqtitle10">Как начать создавать свой сервис?</string>
+    <string name="faqtitle11">Как создать сервис “ОНЛАЙН-ЗАПИСЬ”?</string>
+    <string name="faqtitle12">Как создать сервис “ОПЛАТА”?</string>
+    <string name="faqtitle13">Раздел “ЧАТЫ”</string>
+    <string name="faqtitle14">Раздел “НАСТРОЙКА”</string>
+
+
+    <string name="faqdescription1">U-robot - мобильная платформа для создания полнофункциональных  роботов, сайтов, интернет-магазинов,  лендингов в мессенджерах и соцсетях.</string>
+    <string name="faqdescription2">Все - на базе Android или iOS.</string>
+    <string name="faqdescription3">Нет, на данный момент поддерживаются только мобильные версии.</string>
+    <string name="faqdescription4">WhatsApp, Telegram, Viber, Facebook, Instagram, VK.</string>
+    <string name="faqdescription5">Пользователи не любят уходить на другие площадки, даже на ваш сайт. Клиент будет чувствовать себя гораздо комфортнее, взаимодействуя с вами в привычных соцсетях или мессенджерах. Дать им возможность находиться на той же площадке, где вы их поймали - гарантированный рост конверсии в платеж и лояльности вашему бизнесу.</string>
+    <string name="faqdescription6">Изначально ориентирован на мобильные телефоны; Простота и скорость при создании роботов и сервисов на платформе.</string>
+    <string name="faqdescription7">Скачайте официальное приложение с AppStore (здесь будет линк) или Google Play (здесь будет линк) в зависимости от модели вашего телефона.</string>
+    <string name="faqdescription8">- После загрузки приложения вы по умолчанию попадаете на главный экран и вкладку “РОБОТЫ”, где сможете создать своего робота нажав кнопку “СОЗДАТЬ”; \n
+                                    - далее необходимо ввести название робота, описание (для каких целей вы его используете), телефон к которому он будет привязан и куда будут приходить все сообщения пользователей; \n
+                                    - получить и ввести код для активации робота.
+</string>
+    <string name="faqdescription9">Это онлайн-запись или оплата, которые будут доступны для ваших клиентов в нужных вам мессенджерах и соцсетях.</string>
+    <string name="faqdescription10">После попадания на главный экран вам необходимо выбрать вкладку “СЕРВИСЫ” и нажать кнопку “СОЗДАТЬ”.</string>
+    <string name="faqdescription11">- После нажатия кнопки “СОЗДАТЬ” в разделе “СЕРВИСЫ” выберите “ОНЛАЙН-ЗАПИСЬ”;\n
+- введите название сервиса “ОНЛАЙН-ЗАПИСЬ”;\n
+- отметьте рабочие дни, время работы, возможные перерывы, длительность сеансов сервиса;\n
+- нажмите “СОЗДАТЬ”.</string>
+    <string name="faqdescription12">- После нажатия кнопки “СОЗДАТЬ” в разделе “СЕРВИСЫ” выберите “ОПЛАТА”;\n
+- введите название сервиса оплаты;\n
+- введите номер карты, на которую будут осуществляться платежи клиентов;\n
+- фамилия и имя, как на карте;\n
+- срок действия;\n
+- CVC код и нажмите кнопку “СОЗДАТЬ”.\n
+</string>
+    <string name="faqdescription13">В едином окне вы можете видеть и отвечать на все сообщения, которые пользователи присылают вашим ботам.</string>
+    <string name="faqdescription14">Общая информация о вашем аккаунте. Фото профиля, описание, индустрия, привязанные мессенджеры, поддержка, через которую вы можете задать необходимые параметры, и раздел “ПРОМОКОД”, где вы можете ввести полученное промо для активации особых условий.</string>
 
 
 </resources>

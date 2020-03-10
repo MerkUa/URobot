@@ -1,6 +1,5 @@
 package com.urobot.droid.ui.login
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -370,7 +369,7 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == SIGN_IN_REQ_CODE) {
             val response = IdpResponse.fromResultIntent(data)
 
-            if (resultCode == Activity.RESULT_OK) {
+//            if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
                 user!!.getIdToken(true)
@@ -380,7 +379,7 @@ class LoginActivity : AppCompatActivity() {
 
                         }
                 // ...
-            }
+//            }
 
         }
 

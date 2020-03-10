@@ -1,32 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".fragment.TutorialPageFragment">
 
+
     <ImageView
         android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/tutorial1"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/tutorial_page" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
 
     <TextView
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:textSize="28dp"
-        android:gravity="center"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:textColor="@color/colorAccent"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:text="@string/hello_blank_fragment"
+        android:textColor="@color/colorAccent"
+        android:textSize="28dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textDescription"
@@ -34,13 +51,15 @@
         android:layout_height="wrap_content"
         android:textSize="16dp"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginTop="16dp"
         android:layout_marginStart="28dp"
         android:layout_marginEnd="28dp"
         android:textColor="@color/tutorial_Text_Color"
         android:layout_below="@+id/textTitle"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

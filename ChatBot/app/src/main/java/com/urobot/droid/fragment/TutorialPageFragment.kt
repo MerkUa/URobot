@@ -3,12 +3,12 @@ package com.urobot.droid.fragment
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.urobot.droid.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +37,6 @@ class TutorialPageFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             paramTitle = it.getInt(ARG_PARAM1)
-            paramDescription = it.getInt(ARG_PARAM2)
             paramImage = it.getInt(ARG_PARAM3)
 
         }
@@ -106,11 +105,10 @@ class TutorialPageFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: Int, param2: Int, param3: Int) =
+        fun newInstance(param1: Int, param3: Int) =
                 TutorialPageFragment().apply {
                     arguments = Bundle().apply {
                         putInt(ARG_PARAM1, param1)
-                        putInt(ARG_PARAM2, param2)
                         putInt(ARG_PARAM3, param3)
                     }
                 }
