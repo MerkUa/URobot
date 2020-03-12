@@ -1,5 +1,7 @@
 package com.urobot.droid.ui.login
 
+import android.accounts.AccountManager
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -26,7 +28,11 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.twitter.sdk.android.core.*
 import com.urobot.droid.R
 import com.urobot.droid.data.NetModel.Request.RequestSignInSocial.Companion.FACEBOOK
@@ -55,22 +61,27 @@ class LoginActivity : AppCompatActivity() {
 
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance().registerCallback(callbackManager,
-                object : FacebookCallback<LoginResult?> {
-                    override fun onSuccess(loginResult: LoginResult?) {
-                    }
+            object : FacebookCallback<LoginResult?> {
+                override fun onSuccess(loginResult: LoginResult?) {
+                }
 
-                    override fun onCancel() {
-                    }
+                override fun onCancel() {
+                }
 
-                    override fun onError(exception: FacebookException) {
-                    }
-                })
+                override fun onError(exception: FacebookException) {
+                }
+            })
 
         val config = TwitterConfig.Builder(this)
-                .logger(DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(TwitterAuthConfig("XnSbA5ptLFQPHD1x5tROiCRHo", "j8cHkhx2deVhj7W3LulrwmOiLCl19FDBVDMpWx0iLeuJOPxmmJ"))
-                .debug(true)
-                .build()
+            .logger(DefaultLogger(Log.DEBUG))
+            .twitterAuthConfig(
+                TwitterAuthConfig(
+                    "XnSbA5ptLFQPHD1x5tROiCRHo",
+                    "j8cHkhx2deVhj7W3LulrwmOiLCl19FDBVDMpWx0iLeuJOPxmmJ"
+                )
+            )
+            .debug(true)
+            .build()
         Twitter.initialize(config)
 
         val username = findViewById<AppCompatEditText>(R.id.UserNameEditText)
@@ -111,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButtonFacebook.registerCallback(callbackManager, object :
-                FacebookCallback<LoginResult?> {
+            FacebookCallback<LoginResult?> {
             override fun onSuccess(loginResult: LoginResult?) { // App code
                 val accessToken = AccessToken.getCurrentAccessToken()
                 val isLoggedIn = accessToken != null && !accessToken.isExpired
@@ -211,10 +222,18 @@ class LoginActivity : AppCompatActivity() {
             }
             if (forgotPassState.successForgotPass != null) {
                 buttonCancel.performClick()
-                Toast.makeText(applicationContext, forgotPassState.successForgotPass, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    forgotPassState.successForgotPass,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             if (forgotPassState.errorForgotPass != null) {
-                Toast.makeText(applicationContext, forgotPassState.errorForgotPass, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    forgotPassState.errorForgotPass,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
@@ -228,7 +247,8 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.successSignUp != null) {
                 buttonLogin.performClick()
-                Toast.makeText(applicationContext, loginResult.successSignUp, Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, loginResult.successSignUp, Toast.LENGTH_SHORT)
+                    .show()
             }
             if (loginResult.success != null) {
                 val intent = Intent(this, MainChatActivity::class.java)
@@ -240,22 +260,22 @@ class LoginActivity : AppCompatActivity() {
 
         username.afterTextChanged {
             loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
+                username.text.toString(),
+                password.text.toString()
             )
         }
 
         forgotEmailEditText.afterTextChanged {
             loginViewModel.forgotPassDataChanged(
-                    forgotEmailEditText.text.toString()
+                forgotEmailEditText.text.toString()
             )
         }
 
         password.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                        username.text.toString(),
-                        password.text.toString()
+                    username.text.toString(),
+                    password.text.toString()
                 )
             }
 
@@ -263,8 +283,8 @@ class LoginActivity : AppCompatActivity() {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
-                                username.text.toString(),
-                                password.text.toString(),
+                            username.text.toString(),
+                            password.text.toString(),
                             context
                         )
                 }
@@ -279,38 +299,38 @@ class LoginActivity : AppCompatActivity() {
 
         emailSignin.afterTextChanged {
             loginViewModel.sigInDataChanged(
-                    emailSignin.text.toString(),
-                    passSignin.text.toString(),
-                    nameSignin.text.toString(),
-                    lastnameSignin.text.toString()
+                emailSignin.text.toString(),
+                passSignin.text.toString(),
+                nameSignin.text.toString(),
+                lastnameSignin.text.toString()
             )
         }
 
         passSignin.afterTextChanged {
             loginViewModel.sigInDataChanged(
-                    emailSignin.text.toString(),
-                    passSignin.text.toString(),
-                    nameSignin.text.toString(),
-                    lastnameSignin.text.toString()
+                emailSignin.text.toString(),
+                passSignin.text.toString(),
+                nameSignin.text.toString(),
+                lastnameSignin.text.toString()
             )
         }
 
         nameSignin.afterTextChanged {
             loginViewModel.sigInDataChanged(
-                    emailSignin.text.toString(),
-                    passSignin.text.toString(),
-                    nameSignin.text.toString(),
-                    lastnameSignin.text.toString()
+                emailSignin.text.toString(),
+                passSignin.text.toString(),
+                nameSignin.text.toString(),
+                lastnameSignin.text.toString()
             )
         }
 
         lastnameSignin.apply {
             afterTextChanged {
                 loginViewModel.sigInDataChanged(
-                        emailSignin.text.toString(),
-                        passSignin.text.toString(),
-                        nameSignin.text.toString(),
-                        lastnameSignin.text.toString()
+                    emailSignin.text.toString(),
+                    passSignin.text.toString(),
+                    nameSignin.text.toString(),
+                    lastnameSignin.text.toString()
                 )
             }
 
@@ -318,9 +338,9 @@ class LoginActivity : AppCompatActivity() {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.signUp(
-                                emailSignin.text.toString(),
-                                passSignin.text.toString(),
-                                nameSignin.text.toString(),
+                            emailSignin.text.toString(),
+                            passSignin.text.toString(),
+                            nameSignin.text.toString(),
                             lastnameSignin.text.toString(),
                             context
                         )
@@ -330,9 +350,9 @@ class LoginActivity : AppCompatActivity() {
 
             signUnButton.setOnClickListener {
                 loginViewModel.signUp(
-                        emailSignin.text.toString(),
-                        passSignin.text.toString(),
-                        nameSignin.text.toString(),
+                    emailSignin.text.toString(),
+                    passSignin.text.toString(),
+                    nameSignin.text.toString(),
                     lastnameSignin.text.toString(),
                     context
                 )
@@ -342,16 +362,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseLogin() {
         val providers = arrayListOf(
-                AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.GoogleBuilder().build()
         )
 
         startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setIsSmartLockEnabled(false)
-                        .build(),
-                SIGN_IN_REQ_CODE
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setIsSmartLockEnabled(false)
+                .build(),
+            SIGN_IN_REQ_CODE
         )
     }
 
@@ -360,45 +380,92 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(
-            requestCode: Int,
-            resultCode: Int,
-            data: Intent?
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
     ) {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         loginButtonTwitter.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SIGN_IN_REQ_CODE) {
             val response = IdpResponse.fromResultIntent(data)
 
-//            if (resultCode == Activity.RESULT_OK) {
+            val am: AccountManager = AccountManager.get(this)
+            val options = Bundle()
+
+
+            if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
-                val user = FirebaseAuth.getInstance().currentUser
-                user!!.getIdToken(true)
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//                try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+
+//            am.getAuthToken(
+//                user,                     // Account retrieved using getAccountsByType()
+//                "Manage your tasks",            // Auth scope
+//                options,                        // Authenticator-specific options
+//                this,                           // Your activity
+//                OnTokenAcquired(),              // Callback called when a token is successfully acquired
+//                Handler(OnError())              // Callback called if an error occurs
+//            )
+
+
+//                user!!.getIdToken(true)
+//                        .addOnSuccessListener { result ->
+//                            val idToken = result.token
+//                            loginViewModel.signInSocial(GOOGLE, idToken!!, null, applicationContext)
+//
+//                        }
+//                // ...
+//            }
+
+//                }
+            }
+
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d("", "firebaseAuthWithGoogle:" + acct.id!!)
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("", "signInWithCredential:success")
+                    val user = auth.currentUser
+                    user!!.getIdToken(true)
                         .addOnSuccessListener { result ->
                             val idToken = result.token
                             loginViewModel.signInSocial(GOOGLE, idToken!!, null, applicationContext)
 
                         }
+                } else {
+                    // If sign in fails, display a message to the user.
+
+                }
+
                 // ...
-//            }
-
-        }
-
-        super.onActivityResult(requestCode, resultCode, data)
+            }
     }
 
-}
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable?) {
-            afterTextChanged.invoke(editable.toString())
-        }
+    /**
+     * Extension function to simplify setting an afterTextChanged action to EditText components.
+     */
+    fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+        this.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+                afterTextChanged.invoke(editable.toString())
+            }
 
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-    })
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        })
+    }
 }

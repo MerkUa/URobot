@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameLayout"
         style="@style/RegistrationTextInputLayoutStyle"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
@@ -22,7 +23,7 @@
             android:maxLines="1"
             android:imeOptions="actionNext"
             android:textColor="#1d1d26"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -33,19 +34,23 @@
         android:layout_marginStart="16dp"
         android:text="@string/work_day"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvAddDay" />
 
     <TextView
         android:id="@+id/tvAddDay"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Добавить"
+        android:layout_below="@+id/descriptionCalendarService"
+        android:layout_alignStart="@+id/titleCalendarService"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="ДОБАВИТЬ"
         android:textColor="@color/colorAccent"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameLayout" />
 
@@ -68,7 +73,7 @@
         android:text="@string/work_time"
         android:layout_marginTop="20dp"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCalendarRow" />
 
@@ -79,7 +84,7 @@
         android:layout_marginStart="16dp"
         android:text="7:00"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textViewFrom"
         app:layout_constraintTop_toTopOf="@+id/textViewTime" />
 
@@ -101,7 +106,7 @@
         android:layout_marginStart="16dp"
         android:text="до"
         android:textColor="#b0b0b0"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/timePickerFrom"
         app:layout_constraintTop_toTopOf="@+id/textViewTime" />
 
@@ -112,7 +117,7 @@
         android:layout_marginStart="16dp"
         android:text="18:00"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textViewTo"
         app:layout_constraintTop_toTopOf="@+id/textViewTime" />
 
@@ -135,7 +140,7 @@
         android:text="@string/pause"
         android:layout_marginTop="20dp"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewTimeRow" />
 
@@ -148,8 +153,7 @@
         android:layout_marginEnd="16dp"
         android:hint="15 мин"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
-        android:background="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/viewPauseRow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewTimeRow" />
@@ -173,7 +177,7 @@
         android:text="@string/session_time"
         android:layout_marginTop="20dp"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPauseRow" />
 
@@ -185,8 +189,7 @@
         android:layout_marginEnd="16dp"
         android:hint="45 мин"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
-        android:background="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/viewWorkTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPauseRow" />
@@ -206,19 +209,18 @@
 
     <Button
         android:id="@+id/createBotButton"
+        style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/button_rounded_background"
         android:text="@string/action_add_bot"
-        android:textColor="@color/white"
-        android:windowSoftInputMode="adjustNothing"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/updateBotButton"

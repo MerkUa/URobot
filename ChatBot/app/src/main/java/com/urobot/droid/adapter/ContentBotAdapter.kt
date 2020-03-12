@@ -56,9 +56,12 @@ class ContentBotAdapter(
 
             holder.itemView.text_from_dialog.text = botList[position].description
 
+            holder.itemView.textId.text = botList[position].level.toString() + "." + (position + 1)
+
             val listButtons = botList[position].list_buttons
 
             if (listButtons != null) {
+                holder.itemView.buttonsLinearLayout.removeAllViews()
                 for (item in listButtons) {
                     val itemView = LinearLayout.inflate(
                         holder.itemView.context,
@@ -69,11 +72,6 @@ class ContentBotAdapter(
                         .setText(item.name)
                     holder.itemView.buttonsLinearLayout.addView(itemView)
 
-//                    if (item.id == 1.toLong()) {
-//                        holder.itemView.write_to_event.visibility = View.VISIBLE
-//                    } else {
-//                        holder.itemView.payment_button.visibility = View.VISIBLE
-//                    }
                 }
             }
 

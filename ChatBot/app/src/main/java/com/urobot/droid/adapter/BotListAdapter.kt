@@ -40,9 +40,7 @@ class BotListAdapter(
         holder.title.text = dataSource[position].title
         holder.description.text = dataSource[position].description
 
-        if (dataSource[position].listMessengers.isEmpty()) {
-            holder.addBot.visibility = View.VISIBLE
-        }
+
         for (id in dataSource[position].listMessengers) {
             when (Messenger.Companion.fromValue(id)) {
                 Messenger.Telegram -> {
@@ -66,7 +64,7 @@ class BotListAdapter(
             }
         }
 
-        holder.addBot.setOnClickListener(View.OnClickListener { view ->
+        holder.change.setOnClickListener(View.OnClickListener { view ->
             mOnBotClickListener?.onAddBotClick(
                 view, position
             )

@@ -31,7 +31,6 @@ class BottomPaymentFragment : Fragment() {
 
             ownerPaymentEditText.setText(paymentData?.card_name)
             numberPaymentEditText.setText(paymentData?.cardNumber)
-            cvvPaymentEditText.setText(paymentData?.cvv)
 
             val monthAndYearTextFromNet = paymentData?.month + paymentData?.year
 
@@ -48,7 +47,7 @@ class BottomPaymentFragment : Fragment() {
                     val data  = PaymentModel(
                         ownerPaymentEditText.text.toString(),
                         numberPaymentEditText.textAlignment.toString(),
-                        month, year,cvvPaymentEditText.text.toString(),
+                        month, year, "",
                         listOf(PaymentTypes.CreditCard.type)
                     )
                     val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
@@ -70,7 +69,6 @@ class BottomPaymentFragment : Fragment() {
 
             val cardName =  ownerPaymentEditText.text.toString()
             val cardNumber = numberPaymentEditText.text.toString()
-            val cvv = cvvPaymentEditText.text.toString()
 
             if(phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
 
@@ -82,7 +80,7 @@ class BottomPaymentFragment : Fragment() {
                     cardName,
                     month,
                     year,
-                    cvv,
+                    "",
                     listOf(PaymentTypes.CreditCard.type)
                 )
 

@@ -31,6 +31,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
+    lateinit var contextApp: Context
 
     val getAllServicesLivaData: MutableLiveData<List<GetAllServicesModel>> = MutableLiveData()
 
@@ -42,6 +43,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getAllServices(token: String, context: Context) {
+        contextApp = context
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
 
@@ -91,6 +93,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
             withContext(Dispatchers.Main) {
 
                 if (response.isSuccessful) {
+                    getAllServices(token, contextApp)
 
                 } else {
                     Toast.makeText(
@@ -130,7 +133,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
             withContext(Dispatchers.Main) {
 
                 if (response.isSuccessful) {
-
+                    getAllServices(token, contextApp)
                 } else {
                     Toast.makeText(
                         getApplication(),
@@ -167,7 +170,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
             withContext(Dispatchers.Main) {
 
                 if (response.isSuccessful) {
-
+                    getAllServices(token, contextApp)
                 } else {
                     Toast.makeText(
                         getApplication(),

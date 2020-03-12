@@ -33,7 +33,7 @@ class BottomFragment : BottomSheetDialogFragment() {
         if (isPayment) {
             buttonPaymentCustom.visibility = View.VISIBLE
         }
-        buttonPayment.setOnClickListener {
+        buttonPaymentCustom.setOnClickListener {
             mBottomSheetListener?.onPaymentCustomClick()
         }
 

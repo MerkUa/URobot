@@ -127,7 +127,6 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
             }
 
             if (createPaymentArgs != null) {
-
                 /**Create Payment Service */
                 servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                     users?.let {
@@ -140,7 +139,6 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener {
             }
 
             if(updatePaymentArgs != null){
-
                 /**Update Payment Service */
                 servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
                     users?.let {

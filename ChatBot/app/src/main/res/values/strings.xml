@@ -74,8 +74,9 @@
     <string name="title_activity_main_chat">MainChatActivity</string>
     <string name="title_bot">U-Robot</string>
     <string name="title_chats">Chats</string>
-    <string name="title_contacts">Contacts</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_contacts">Контакты и подписчики</string>
+    <string name="contacts">Contacts</string>
+    <string name="title_settings">Настройки</string>
     <string name="text_forgot_pass">Необходимо ввести e-mail который был указан во время регистрации</string>
     <string name="text_add_messenger">Введите номер к которому привязан мессенджер, на этот номер придет смс с кодом подтверждения</string>
     <string name="action_forgot_pass">Сбросить пароль</string>
@@ -99,11 +100,10 @@
     <string name="hint_number_card">Номер карты</string>
     <string name="hint_owner_card">Фамилия Имя (как на карте)</string>
     <string name="period">Срок Действия</string>
-    <string name="hint_cvv">CVC</string>
     <string name="start_bot">Запустить</string>
 
-    <string name="tabs_my_contacts">Контакты 1</string>
-    <string name="tabs_server_contacts">Контакты 2</string>
+    <string name="tabs_my_contacts">Подписчики</string>
+    <string name="tabs_server_contacts">Контакты</string>
 
 
     <array name="material_calendar_months_array">

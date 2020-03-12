@@ -110,6 +110,9 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener,
 //                list?.clear()
                 dismiss()
             }
+            R.id.deleteTextViewDialogFragment -> {
+
+            }
         }
     }
 

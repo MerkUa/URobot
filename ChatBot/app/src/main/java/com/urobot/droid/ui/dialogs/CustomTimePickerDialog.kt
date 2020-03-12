@@ -1,17 +1,18 @@
 package com.urobot.droid.ui.dialogs
 
-import java.lang.reflect.Field
-import java.util.ArrayList
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.widget.NumberPicker
 import android.widget.TimePicker
-
+import com.urobot.droid.R
+import java.lang.reflect.Field
+import java.util.*
 
 class CustomTimePickerDialog(
-    context: Context?, private val mTimeSetListener: OnTimeSetListener?, hourOfDay: Int, minute: Int, is24HourView: Boolean)
-    : TimePickerDialog(context, 3, null, hourOfDay,
+    context: Context?, private val mTimeSetListener: OnTimeSetListener?, hourOfDay: Int, minute: Int, is24HourView: Boolean) :
+    TimePickerDialog(
+        context, R.style.DialogTheme, null, hourOfDay,
         minute / TIME_PICKER_INTERVAL, is24HourView
     ) {
     private var mTimePicker: TimePicker? = null

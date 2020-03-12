@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contactItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="56dp"
     android:orientation="vertical">
 
     <CheckBox
@@ -13,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +22,7 @@
         android:layout_marginStart="32dp"
         android:text="NameName"
         android:textColor="@color/black_text"
-        android:textSize="16sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/checkboxIndustry"
         app:layout_constraintStart_toEndOf="@+id/checkboxIndustry"
         app:layout_constraintTop_toTopOf="@+id/checkboxIndustry" />
@@ -33,7 +32,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_marginStart="80dp"
-        android:layout_height="3dp"
+        android:layout_height="1dp"
         android:background="@drawable/background_sub_module_text"
         app:layout_constraintStart_toStartOf="@+id/nameIndustry"
         app:layout_constraintTop_toBottomOf="@+id/checkboxIndustry">
