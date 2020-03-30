@@ -16,10 +16,11 @@ import com.urobot.droid.db.Messenger
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.FACEBOOK
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.INSTAGRAM
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.TELEGTAM
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VIBER
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VK
-import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.WHATSAPP
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.WHATSAP
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
@@ -67,7 +68,7 @@ class AddMessengerViewModel(application: Application) : AndroidViewModel(applica
                     when (messenger.toString()) {
                         TELEGTAM -> {
                             messenger = Messenger.Telegram
-                            SharedManager(getApplication()!!).telegramIsConnected = true
+
                         }
                         VIBER -> {
                             messenger = Messenger.Viber
@@ -81,8 +82,12 @@ class AddMessengerViewModel(application: Application) : AndroidViewModel(applica
                             messenger = Messenger.Vk
                             SharedManager(getApplication()!!).vkIsConnected = true
                         }
-                        WHATSAPP -> {
+                        WHATSAP -> {
                             messenger = Messenger.WhatsApp
+                            SharedManager(getApplication()!!).paymentIsBuy = true
+                        }
+                        INSTAGRAM -> {
+                            messenger = Messenger.Instagram
                             SharedManager(getApplication()!!).paymentIsBuy = true
                         }
                     }

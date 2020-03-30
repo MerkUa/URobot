@@ -31,11 +31,11 @@ class ChatListAdapter(private val context: Context,
         title.text = chat.title
         description.text = chat.details
         time.text = chat.lastTime
-        if (chat.isRead)
-            readStatus.visibility = View.VISIBLE
+//        if (chat.isRead)
+//            readStatus.visibility = View.VISIBLE
 
-        if (chat.isOnline)
-            onlineStatus.visibility = View.VISIBLE
+//        if (chat.isOnline)
+//            onlineStatus.visibility = View.VISIBLE
 
         if (chat.imageUrl.isNotEmpty()) {
             Picasso.get().load(chat.imageUrl).into(photo)

@@ -3,6 +3,7 @@ package com.urobot.droid.Helper
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.ConnectivityManager
@@ -10,10 +11,16 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.CalendarContract
+import android.provider.CalendarContract.Calendars
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Log
 import androidx.loader.content.CursorLoader
+import com.urobot.droid.R
+import com.urobot.droid.data.model.CalendarItemModel
+import java.util.*
 
 
 object Utils {
@@ -237,5 +244,111 @@ object Utils {
             }
         }
         return false
+    }
+
+
+    fun ensureCalendarExists(context: Context): Long {
+        Log.d("Merk", "ensureCalendarExists ")
+
+        val resolver = context.contentResolver
+        // Lookup the calendar
+        var calendarId: Long = 0
+        val cursor = resolver.query(
+            Calendars.CONTENT_URI,
+            arrayOf(
+                Calendars._ID
+            ),
+            Calendars.ACCOUNT_NAME + "=? AND " + Calendars.ACCOUNT_TYPE + "=?",
+            arrayOf("Urobot", "Urobot calendar"),
+            null
+        )
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    calendarId = cursor.getLong(0)
+                }
+            } finally {
+                cursor.close()
+            }
+        }
+        if (calendarId == 0L) { // Calendar doesn't exist yet, so create it
+            val contentValues = ContentValues()
+            contentValues.put(Calendars.ACCOUNT_NAME, "Urobot")
+            contentValues.put(Calendars.ACCOUNT_TYPE, "Urobot calendar")
+            contentValues.put(Calendars.NAME, "Calendar")
+            contentValues.put(
+                Calendars.CALENDAR_DISPLAY_NAME,
+                context.getString(R.string.app_name)
+            )
+//            contentValues.put(
+//                Calendars.CALENDAR_COLOR,
+//                ContextCompat.getColor(context, R.color.)
+//            )
+            contentValues.put(
+                Calendars.CALENDAR_ACCESS_LEVEL,
+                Calendars.CAL_ACCESS_OWNER
+            )
+            contentValues.put(Calendars.CAN_ORGANIZER_RESPOND, 0)
+            contentValues.put(Calendars.OWNER_ACCOUNT, "Urobot")
+            contentValues.put(Calendars.SYNC_EVENTS, 1)
+            contentValues.put(
+                Calendars.CALENDAR_TIME_ZONE,
+                TimeZone.getDefault().id
+            )
+            contentValues.put(Calendars.ALLOWED_REMINDERS, "0,1,2")
+            contentValues.put(Calendars.ALLOWED_AVAILABILITY, "0,1")
+            contentValues.put(Calendars.ALLOWED_ATTENDEE_TYPES, "0")
+            contentValues.put(
+                Calendars.MAX_REMINDERS,
+                Integer.toString(Int.MAX_VALUE)
+            )
+            contentValues.put(Calendars.VISIBLE, 1)
+            var uri = Calendars.CONTENT_URI
+            uri = uri.buildUpon()
+                .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+                .appendQueryParameter(Calendars.ACCOUNT_NAME, "Urobot")
+                .appendQueryParameter(Calendars.ACCOUNT_TYPE, "Urobot calendar")
+                .build()
+            val newCalendarUri = resolver.insert(uri, contentValues) ?: return -1
+            calendarId = ContentUris.parseId(newCalendarUri)
+            Log.d("Merk", "Merk " + calendarId)
+        }
+        return calendarId
+    }
+
+
+    fun addCalendarEvent(context: Context, item: CalendarItemModel) {
+        Log.d("Merk", "ensureCalendarExists ")
+
+        val resolver = context.contentResolver
+        // Lookup the calendar
+        var calendarId: Long = 0
+        val cursor = resolver.query(
+            Calendars.CONTENT_URI,
+            arrayOf(
+                Calendars._ID
+            ),
+            Calendars.ACCOUNT_NAME + "=? AND " + Calendars.ACCOUNT_TYPE + "=?",
+            arrayOf("Urobot", "Urobot calendar"),
+            null
+        )
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    calendarId = cursor.getLong(0)
+                    val contentValues = ContentValues()
+                    contentValues.put(CalendarContract.Events.DTSTART, item.timeInMilis);
+                    contentValues.put(CalendarContract.Events.DURATION, 1);
+
+                    contentValues.put(CalendarContract.Events.TITLE, item.title);
+                    contentValues.put(CalendarContract.Events.DESCRIPTION, item.description);
+                    contentValues.put(CalendarContract.Events.CALENDAR_ID, calendarId);
+                    contentValues.put(CalendarContract.Events.EVENT_TIMEZONE, "Ukraine");
+                    resolver.insert(CalendarContract.Events.CONTENT_URI, contentValues);
+                }
+            } finally {
+                cursor.close()
+            }
+        }
     }
 }

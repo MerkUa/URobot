@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.urobot.droid.R
-import com.urobot.droid.data.SharedManager
+import com.urobot.droid.data.model.cmsModel
+import com.urobot.droid.data.model.cmsType
 import kotlinx.android.synthetic.main.fragment_tariffs.*
 
 class TariffsFragment : Fragment(), TariffsViewModel.ITariffsContract {
 
-    companion object {
-        fun newInstance() = TariffsFragment()
-    }
+    private var userId = "0"
 
     private lateinit var viewModel: TariffsViewModel
 
@@ -32,43 +33,81 @@ class TariffsFragment : Fragment(), TariffsViewModel.ITariffsContract {
         viewModel.User.observe(viewLifecycleOwner, Observer { users ->
             // Update the cached copy of the words in the adapter.
             users?.let {
-
+                userId = it.id
+                viewModel.getAllIndustryFromNet(it.token!!)
             }
         })
+        var url = ""
         viewModel.setListener(this)
-        val isPayment = SharedManager(context!!).paymentIsBuy
-        if (isPayment) {
-            payBill.setText("отключить")
-        } else {
-            payBill.setText("подключить")
 
-        }
-        val isCRM = SharedManager(context!!).crmIsBuy
-        if (isCRM) {
-            payCRM.setText("отключить")
-        } else {
-            payCRM.setText("подключить")
-
-        }
         payBill.setOnClickListener {
-            if (isPayment) {
-                payBill.setText("подключить")
-            } else {
-                payBill.setText("отключить")
+            url = "https://urobot-dev.ml/system/user/update-billing/" + userId
+            payments.visibility = View.GONE
+            webView.visibility = View.VISIBLE
+            webView.webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                    if (url == "https://urobot-dev.ml/system/user/update-cms/success") {
+                        webView.visibility = View.GONE
+                        payBill.setText("отключить")
+
+                    }
+                    view?.loadUrl(url)
+                    return true
+                }
             }
-            SharedManager(context!!).paymentIsBuy = !isPayment
+            webView.settings.javaScriptEnabled = true;
+            webView.settings.javaScriptCanOpenWindowsAutomatically = true
+            webView.loadUrl(url)
+
         }
         payCRM.setOnClickListener {
-            if (isCRM) {
-                payCRM.setText("подключить")
-            } else {
-                payCRM.setText("отключить")
+            payments.visibility = View.GONE
+            url = "https://urobot-dev.ml/system/user/update-cms/" + userId
+            webView.visibility = View.VISIBLE
+            webView.webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                    if (url == "https://urobot-dev.ml/system/user/update-cms/success") {
+                        webView.visibility = View.GONE
+                        payCRM.setText("отключить")
+                    }
+                    view?.loadUrl(url)
+                    return true
+                }
             }
-            SharedManager(context!!).crmIsBuy = !isPayment
+            webView.settings.javaScriptEnabled = true;
+            webView.settings.javaScriptCanOpenWindowsAutomatically = true
+            webView.loadUrl(url)
         }
+
+
     }
 
-    override fun onTariffsResult(prmo: String) {
+    override fun onTariffsResult(crmList: List<cmsModel>) {
+        for (item in crmList) {
+            when (cmsType.Companion.fromValue(item.id)) {
+                cmsType.BillingAccount -> {
+                    if (item.active) {
+                        payBill.setText(R.string.off)
+                    } else {
+                        payBill.setText(R.string.on)
+                    }
+                }
+                cmsType.OneC -> {
+                    if (item.active) {
+                        payCRM.setText(R.string.off)
+                    } else {
+                        payCRM.setText(R.string.on)
+                    }
+                }
+                cmsType.Amo -> {
+                    if (item.active) {
+                        payCRM.setText(R.string.off)
+                    } else {
+                        payCRM.setText(R.string.on)
+                    }
+                }
+            }
+        }
     }
 
 

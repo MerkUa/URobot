@@ -21,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.ConnectException
 
 class ServicesViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
@@ -46,21 +47,23 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
         contextApp = context
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val apiService: ApiService = Apifactory.create()
+                    val response = apiService.getAllServices(token)
 
-                val apiService: ApiService = Apifactory.create()
-                val response = apiService.getAllServices(token)
+                    withContext(Dispatchers.Main) {
+                        if (response.isSuccessful) {
+                            getAllServicesLivaData.value = response.body()
 
-                withContext(Dispatchers.Main) {
-                    if (response.isSuccessful) {
-                        getAllServicesLivaData.value = response.body()
-
-                    } else {
-                        Toast.makeText(
-                            getApplication(),
-                            "Ooops: Something else went wrong",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        } else {
+                            Toast.makeText(
+                                getApplication(),
+                                "Ooops: Something else went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
+                } catch (e: ConnectException) {
                 }
             }
         }
@@ -75,11 +78,10 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId =
-                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            //            val resultBotId =
+//                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val requestServices =
                 RequestBotCalendarService(
-                    resultBotId?.botId!!,
                     nameCalendar,
                     "description",
                     type_id,
@@ -115,14 +117,13 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId =
-                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+            //            val resultBotId =
+//                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val apiService: ApiService = Apifactory.create()
 
             val model = UpdateBotCalendarService(
                 serviceId,
-                resultBotId?.botId!!,
                 nameCalendar,
                 "description",
                 dataListModel
@@ -147,6 +148,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
 
     fun createPaymentService(
         namePaymentServices: String,
+        descriptionPaymentServices: String,
         token: String,
         dataListModel: PaymentModel?,
         type_id: Int
@@ -154,12 +156,10 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId =
-                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+
             val requestServices = RequestBotPaymentService(
-                resultBotId?.botId!!,
                 namePaymentServices,
-                "description",
+                descriptionPaymentServices,
                 type_id,
                 dataListModel
             )
@@ -192,14 +192,11 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val resultBotId =
-                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
 
             val model = UpdatePaymentService(
                 serviceId,
-                resultBotId?.botId!!,
                 namePayment,
-                "description",
+                "",
                 dataListModel
             )
 

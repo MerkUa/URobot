@@ -6,7 +6,8 @@ data class Contact(
     val name: String,
     val phone: String,
     val email: String,
-    val avatar: String
+    val avatar: String,
+    val messengerId: Int
 ) {
 
 }

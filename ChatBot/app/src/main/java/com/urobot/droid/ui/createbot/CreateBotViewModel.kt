@@ -9,10 +9,7 @@ import com.urobot.droid.Network.ApiService
 import com.urobot.droid.Repository.UserRepository
 import com.urobot.droid.contracts.IUserContract
 import com.urobot.droid.data.NetModel.Request.RequestBotScripts
-import com.urobot.droid.data.model.BotContentItem
-import com.urobot.droid.data.model.GetAllScriptsModel
-import com.urobot.droid.data.model.ServiceButtons
-import com.urobot.droid.data.model.UpdateOrCreateScriptsModel
+import com.urobot.droid.data.model.*
 import com.urobot.droid.db.User
 import com.urobot.droid.db.UserRoomDatabase
 import com.urobot.droid.ui.fragments.chats.ChatsViewModel
@@ -32,6 +29,8 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
     var resultBotId: Int = -1
+    lateinit var list: List<List<GetAllScriptsModel>>
+
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -41,6 +40,27 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
     }
 
     val getAllScriptsLivaData: MutableLiveData<List<List<GetAllScriptsModel>>> = MutableLiveData()
+    val getAllServicesLivaData: MutableLiveData<List<GetAllServicesModel>> = MutableLiveData()
+
+
+    fun deleteBotContentAndScripts(
+        token:
+        String, botContentItem: BotContentItem
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            //            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
+
+            val apiService: ApiService = Apifactory.create()
+            val response = apiService.deleteScript(token, botContentItem.id!!)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    getAllContentAndScripts(token)
+                }
+            }
+        }
+
+    }
 
     fun createBotContentAndScripts(token:
                                    String, botContentItem: BotContentItem) {
@@ -53,6 +73,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
             val listscripts: ArrayList<UpdateOrCreateScriptsModel> = ArrayList()
 
 
+            !
             listscripts.add(
                 UpdateOrCreateScriptsModel(
                     botContentItem.description,
@@ -68,21 +89,34 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
             )
 
             for (buttons in botContentItem.list_buttons!!) {
+                var contain = false
+                if (list != null) {
+                    for (level in list) {
+                        val listLevelContent: ArrayList<BotContentItem> = ArrayList()
+                        for (item in level) {
+                            if (item.uid == botContentItem.parent_id!! + buttons.id!!) {
+                                contain = true
+                            }
+                        }
+                    }
+                }
                 val list: ArrayList<ServiceButtons>? = ArrayList()
 
-                listscripts.add(
-                    UpdateOrCreateScriptsModel(
-                        "",
-                        0,
-                        "text",
-                        botContentItem.id,
-                        botContentItem.level!! + 1,
-                        botContentItem.parent_id!! + buttons.id!!,
-                        botContentItem.action,
-                        true,
-                        list
+                if (!contain) {
+                    listscripts.add(
+                        UpdateOrCreateScriptsModel(
+                            "",
+                            0,
+                            "text",
+                            botContentItem.id,
+                            botContentItem.level!! + 1,
+                            botContentItem.parent_id!! + buttons.id!!,
+                            buttons.id,
+                            true,
+                            list
+                        )
                     )
-                )
+                }
             }
 
             val modelList = listscripts.toList()
@@ -107,7 +141,6 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
     fun getAllContentAndScripts(token:String){
         CoroutineScope(Dispatchers.IO).launch {
-
             //            val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
             val apiService: ApiService = Apifactory.create()
             val response = apiService.getAllScripts(token, resultBotId)
@@ -116,7 +149,6 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
                 if(response.body() != null ){
 
-                    val list: List<List<GetAllScriptsModel>>
 
                     list = response.body() as ArrayList<List<GetAllScriptsModel>>
 

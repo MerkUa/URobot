@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class UpdatePaymentService (
     @field:SerializedName("service_id")
     val service_id: Int,
-    @field:SerializedName("bot_id")
-    val bot_id: Int,
     @field:SerializedName("name")
     val name: String,
     @field:SerializedName("description")

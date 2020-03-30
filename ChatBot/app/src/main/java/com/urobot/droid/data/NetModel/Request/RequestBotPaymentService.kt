@@ -5,8 +5,6 @@ import com.urobot.droid.data.model.PaymentModel
 
 data class RequestBotPaymentService (
 
-    @field:SerializedName("bot_id")
-    val bot_id: Int,
     @field:SerializedName("name")
     val name: String,
     @field:SerializedName("description")

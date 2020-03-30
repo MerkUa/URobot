@@ -66,7 +66,7 @@ class BottomPaymentFragment : Fragment() {
         createPaymentBotButton.setOnClickListener{
 
             val namePaymentService = namePaymentEditText.text.toString()
-
+            val description = namePaymentEditText.text.toString()
             val cardName =  ownerPaymentEditText.text.toString()
             val cardNumber = numberPaymentEditText.text.toString()
 
@@ -88,6 +88,7 @@ class BottomPaymentFragment : Fragment() {
                     .actionNavigationCreatePaymentToNavigationServicesFragment()
                     .setPaymentModel(dataPayment)
                     .setNamePaymentService(namePaymentService)
+                    .setDescriptionPaymentService(description)
 
                 Navigation.findNavController(view).navigate(action)
             } else{

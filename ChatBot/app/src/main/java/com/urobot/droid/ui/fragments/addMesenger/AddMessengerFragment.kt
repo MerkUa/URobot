@@ -18,9 +18,11 @@ import com.facebook.login.LoginResult
 import com.urobot.droid.R
 import com.urobot.droid.data.SharedManager
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.FACEBOOK
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.INSTAGRAM
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.TELEGTAM
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VIBER
 import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.VK
+import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment.Companion.WHATSAP
 import kotlinx.android.synthetic.main.activity_login.FBLayout
 import kotlinx.android.synthetic.main.activity_login.loginButtonFacebook
 import kotlinx.android.synthetic.main.add_messenger_fragment.*
@@ -85,6 +87,14 @@ class AddMessengerFragment : Fragment() {
             imageVKLogin.visibility = View.VISIBLE
             textConnectVK.visibility = View.GONE
         }
+        if (SharedManager(context!!).whatsupIsConnected) {
+            imageWhatsappLogin.visibility = View.VISIBLE
+            textConnectWhatsapp.visibility = View.GONE
+        }
+        if (SharedManager(context!!).instagramIsConnected) {
+            imageInstagramLogin.visibility = View.VISIBLE
+            textConnectInstagram.visibility = View.GONE
+        }
         FBLayout.setOnClickListener {
             val action = AddMessengerFragmentDirections.navigationToAddMessenger(FACEBOOK)
             view.findNavController().navigate(action)
@@ -121,6 +131,14 @@ class AddMessengerFragment : Fragment() {
         }
         textConnectVK.setOnClickListener {
             val action = AddMessengerFragmentDirections.navigationToAddMessenger(VK)
+            view.findNavController().navigate(action)
+        }
+        textConnectWhatsapp.setOnClickListener {
+            val action = AddMessengerFragmentDirections.navigationToAddMessenger(WHATSAP)
+            view.findNavController().navigate(action)
+        }
+        textConnectInstagram.setOnClickListener {
+            val action = AddMessengerFragmentDirections.navigationToAddMessenger(INSTAGRAM)
             view.findNavController().navigate(action)
         }
 

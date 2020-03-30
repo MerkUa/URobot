@@ -1,15 +1,22 @@
 package com.urobot.droid.ui.main
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PermissionChecker
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.urobot.droid.Helper.Utils.ensureCalendarExists
 import com.urobot.droid.R
 import com.urobot.droid.db.User
+import com.urobot.droid.ui.dialogs.CreateEventDialogFragment
 
 
 class MainChatActivity : AppCompatActivity() {
@@ -38,7 +45,7 @@ class MainChatActivity : AppCompatActivity() {
                         R.id.navigation_settings_promo, R.id.navigation_messages, R.id.navigation_services_fragment,
                     R.id.navigation_create_calendar,
                     R.id.navigation_create_payment,
-                    R.id.navigation_industry_fragment
+                    R.id.navigation_industry_fragment, R.id.navigation_create_bot
                 )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -54,7 +61,24 @@ class MainChatActivity : AppCompatActivity() {
             bundle.putInt("IdRecipient", id.toInt())
             navController.navigate(R.id.navigation_messages, bundle)
         }
+        mainViewModel.currentUser.observe(this, Observer { user ->
+            user?.let {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (PermissionChecker.checkSelfPermission(
+                            this,
+                            Manifest.permission.READ_CALENDAR
+                        ) ==
+                        PermissionChecker.PERMISSION_GRANTED
+                    ) {
+                        mainViewModel.getCalendarEvent(this, user.token!!)
+                    }
+                } else {
+                    mainViewModel.getCalendarEvent(this, user.token!!)
+                }
 
+            }
+        })
+        checkPermission()
     }
 
     fun onBackStackChanged() {
@@ -67,5 +91,48 @@ class MainChatActivity : AppCompatActivity() {
     fun shouldDisplayHomeUp() { //Enable Up button only  if there are entries in the back stack
         val canGoBack = supportFragmentManager.backStackEntryCount > 0
         supportActionBar!!.setDisplayHomeAsUpEnabled(canGoBack)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            CreateEventDialogFragment.PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PermissionChecker.PERMISSION_GRANTED
+                ) {
+                    ensureCalendarExists(this)
+                } else {
+                    //permission from popup denied
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (PermissionChecker.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_CALENDAR
+                ) ==
+                PermissionChecker.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(
+                    Manifest.permission.READ_CALENDAR,
+                    Manifest.permission.WRITE_CALENDAR
+                )
+                //show popup to request runtime permission
+                requestPermissions(permissions, CreateEventDialogFragment.PERMISSION_CODE);
+            } else {
+                ensureCalendarExists(this)
+
+            }
+        } else {
+            ensureCalendarExists(this)
+        }
     }
 }

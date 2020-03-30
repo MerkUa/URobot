@@ -10,46 +10,51 @@
     app:behavior_peekHeight="140dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <Button
-        android:id="@+id/add_write_button"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:background="@drawable/button_rounded_with_border_background"
-        android:text="@string/action_service_calendar"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <Button-->
+    <!--        android:id="@+id/add_write_button"-->
+    <!--        style="@style/ButtonStyle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:background="@drawable/button_rounded_with_border_background"-->
+    <!--        android:text="@string/action_service_calendar"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <Button
-        android:id="@+id/add_payment_button"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_write_button"
-        android:layout_gravity="start"
-        android:background="@drawable/button_rounded_with_border_background"
-        android:text="@string/action_service_payment"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_write_button" />
+    <!--    <Button-->
+    <!--        android:id="@+id/add_payment_button"-->
+    <!--        style="@style/ButtonStyle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/add_write_button"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:background="@drawable/button_rounded_with_border_background"-->
+    <!--        android:text="@string/action_service_payment"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/add_write_button" />-->
 
-    <Button
-        android:id="@+id/add_new_level"
-        style="@style/ButtonStyle"
+    <!--    <Button-->
+    <!--        android:id="@+id/add_new_level"-->
+    <!--        style="@style/ButtonStyle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/add_write_button"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:background="@drawable/button_rounded_with_border_background"-->
+    <!--        android:text="@string/action_service_new_lewel"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/add_payment_button" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_write_button"
-        android:layout_gravity="start"
-        android:background="@drawable/button_rounded_with_border_background"
-        android:text="@string/action_service_new_lewel"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_payment_button" />
+        android:layout_height="match_parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

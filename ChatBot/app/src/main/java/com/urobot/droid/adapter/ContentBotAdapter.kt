@@ -23,6 +23,8 @@ class ContentBotAdapter(
 
     private val emptyType = 0
     private val contentType = 1
+    private var botId = ""
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -40,11 +42,11 @@ class ContentBotAdapter(
 
         return when {
 
-            (botList[position].isEmpty) -> {
-                emptyType
+            (botList[position].description?.isNotEmpty() ?: !botList[position].isEmpty) -> {
+                contentType
             }
             else -> {
-                contentType
+                emptyType
             }
         }
 
@@ -79,7 +81,8 @@ class ContentBotAdapter(
                 holder.itemView.setOnClickListener {
                     val manager = activity.supportFragmentManager
                     activity.supportFragmentManager.beginTransaction()
-                    val newFragment = CreateEventDialogFragment.newInstance(botList[position])
+                    val newFragment =
+                        CreateEventDialogFragment.newInstance(botList[position], botId)
                     newFragment?.setSelectedListener(activity as CreateBotActivity)
                     newFragment?.show(manager, botList[position].id.toString())
                     holder.itemView.text_from_dialog.text = botList[position].description
@@ -91,7 +94,7 @@ class ContentBotAdapter(
             holder.itemView.setOnClickListener {
                 val manager = activity.supportFragmentManager
                 activity.supportFragmentManager.beginTransaction()
-                val newFragment = CreateEventDialogFragment.newInstance(botList[position])
+                val newFragment = CreateEventDialogFragment.newInstance(botList[position], botId)
                 newFragment?.setSelectedListener(activity as CreateBotActivity)
                 newFragment?.show(manager, botList[position].id.toString())
             }
@@ -112,6 +115,10 @@ class ContentBotAdapter(
 //            }
 //        }
         return botList.size
+    }
+
+    fun setbot(id: String) {
+        botId = id
     }
 
     inner class ContentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

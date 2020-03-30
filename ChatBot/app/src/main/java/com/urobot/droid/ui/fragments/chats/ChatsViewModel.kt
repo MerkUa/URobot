@@ -14,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 class ChatsViewModel(application: Application) : AndroidViewModel(application), IUserContract {
 
@@ -38,20 +39,21 @@ class ChatsViewModel(application: Application) : AndroidViewModel(application), 
 CoroutineScope(Dispatchers.IO).launch {
 
     val apiService: ApiService = Apifactory.create()
-    val resultBotId = UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
-
-    if (resultBotId != null) {
-
-            apiService.getContacts(token, resultBotId.botId)
+    val serverPattern = "yyyy-MM-dd HH:mm:ss"
+    val format = SimpleDateFormat("HH:mm")
+    val sdf = SimpleDateFormat(serverPattern)
+    apiService.getChats(token)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     val list = arrayListOf<Chat>()
                     for (contact in result) {
+                        var message = contact.lastMessage?.text ?: ""
+                        var time = sdf.parse(contact.lastMessage?.time)
                         list.add(
                             Chat(
                                 contact.id!!, contact.firstName + " " + contact.lastName,
                                 contact.photo!!,
-                                true, false, "12:07", " "
+                                true, false, format.format(time), message
                             )
                         )
                         listener?.onGetContactsResult(list)
@@ -61,7 +63,7 @@ CoroutineScope(Dispatchers.IO).launch {
 
                 })
 
-    }
+
 }
 }
 

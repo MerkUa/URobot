@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:fitsSystemWindows="false"
     tools:background="@android:color/darker_gray">
@@ -40,12 +40,25 @@
         app:layout_constraintStart_toStartOf="@+id/deleteTextViewDialogFragment"
         app:layout_constraintTop_toBottomOf="@+id/add_buttons_tv" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listButtonsRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/add_buttons_tv"
+        app:layout_constraintStart_toStartOf="@+id/deleteTextViewDialogFragment"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEditText">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <HorizontalScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEditText">
+        app:layout_constraintBottom_toTopOf="@+id/save_button">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -57,20 +70,15 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/action_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_rounded_with_border_background"
-        android:inputType="textCapSentences"
-        android:text="@string/action"
-        android:textColor="@color/colorAccent"
-        android:textSize="15sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll" />
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="48dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_add_a_photo_24px"
+        app:layout_constraintBottom_toTopOf="@+id/scroll"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/save_button"
@@ -84,6 +92,6 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/action_button" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

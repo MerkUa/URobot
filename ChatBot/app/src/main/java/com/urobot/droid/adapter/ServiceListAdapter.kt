@@ -5,18 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.urobot.droid.R
 import com.urobot.droid.data.model.Datum
 import com.urobot.droid.data.model.GetAllServicesModel
 import com.urobot.droid.data.model.TypeServices
-import com.urobot.droid.ui.dialogs.BottomCalendarFragmentDirections
-import com.urobot.droid.ui.fragments.addMesenger.AddMessengerFragmentDirections
-import com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment
 import com.urobot.droid.ui.fragments.robot.RobotFragmentDirections
-import com.urobot.droid.ui.fragments.ubotservice.ServicesFragment
-import com.urobot.droid.ui.fragments.ubotservice.ServicesFragmentArgs
 import kotlinx.android.synthetic.main.list_item_calendar_services.view.*
 import kotlinx.android.synthetic.main.list_item_payment_services.view.*
 
@@ -58,7 +52,7 @@ class ServiceListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
             if (temp != null) {
-                holder.itemView.titleCalendarService.text = temp.name
+                holder.itemView.titleCalendarService.text = allDataServices[position].name
                 Log.d("Merk", "getItemViewType " + temp.name)
 
             } else {
@@ -75,17 +69,27 @@ class ServiceListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         if (getItemViewType(position) == paymentType) {
             val temp: Datum? = allDataServices[position].data
-            if (temp != null) {
-                holder.itemView.descriptionPaymentService.text = "!"
-                holder.itemView.descriptionPaymentService.text = temp.cvv
-
-                holder.itemView.updatePaymentService.setOnClickListener {
-                    val id = allDataServices[position].id
-
+            holder.itemView.titlePaymentService.text = allDataServices[position].name
+            holder.itemView.descriptionPaymentService.text = allDataServices[position].description
+            holder.itemView.updatePaymentService.setOnClickListener {
+                val id = allDataServices[position].id
+//
                     val action = RobotFragmentDirections.actionNavigationUbotToNavigationCreatePayment().setPaymentData(temp).setServiceId(id!!)
                     holder.itemView.findNavController().navigate(action)
                 }
-            }
+//            val temp: Datum? = allDataServices[position].data
+//            if (temp != null) {
+//                holder.itemView.titlePaymentService.text = temp.name
+//                holder.itemView.descriptionPaymentService.text = "!"
+//                holder.itemView.descriptionPaymentService.text = temp.cvv
+//
+//                holder.itemView.updatePaymentService.setOnClickListener {
+//                    val id = allDataServices[position].id
+//
+//                    val action = RobotFragmentDirections.actionNavigationUbotToNavigationCreatePayment().setPaymentData(temp).setServiceId(id!!)
+//                    holder.itemView.findNavController().navigate(action)
+//                }
+//            }
         }
     }
 

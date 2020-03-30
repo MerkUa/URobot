@@ -20,6 +20,22 @@ data class GetContactsModel (
     var photo: String? = null,
     @SerializedName("created_at")
     @Expose
-    var createdAt: String? = null
+    var createdAt: String? = null,
+    @SerializedName("messenger_id")
+    @Expose
+    var messengerId: Int = 0,
+    @SerializedName("last_message")
+    @Expose
+    var lastMessage: LastMessage? = null
 
+)
+
+
+data class LastMessage(
+    @SerializedName("data")
+    @Expose
+    var text: String = "",
+    @SerializedName("created_at")
+    @Expose
+    var time: String? = null
 )

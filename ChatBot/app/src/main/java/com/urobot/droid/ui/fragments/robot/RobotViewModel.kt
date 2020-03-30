@@ -33,16 +33,20 @@ class RobotViewModel(application: Application) : AndroidViewModel(application), 
         currentUser = repository.User
     }
 
-    fun registerDeviceId(context: Context, token:String){
+    fun registerDeviceId(context: Context, token: String) {
 
         if (isNetworkConected(context)) {
-            CoroutineScope(Dispatchers.IO).launch {
 
-                val tokenFb = SharedManager(context).tokenFb
-                val apiService: ApiService = Apifactory.create()
-                val type = "android"
-                apiService.registerDeviceId(token, tokenFb, type)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val tokenFb = SharedManager(context).tokenFb
+                    val apiService: ApiService = Apifactory.create()
+                    val type = "android"
+                    apiService.registerDeviceId(token, tokenFb, type)
+                } catch (e: Exception) {
+                }
             }
+
         }
     }
 

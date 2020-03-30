@@ -50,6 +50,7 @@
     <string name="signUp_success">"На указанный e-mail отправлено письмо со ссылкой для активации"</string>
     <string name="forgotPass_success">"На указанный e-mail отправлено письмо со ссылкой для восстановления пароля"</string>
     <string name="forgotPass_error">"Не верный e-mail"</string>
+    <string name="support">"Поддержка"</string>
 
 
     <string name="title_activity_tutorial">TutorialActivity</string>
@@ -80,8 +81,8 @@
     <string name="text_forgot_pass">Необходимо ввести e-mail который был указан во время регистрации</string>
     <string name="text_add_messenger">Введите номер к которому привязан мессенджер, на этот номер придет смс с кодом подтверждения</string>
     <string name="action_forgot_pass">Сбросить пароль</string>
-    <string name="tabs_robots">Роботы</string>
-    <string name="tabs_scripts">Сервисы</string>
+    <string name="tabs_robots">Мои роботы</string>
+    <string name="tabs_scripts">Мои сервисы</string>
     <string name="bottom_title">Сервисы</string>
     <string name="work_day">Рабочие дни</string>
     <string name="work_time">Время работы</string>
@@ -125,6 +126,7 @@
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Отмена</string>
     <string name="update_button">ОБНОВИТЬ</string>
+    <string name="send_message_button">НАПИСАТЬ</string>
     <string name="industry">Индустрии</string>
     <string name="default_notification_channel_id">0</string>
     <string name="add_messenger">Привязать мессенджер</string>
@@ -145,6 +147,8 @@
     <string name="faqtitle12">Как создать сервис “ОПЛАТА”?</string>
     <string name="faqtitle13">Раздел “ЧАТЫ”</string>
     <string name="faqtitle14">Раздел “НАСТРОЙКА”</string>
+    <string name="faqtitle15">Terms of use</string>
+    <string name="faqtitle16">Privacy Policy</string>
 
 
     <string name="faqdescription1">U-robot - мобильная платформа для создания полнофункциональных  роботов, сайтов, интернет-магазинов,  лендингов в мессенджерах и соцсетях.</string>
@@ -174,5 +178,10 @@
     <string name="faqdescription13">В едином окне вы можете видеть и отвечать на все сообщения, которые пользователи присылают вашим ботам.</string>
     <string name="faqdescription14">Общая информация о вашем аккаунте. Фото профиля, описание, индустрия, привязанные мессенджеры, поддержка, через которую вы можете задать необходимые параметры, и раздел “ПРОМОКОД”, где вы можете ввести полученное промо для активации особых условий.</string>
 
-
+    <string name="faqdescription15"></string>
+    <string name="off">отключить</string>
+    <string name="on">подключить</string>
+    <string name="titleCRM">Интеграция с CRM</string>
+    <string name="titleBill">Оплата на р/с</string>
+    <string name="descriptionBill">Стоимость:</string>
 </resources>

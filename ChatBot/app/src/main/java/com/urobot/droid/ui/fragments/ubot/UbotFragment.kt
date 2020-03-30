@@ -16,11 +16,13 @@ import com.urobot.droid.data.model.Bot
 import com.urobot.droid.ui.createbot.CreateBotActivity
 import com.urobot.droid.ui.createbot.CreateBotActivity.Companion.EXTRA_BOT_ID
 import com.urobot.droid.ui.dialogs.ChooseMessengerDialogFragment
+import com.urobot.droid.ui.dialogs.EditBotDialogFragment
 import kotlinx.android.synthetic.main.fragment_ubot.*
 
 
 class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
-    ChooseMessengerDialogFragment.OnMessengerClickListener {
+    ChooseMessengerDialogFragment.OnMessengerClickListener,
+    EditBotDialogFragment.OnEditClickListener {
 
     private lateinit var ubotViewModel: UbotViewModel
     private val list = arrayListOf<Bot>()
@@ -58,7 +60,7 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
 
             list.clear()
             if (result.isEmpty()) {
-                createBotButton.isEnabled = true
+                listBot.adapter?.notifyDataSetChanged()
 
             } else {
                 for (bot in result) {
@@ -97,7 +99,31 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
         dialog.show(activity!!.supportFragmentManager, "TAG")
     }
 
+    override fun onChangeClick(view: View?, position: Int) {
+
+        var bot = list.get(position)
+        val dialog = EditBotDialogFragment()
+        if (list.isNotEmpty()) {
+            dialog.setRobot(bot)
+        }
+        dialog.setSelectedListener(this)
+        dialog.show(activity!!.supportFragmentManager, "TAG")
+
+    }
+
     override fun onClickListener(robotId: String, messengerId: Int, token: String, code: String) {
         ubotViewModel.addBot(robotId, messengerId, token, code, context!!)
+    }
+
+    override fun messengerAdded() {
+        ubotViewModel.update(context!!)
+    }
+
+    override fun onEditListener(robotId: String, title: String, description: String) {
+        ubotViewModel.editBot(robotId, title, description, context!!)
+    }
+
+    override fun onDeleteListener(robotId: String) {
+        ubotViewModel.deleteBot(robotId, context!!)
     }
 }

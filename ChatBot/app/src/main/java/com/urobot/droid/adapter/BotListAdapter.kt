@@ -40,32 +40,70 @@ class BotListAdapter(
         holder.title.text = dataSource[position].title
         holder.description.text = dataSource[position].description
 
-
+        if (dataSource[position].listMessengers.isEmpty()) {
+            holder.addBot.visibility = View.VISIBLE
+        }
         for (id in dataSource[position].listMessengers) {
             when (Messenger.Companion.fromValue(id)) {
                 Messenger.Telegram -> {
                     holder.iconTelegram.visibility = View.VISIBLE
+                    holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+                        mOnBotClickListener?.onAddBotClick(
+                            view, position
+                        )
+                    })
                 }
                 Messenger.Viber -> {
                     holder.iconViber.visibility = View.VISIBLE
+                    holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+                        mOnBotClickListener?.onAddBotClick(
+                            view, position
+                        )
+                    })
                 }
                 Messenger.Facebook -> {
                     holder.iconFacabook.visibility = View.VISIBLE
+                    holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+                        mOnBotClickListener?.onAddBotClick(
+                            view, position
+                        )
+                    })
                 }
                 Messenger.Vk -> {
                     holder.iconVk.visibility = View.VISIBLE
+                    holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+                        mOnBotClickListener?.onAddBotClick(
+                            view, position
+                        )
+                    })
                 }
                 Messenger.WhatsApp -> {
                     holder.iconWhatsUp.visibility = View.VISIBLE
+                    holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+                        mOnBotClickListener?.onAddBotClick(
+                            view, position
+                        )
+                    })
                 }
                 Messenger.Instagram -> {
                     holder.iconInstagramm.visibility = View.VISIBLE
+                    holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+                        mOnBotClickListener?.onAddBotClick(
+                            view, position
+                        )
+                    })
                 }
             }
         }
 
-        holder.change.setOnClickListener(View.OnClickListener { view ->
+        holder.addBot.setOnClickListener(View.OnClickListener { view ->
             mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+        holder.change.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onChangeClick(
                 view, position
             )
         })
@@ -112,6 +150,7 @@ class BotListAdapter(
     interface ItemClickListener {
         fun onItemClick(view: View?, position: Int)
         fun onAddBotClick(view: View?, position: Int)
+        fun onChangeClick(view: View?, position: Int)
     }
 
     fun addClickListener(itemClickListener: ItemClickListener) {

@@ -22,7 +22,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:text="Детский прием"
                 android:textSize="24sp" />
 
             <TextView
@@ -31,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/titleCalendarService"
                 android:layout_marginTop="4dp"
-                android:text="Режим работы, кол-во дней"
                 android:textSize="16sp" />
 
             <TextView

@@ -57,6 +57,9 @@ data class GetAllScriptsModel (
     @SerializedName("data")
     @Expose
     var data: String? = null,
+    @SerializedName("text")
+    @Expose
+    var text: String? = null,
     @SerializedName("type")
     @Expose
     var type: String? = null,

@@ -118,6 +118,17 @@ class SupportFragment : Fragment() {
                 .setText(getString(R.string.faqdescription14))
             view.findNavController().navigate(action)
         }
+
+        textView15.setOnClickListener {
+            val action = SupportFragmentDirections.navigationToDetails()
+                .setText("https://u-robot.net/termsofuse")
+            view.findNavController().navigate(action)
+        }
+        textView16.setOnClickListener {
+            val action = SupportFragmentDirections.navigationToDetails()
+                .setText("https://u-robot.net/privacypolicy")
+            view.findNavController().navigate(action)
+        }
     }
 
 }

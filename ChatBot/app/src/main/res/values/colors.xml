@@ -9,6 +9,7 @@
     <color name="black_overlay">#66000000</color>
     <color name="tutorial_Text_Color">#a0a0a0</color>
     <color name="white_text">#ffffff</color>
+    <color name="colorButtonRed">#ff3b30</color>
 
 
     <color name="colorWhiteButton">#ffffff</color>

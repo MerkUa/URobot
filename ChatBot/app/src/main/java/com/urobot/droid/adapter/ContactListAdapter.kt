@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.urobot.droid.R
 import com.urobot.droid.data.model.Contact
-import org.zakariya.stickyheaders.SectioningAdapter
+import com.urobot.droid.db.Messenger
 
 
 class ContactListAdapter :
@@ -67,8 +67,9 @@ class ContactListAdapter :
         mutableListOf<Contact>() as ArrayList<Contact>
 
     fun setData(items: ArrayList<Contact>) {
-        dataSource.clear()
-        dataSource.addAll(items)
+//        dataSource.clear()
+        contactListFiltered.clear()
+//        dataSource.addAll(items)
         contactListFiltered.addAll(items)
         notifyDataSetChanged()
     }
@@ -85,23 +86,16 @@ class ContactListAdapter :
         var personNameTextView: TextView
         var personAvatarView: ImageView
         var contactItem: ConstraintLayout
+        var messengerId: ImageView
 
         init {
             personNameTextView = itemView.findViewById(R.id.nameTextView)
             personAvatarView = itemView.findViewById(R.id.photoView)
             contactItem = itemView.findViewById(R.id.contactItem)
+            messengerId = itemView.findViewById(R.id.messengerId)
         }
 
         override fun onClick(v: View?) {
-        }
-    }
-
-    inner class MyHeaderViewHolder(itemView: View) :
-        SectioningAdapter.HeaderViewHolder(itemView) {
-        var titleTextView: TextView
-
-        init {
-            titleTextView = itemView.findViewById(R.id.titleTextView)
         }
     }
 
@@ -128,12 +122,38 @@ class ContactListAdapter :
                 view, position
             )
         })
+        when (Messenger.Companion.fromValue(contactListFiltered[position].messengerId)) {
+            Messenger.Telegram -> {
+                Picasso.get().load(R.drawable.telegram)
+                    .into(holder.messengerId)
+            }
+            Messenger.Viber -> {
+                Picasso.get().load(R.drawable.viber)
+                    .into(holder.messengerId)
+            }
+            Messenger.Facebook -> {
+                Picasso.get().load(R.drawable.facebook)
+                    .into(holder.messengerId)
+            }
+            Messenger.Vk -> {
+                Picasso.get().load(R.drawable.vklogo)
+                    .into(holder.messengerId)
+            }
+            Messenger.WhatsApp -> {
+                Picasso.get().load(R.drawable.whatsapp)
+                    .into(holder.messengerId)
+            }
+            Messenger.Instagram -> {
+                Picasso.get().load(R.drawable.instagram)
+                    .into(holder.messengerId)
+            }
+        }
 
     }
-
 
     fun addClickListener(itemClickListener: ItemClickListener) {
         mOnUserClickListener = itemClickListener
     }
+
 
 }

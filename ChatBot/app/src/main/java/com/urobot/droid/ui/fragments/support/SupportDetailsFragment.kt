@@ -1,12 +1,12 @@
 package com.urobot.droid.ui.fragments.support
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-
 import com.urobot.droid.R
 import kotlinx.android.synthetic.main.support_details_fragment.*
 
@@ -51,6 +51,13 @@ class SupportDetailsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SupportDetailsViewModel::class.java)
         detailsTextView.text = text
+        if (Patterns.WEB_URL.matcher(text).matches()) {
+            webView.visibility = View.VISIBLE
+            detailsTextView.visibility = View.GONE
+            webView.settings.javaScriptEnabled = true;
+            webView.settings.javaScriptCanOpenWindowsAutomatically = true
+            webView.loadUrl(text)
+        }
     }
 
 }

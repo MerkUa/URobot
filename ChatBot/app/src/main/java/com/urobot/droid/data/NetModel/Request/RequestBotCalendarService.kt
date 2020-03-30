@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.urobot.droid.data.model.OnlineRecordModel
 
 data class RequestBotCalendarService(
-    @field:SerializedName("bot_id")
-    val bot_id: Int,
+
     @field:SerializedName("name")
     val name: String,
     @field:SerializedName("description")

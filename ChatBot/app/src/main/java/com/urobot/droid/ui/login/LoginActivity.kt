@@ -1,7 +1,5 @@
 package com.urobot.droid.ui.login
 
-import android.accounts.AccountManager
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -26,11 +24,13 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.twitter.sdk.android.core.*
@@ -53,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -255,7 +256,6 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-            auth = FirebaseAuth.getInstance()
         })
 
         username.afterTextChanged {
@@ -358,21 +358,38 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
         }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestScopes(Scope(Scopes.DRIVE_APPFOLDER))
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        // [END config_signin]
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        // [START initialize_auth]
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
     }
 
     private fun firebaseLogin() {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.GoogleBuilder().build()
-        )
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, SIGN_IN_REQ_CODE)
 
-        startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setIsSmartLockEnabled(false)
-                .build(),
-            SIGN_IN_REQ_CODE
-        )
+
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.GoogleBuilder().build()
+//        )
+//
+//        startActivityForResult(
+//            AuthUI.getInstance()
+//                .createSignInIntentBuilder()
+//                .setAvailableProviders(providers)
+//                .setIsSmartLockEnabled(false)
+//                .build(),
+//            SIGN_IN_REQ_CODE
+//        )
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
@@ -384,48 +401,24 @@ class LoginActivity : AppCompatActivity() {
         resultCode: Int,
         data: Intent?
     ) {
+        super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
         loginButtonTwitter.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SIGN_IN_REQ_CODE) {
-            val response = IdpResponse.fromResultIntent(data)
-
-            val am: AccountManager = AccountManager.get(this)
-            val options = Bundle()
-
-
-            if (resultCode == Activity.RESULT_OK) {
-                // Successfully signed in
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//                try {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account!!)
+                account!!.idToken?.let {
+                    loginViewModel.signInSocial(
+                        GOOGLE,
+                        it, null, applicationContext
+                    )
+                }//                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
 
-//            am.getAuthToken(
-//                user,                     // Account retrieved using getAccountsByType()
-//                "Manage your tasks",            // Auth scope
-//                options,                        // Authenticator-specific options
-//                this,                           // Your activity
-//                OnTokenAcquired(),              // Callback called when a token is successfully acquired
-//                Handler(OnError())              // Callback called if an error occurs
-//            )
-
-
-//                user!!.getIdToken(true)
-//                        .addOnSuccessListener { result ->
-//                            val idToken = result.token
-//                            loginViewModel.signInSocial(GOOGLE, idToken!!, null, applicationContext)
-//
-//                        }
-//                // ...
-//            }
-
-//                }
             }
-
-            super.onActivityResult(requestCode, resultCode, data)
         }
-
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
@@ -436,12 +429,11 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("", "signInWithCredential:success")
                     val user = auth.currentUser
                     user!!.getIdToken(true)
                         .addOnSuccessListener { result ->
                             val idToken = result.token
-                            loginViewModel.signInSocial(GOOGLE, idToken!!, null, applicationContext)
+
 
                         }
                 } else {

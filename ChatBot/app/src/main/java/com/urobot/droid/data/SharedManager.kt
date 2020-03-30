@@ -15,6 +15,8 @@ class SharedManager(val context: Context) {
     private val VIBER = "Viber"
     private val VK = "vk"
     private val WHATSUP = "Whatsup"
+    private val INSTAGRAM = "Instagram"
+
 
 
     private fun get(): SharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -63,6 +65,11 @@ class SharedManager(val context: Context) {
         get() = get().getBoolean(WHATSUP, false)
         set(value) = get().edit()
             .putBoolean(WHATSUP, value)
+            .apply()
+    var instagramIsConnected: Boolean
+        get() = get().getBoolean(INSTAGRAM, false)
+        set(value) = get().edit()
+            .putBoolean(INSTAGRAM, value)
             .apply()
 
 }

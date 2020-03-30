@@ -23,6 +23,7 @@ class HomeBotAdapter(
     private val recycledViewPool: RecycledViewPool = RecycledViewPool()
 
     private val data: ArrayList<BotData> = mutableListOf<BotData>() as ArrayList<BotData>
+    var id: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeBotViewHolder {
         val theView =
@@ -36,6 +37,7 @@ class HomeBotAdapter(
 
         horizontalAdapter =
             ContentBotAdapter(data[position].botContentList, activity)
+        horizontalAdapter!!.setbot(id)
         holder.itemView.home_recycler_view_horizontal.adapter = horizontalAdapter
         holder.itemView.home_recycler_view_horizontal.setRecycledViewPool(recycledViewPool)
         holder.itemView.home_recycler_view_horizontal.setHasFixedSize(true)
@@ -81,6 +83,7 @@ class HomeBotAdapter(
                                     buttons.id,
                                     true,
                                     "",
+                                    "",
                                     list
                                 )
                             )
@@ -88,19 +91,27 @@ class HomeBotAdapter(
                     } else {
                         val nextRow = data[(data.indexOf(dataList) + 1)]
                         for (buttons in bot.list_buttons!!) {
+                            val listId: ArrayList<String> = ArrayList()
+                            for (service in nextRow.botContentList) {
+                                listId.add(service.id.toString())
+                            }
 //                            Log.d("addData","addData "+(data.size + bot.id!! + buttons.id!!))
-                            nextRow.botContentList.add(
-                                BotContentItem(
-                                    bot.parent_id!! + buttons.id!!,
-                                    bot.id,
-                                    (data.indexOf(dataList) + 2),
-                                    null,
-                                    buttons.id,
-                                    true,
-                                    "",
-                                    list
-                                )
+                            val content = BotContentItem(
+                                bot.parent_id!! + buttons.id!!,
+                                bot.id,
+                                (data.indexOf(dataList) + 2),
+                                null,
+                                buttons.id,
+                                true,
+                                "",
+                                "",
+                                list
                             )
+
+                            if (!listId.contains((bot.parent_id!! + buttons.id!!).toString())) {
+                                nextRow.botContentList.add(content)
+                            }
+
                         }
                     }
                 }
@@ -117,5 +128,9 @@ class HomeBotAdapter(
         data.clear()
         data.addAll(items)
         notifyDataSetChanged()
+    }
+
+    fun setBotId(botId: String) {
+        id = botId
     }
 }

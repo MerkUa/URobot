@@ -76,14 +76,27 @@ interface ApiService {
         @Body requestCreateBot: RequestCreateBot
     ): Observable<CreateWithRobotModel>
 
-    @GET("bots/get-contacts")
+    @GET("bots/get-all-chats")
+    fun getChats(
+        @Header("Authorization") authorization: String
+    ): Observable<List<GetContactsModel>>
+
+    @GET("messengers/get-contacts")
     fun getContacts(
-        @Header("Authorization") authorization: String,
-        @Query("bot_id") botID: Int?
+        @Header("Authorization") authorization: String
     ): Observable<List<GetContactsModel>>
 
     @GET("bots/get-messages")
     suspend fun getMessage(
+        @Header("Authorization") authorization: String,
+        @Query("contact_id") contact_id: String?,
+        @Query("page") page: Int?,
+        @Query("limit") limit: Int?
+    ): Response<GetMessageModel>
+
+
+    @GET("messengers/get-messages")
+    suspend fun getMessageOfContact(
         @Header("Authorization") authorization: String,
         @Query("contact_id") contact_id: String?,
         @Query("page") page: Int?,
@@ -97,7 +110,24 @@ interface ApiService {
         @Body message: RequestMessage
     ): Response<SendMessageResponseModel>
 
+    @POST("messengers/send-message")
+    suspend fun sendMessageToContact(
+        @Header("Authorization") authorization: String,
+        @Body message: RequestMessage
+    ): Response<SendMessageResponseModel>
+
     /** Send Message Image */
+    @Multipart
+    @POST("messengers/send-message")
+    suspend fun sendImageMessageToContact(
+        @Header("Authorization") authorization: String,
+        @Query("type") type: String,
+        @Query("contact_id") contact_id: String,
+        @Part file: MultipartBody.Part?,
+        @Part("data") data: RequestBody?
+    ): Response<SendMessageResponseModel>
+
+
     @Multipart
     @POST("bots/send-message")
     suspend fun sendImageMessage(
@@ -109,11 +139,16 @@ interface ApiService {
     ): Response<SendMessageResponseModel>
 
     /** bot Scripts */
-
     @POST("scripts/create-update")
     suspend fun createScripts(
         @Header("Authorization") authorization: String,
         @Body botScripts: RequestBotScripts
+    ): Response<ResponseBody>
+
+    @DELETE("scripts/delete")
+    suspend fun deleteScript(
+        @Header("Authorization") authorization: String,
+        @Query("uid") uid: Long
     ): Response<ResponseBody>
 
     @PUT("scripts/update")
@@ -204,4 +239,39 @@ interface ApiService {
         @Query("type") type: String
     ): Response<ResponseBody>
 
+    @GET("services/online-records")
+    suspend fun getAllEvents(
+        @Header("Authorization") authorization: String
+    ): Response<List<GetAllEventsModel>>
+
+
+    @Multipart
+    @POST("scripts/update-by-uid")
+    suspend fun sendImageToEvent(
+        @Header("Authorization") authorization: String,
+        @Query("type") type: String,
+        @Query("uid") uid: Long,
+        @Query("robot_id") id: String,
+        @Part file: MultipartBody.Part?,
+        @Part("data") data: RequestBody?
+    ): Response<GetAllScriptsModel>
+
+    @DELETE("robots/delete")
+    suspend fun deleteRobot(
+        @Header("Authorization") authorization: String,
+        @Query("robot_id") robotId: String?
+    ): Response<ResponseBody>
+
+    @PUT("robots/update")
+    suspend fun updateRobot(
+        @Header("Authorization") authorization: String,
+        @Query("robot_id") robotId: String?,
+        @Query("name") name: String?,
+        @Query("description") description: String?
+    ): Response<GetRobotModel>
+
+    @GET("users/cms")
+    suspend fun getCms(
+        @Header("Authorization") authorization: String
+    ): Response<List<cmsModel>>
 }

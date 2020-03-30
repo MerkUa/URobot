@@ -3,6 +3,7 @@ package com.urobot.droid.ui.fragments.ubot
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -46,22 +47,32 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
         userToken = token
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    Log.d("Merk", "try")
 
-                //            val resultBotId =
+                    //            val resultBotId =
 //                UserRoomDatabase.getDatabase(getApplication()).botDao().getTelegramBotId()
-                val apiService: ApiService = Apifactory.create()
-                val response = apiService.getAllRobots(token)
-                Log.d("Merk", "getAllRobots")
-                withContext(Dispatchers.Main) {
-                    Log.d("Merk", "Dispatchers")
-                    if (response.body() != null) {
-                        val list: List<GetAllRobotsModel>
+                    val apiService: ApiService = Apifactory.create()
+                    val response = apiService.getAllRobots(token)
+                    withContext(Dispatchers.Main) {
+                        Log.d("Merk", "Main")
 
-                        list = response.body() as ArrayList<GetAllRobotsModel>
+                        if (response.body() != null) {
+                            val list: List<GetAllRobotsModel>
 
-                        getAllScriptsLivaData.value = list
+                            list = response.body() as ArrayList<GetAllRobotsModel>
 
+                            getAllScriptsLivaData.value = list
+
+                        } else {
+                            Toast.makeText(
+                                getApplication(),
+                                "Ooops: Something else went wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
+                } catch (e: Exception) {
                 }
             }
         }
@@ -90,6 +101,53 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
 
                     if (response.isSuccessful) {
                         getAllContentAndScripts(userToken, context)
+                    }
+                }
+            }
+        }
+    }
+
+    fun update(context: Context) {
+        getAllContentAndScripts(userToken, context)
+    }
+
+    fun editBot(robotId: String, title: String, description: String, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val apiService: ApiService = Apifactory.create()
+                val response = apiService.updateRobot(userToken, robotId, title, description)
+
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        getAllContentAndScripts(userToken, context)
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun deleteBot(robotId: String, context: Context) {
+        if (Utils.isNetworkConected(context)) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val apiService: ApiService = Apifactory.create()
+                val response = apiService.deleteRobot(userToken, robotId)
+//
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        getAllContentAndScripts(userToken, context)
+                    } else {
+                        Toast.makeText(
+                            getApplication(),
+                            "Ooops: Something else went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

@@ -18,7 +18,7 @@
         <action
             android:id="@+id/action_navigation_ubot_to_navigation_create_bot"
             app:destination="@id/navigation_create_bot"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_navigation_ubot_to_navigation_create_payment"
             app:destination="@id/navigation_create_payment" />
@@ -76,7 +76,8 @@
     <fragment
         android:id="@+id/navigation_create_bot"
         android:name="com.urobot.droid.ui.fragments.createbot.CreateBotFragment"
-        android:label="@string/tabs_scripts"
+        android:label="Новый Робот"
+        app:popUpToInclusive="false"
         tools:layout="@layout/create_bot_fragment" />
 
     <fragment
@@ -107,6 +108,10 @@
         tools:layout="@layout/profile_fragment">
 
         <argument
+            android:name="id"
+            app:argType="string" />
+
+        <argument
             android:name="name"
             app:argType="string" />
         <argument
@@ -115,6 +120,10 @@
         <argument
             android:name="phone"
             app:argType="string" />
+
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_messages"
+            app:destination="@id/navigation_messages" />
 
     </fragment>
 
@@ -164,7 +173,7 @@
     <fragment
         android:id="@+id/navigation_settings_support"
         android:name="com.urobot.droid.ui.fragments.support.SupportFragment"
-        android:label="@string/title_settings"
+        android:label="@string/support"
         tools:layout="@layout/support_fragment">
         <action
             android:id="@+id/navigation_to_details"
@@ -174,7 +183,7 @@
     <fragment
         android:id="@+id/navigation_settings_support_details"
         android:name="com.urobot.droid.ui.fragments.support.SupportDetailsFragment"
-        android:label="@string/title_settings"
+        android:label="@string/support"
         tools:layout="@layout/support_details_fragment">
 
         <argument
@@ -188,6 +197,12 @@
         android:name="com.urobot.droid.ui.fragments.message.MessageFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/message_fragment">
+
+        <argument
+            android:name="Contact"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
         <argument
             android:name="IdRecipient"
             app:argType="integer"
@@ -225,6 +240,10 @@
             android:name="namePaymentService"
             app:argType="string"
             android:defaultValue="name" />
+        <argument
+            android:name="descriptionPaymentService"
+            app:argType="string"
+            android:defaultValue="" />
         <argument
             android:name="updateOnlineRecord"
             app:argType="com.urobot.droid.data.model.OnlineRecordModel"

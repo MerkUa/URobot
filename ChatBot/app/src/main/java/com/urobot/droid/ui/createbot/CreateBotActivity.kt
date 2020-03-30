@@ -40,6 +40,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         hideProgressBar()
 
         val botId = intent.getStringExtra(EXTRA_BOT_ID)
+        adapter.setBotId(botId)
         createBotViewModel.setBotId(botId.toInt())
     }
 
@@ -65,10 +66,10 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         })
 
         createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
-
+            dataList.clear()
             if (result.isEmpty()) {
                 val list: ArrayList<ServiceButtons>? = ArrayList()
-                listContent.add(BotContentItem(1, 0, 1, null, -1, true, "", list))
+                listContent.add(BotContentItem(1, 0, 1, null, -1, true, "", "", list))
                 dataList.add(BotData(listContent))
                 adapter.setData(dataList)
             }
@@ -95,6 +96,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                             null,
                             -1,
                             item.empty!!,
+                            item.text,
                             item.data,
                             list
                         )
@@ -204,7 +206,6 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         /** Create New Bot Content */
         createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
             users?.let {
-                Log.d("Merk", "botContentItem " + botContentItem.level)
                 createBotViewModel.createBotContentAndScripts(it.token!!, botContentItem)
             }
         })
@@ -216,8 +217,16 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         /** Create New Bot Content */
         createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
             users?.let {
-                Log.d("Merk", "botContentItem " + botContentItem.level)
                 createBotViewModel.createBotContentAndScripts(it.token!!, botContentItem)
+            }
+        })
+    }
+
+    override fun onBotDeleted(botContentItem: BotContentItem) {
+        createBotViewModel.currentUser.observe(this, androidx.lifecycle.Observer { users ->
+            users?.let {
+                Log.d("Merk", "botContentItem " + botContentItem.level)
+                createBotViewModel.deleteBotContentAndScripts(it.token!!, botContentItem)
             }
         })
     }

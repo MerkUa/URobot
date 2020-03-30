@@ -29,10 +29,30 @@ class ChooseMessengerDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        val url = "https://google.com"
+//        Log.d("Merk","Merk "+url)
+//        webView.settings.javaScriptEnabled = true;
+//        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+//        webView.webViewClient = object : WebViewClient() {
+//            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+////                    if(url == "https://urobot-dev.ml/system/services/messenger-login/success"){
+////                        activity?.onBackPressed()
+////                dismiss()
+////                onClickListener?.messengerAdded()
+////                        SharedManager(context!!).telegramIsConnected = true
+////                    }
+//                view?.loadUrl(url)
+//                return true
+//            }
+//        }
+
         faceBookLayout.setOnClickListener {
             linearLayoutMessengers.visibility = View.GONE
             linearLayoutText.visibility = View.VISIBLE
             messengerId = Messenger.Facebook.messengerId
+//            onClickListener?.messengerAdded()
+//            webView.loadUrl(url)
+
         }
         telegramLayout.setOnClickListener {
             linearLayoutMessengers.visibility = View.GONE
@@ -50,6 +70,17 @@ class ChooseMessengerDialogFragment : DialogFragment() {
             linearLayoutText.visibility = View.VISIBLE
             messengerId = Messenger.Viber.messengerId
         }
+        istaLayout.setOnClickListener {
+            linearLayoutMessengers.visibility = View.GONE
+            linearLayoutText.visibility = View.VISIBLE
+            messengerId = Messenger.Instagram.messengerId
+//            webView.loadUrl(url)
+        }
+        waLayout.setOnClickListener {
+            linearLayoutMessengers.visibility = View.GONE
+            linearLayoutText.visibility = View.VISIBLE
+            messengerId = Messenger.WhatsApp.messengerId
+        }
         addBotButton.setOnClickListener {
             onClickListener?.onClickListener(
                 robotId,
@@ -59,7 +90,6 @@ class ChooseMessengerDialogFragment : DialogFragment() {
             )
             dismiss()
         }
-
     }
 
     fun setSelectedListener(listener: OnMessengerClickListener) {
@@ -82,6 +112,6 @@ class ChooseMessengerDialogFragment : DialogFragment() {
 
     interface OnMessengerClickListener {
         fun onClickListener(robotId: String, messengerId: Int, token: String, code: String)
-
+        fun messengerAdded()
     }
 }

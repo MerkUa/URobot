@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.urobot.droid.R
@@ -34,9 +35,20 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+        val id = arguments?.let { ProfileFragmentArgs.fromBundle(it).id }
         val name = arguments?.let { ProfileFragmentArgs.fromBundle(it).name }
         val avatar = arguments?.let { ProfileFragmentArgs.fromBundle(it).avatar }
         val phone = arguments?.let { ProfileFragmentArgs.fromBundle(it).phone }
+
+        if (id!!.isNotEmpty()) {
+            sendMessageButton.visibility = View.VISIBLE
+            sendMessageButton.setOnClickListener {
+
+                val action = ProfileFragmentDirections.actionNavigationProfileToNavigationMessages()
+                    .setContact(id.toInt())
+                view.findNavController().navigate(action)
+            }
+        }
 
         textViewName.text = name
         if (avatar?.isNotEmpty()!!) {

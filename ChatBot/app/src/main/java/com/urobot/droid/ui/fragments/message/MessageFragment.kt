@@ -40,9 +40,9 @@ class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
 
     companion object {
         //image pick code
-        private val IMAGE_PICK_CODE = 1000
+        val IMAGE_PICK_CODE = 1000
         //Permission code
-        private val PERMISSION_CODE = 1001;
+        internal val PERMISSION_CODE = 1001;
     }
 
     private lateinit var messageViewModel: MessageViewModel
@@ -60,6 +60,9 @@ class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
 
         val recipientId = arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
 
+        val contactId = arguments?.let { MessageFragmentArgs.fromBundle(it).contact }
+
+
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
         inputField = root.findViewById(R.id.input)
@@ -76,7 +79,7 @@ class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
             Author("-1", "Me", "http://android.com.ua/images/News/android_logo.png", false)
         val authorSender = Author("2", "Sender", "", false)
 
-        inputField.setInputListener(InputListener {
+        inputField.setInputListener(InputListener { it ->
 
             val inputMessage = ChatMessage(1, authorMe, it.toString(), Date())
 
@@ -86,10 +89,16 @@ class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
                 androidx.lifecycle.Observer { users ->
 
                     users?.let {
-                        if (recipientId != null) {
+                        if (recipientId != -1) {
                             messageViewModel.sendTextMessage(
                                 it.token!!,
-                                recipientId,
+                                recipientId!!,
+                                inputField.inputEditText.text.toString()
+                            )
+                        } else if (contactId != -1) {
+                            messageViewModel.sendTextMessage(
+                                it.token!!,
+                                contactId!!,
                                 inputField.inputEditText.text.toString()
                             )
                         }
@@ -114,7 +123,22 @@ class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
             viewLifecycleOwner,
             androidx.lifecycle.Observer { users ->
                 users?.let {
-                    messageViewModel.getMessages(it.token!!, recipientId.toString(), 1)
+                    if (recipientId != -1) {
+                        messageViewModel.getMessages(
+                            it.token!!,
+                            recipientId.toString(),
+                            recipientId.toString(),
+                            1
+                        )
+                    } else if (contactId != -1) {
+                        messageViewModel.getMessages(
+                            it.token!!,
+                            recipientId.toString(),
+                            contactId.toString(),
+                            1
+                        )
+                    }
+
 
                 }
             })
@@ -324,10 +348,17 @@ class MessageFragment : Fragment(), MessageViewModel.IChatMessageContract {
                         users?.let {
                             val recipientId =
                                 arguments?.let { MessageFragmentArgs.fromBundle(it).idRecipient }
-                            if (recipientId != null) {
+                            val contact =
+                                arguments?.let { MessageFragmentArgs.fromBundle(it).contact }
+
+                            if (recipientId != -1) {
                                 val file = File(Utils.getRealPath(context!!, data?.data!!))
-                                messageViewModel.sendImageMessage(it.token!!, recipientId, file)
+                                messageViewModel.sendImageMessage(it.token!!, recipientId!!, file)
+                            } else if (contact != -1) {
+                                val file = File(Utils.getRealPath(context!!, data?.data!!))
+                                messageViewModel.sendImageMessage(it.token!!, contact!!, file)
                             }
+
                         }
                     })
             }

@@ -34,6 +34,7 @@ class ContactsFragment : Fragment(), ContactListAdapter.ItemClickListener {
         var contact = list.get(position)
         val action =
             ContactsFragmentDirections.actionNavigationContactsToNavigationProfile2(
+                "",
                 contact.name,
                 contact.avatar,
                 contact.phone
