@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:633963900896:android:c3c9a489f59d1e54554585",
+        "android_client_info": {
+          "package_name": "com.urobot.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633963900896-jhpjgf3ioj1qtok7mb6foqdcbls3q9du.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urobot.android",
+            "certificate_hash": "47bd0fad87bac405820b71a683515558c90b2081"
+          }
+        },
+        {
+          "client_id": "633963900896-d70i7p841kp52gejmsn396fj6id0m329.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrmAYMlzt6gAX0eRg2BrTZiZihNRJua2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633963900896-2psmt6cqbh9aqh7sbf33ho1fcdpndi2h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "633963900896-l0d6qdi39b5lv8qm3n11epsk8l8o1siu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hilditonn.URobot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:633963900896:android:179867c274ef0cb6554585",
         "android_client_info": {
           "package_name": "com.urobot.droid"

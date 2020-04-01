@@ -31,7 +31,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.urobot.droid"
+        applicationId "com.urobot.android"
 
         /** change SDK to 24 in release version
          * 23 only for testing in device */

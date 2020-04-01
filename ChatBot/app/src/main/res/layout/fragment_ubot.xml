@@ -12,6 +12,17 @@
         app:layout_constraintBottom_toTopOf="@+id/createBotButton"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/robotTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/robot_tips"
+        app:layout_constraintBottom_toTopOf="@+id/createBotButton"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/createBotButton"
         style="@style/ButtonStyle"

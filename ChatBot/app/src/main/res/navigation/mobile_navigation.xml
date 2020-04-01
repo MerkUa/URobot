@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_ubot"
-        android:name="com.urobot.droid.ui.fragments.robot.RobotFragment"
+        android:name="com.urobot.android.ui.fragments.robot.RobotFragment"
         android:label="@string/title_bot"
         tools:layout="@layout/robot_fragment">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_create_calendar"
-        android:name="com.urobot.droid.ui.dialogs.BottomCalendarFragment"
+        android:name="com.urobot.android.ui.dialogs.BottomCalendarFragment"
         android:label="@string/tabs_scripts"
         tools:layout="@layout/fragment_bottom_calendar">
         <action
@@ -42,7 +42,7 @@
             android:name="calendarData"
             android:defaultValue="@null"
             app:nullable="true"
-            app:argType="com.urobot.droid.data.model.Datum" />
+            app:argType="com.urobot.android.data.model.GetAllServicesModel" />
         <argument
             android:name="serviceId"
             app:argType="integer"
@@ -51,7 +51,7 @@
 
     <fragment
         android:id="@+id/navigation_create_payment"
-        android:name="com.urobot.droid.ui.dialogs.BottomPaymentFragment"
+        android:name="com.urobot.android.ui.dialogs.BottomPaymentFragment"
         android:label="@string/tabs_scripts"
         tools:layout="@layout/fragment_bottom_payment" >
         <action
@@ -65,7 +65,7 @@
             android:name="paymentData"
             android:defaultValue="@null"
             app:nullable="true"
-            app:argType="com.urobot.droid.data.model.Datum" />
+            app:argType="com.urobot.android.data.model.GetAllServicesModel" />
         <argument
             android:name="serviceId"
             app:argType="integer"
@@ -75,14 +75,14 @@
 
     <fragment
         android:id="@+id/navigation_create_bot"
-        android:name="com.urobot.droid.ui.fragments.createbot.CreateBotFragment"
+        android:name="com.urobot.android.ui.fragments.createbot.CreateBotFragment"
         android:label="Новый Робот"
         app:popUpToInclusive="false"
         tools:layout="@layout/create_bot_fragment" />
 
     <fragment
         android:id="@+id/navigation_chats"
-        android:name="com.urobot.droid.ui.fragments.chats.ChatsFragment"
+        android:name="com.urobot.android.ui.fragments.chats.ChatsFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/fragment_chats">
         <action
@@ -92,7 +92,7 @@
 
     <fragment
         android:id="@+id/navigation_contacts"
-        android:name="com.urobot.droid.ui.fragments.contacts.ContactsFragment"
+        android:name="com.urobot.android.ui.fragments.contacts.ContactsFragment"
         android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts">
         <action
@@ -103,7 +103,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.urobot.droid.ui.fragments.profile.ProfileFragment"
+        android:name="com.urobot.android.ui.fragments.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/profile_fragment">
 
@@ -130,7 +130,7 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.urobot.droid.ui.fragments.ubot.SettingsFragment"
+        android:name="com.urobot.android.ui.fragments.ubot.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -150,7 +150,7 @@
 
     <fragment
         android:id="@+id/navigation_settings_add_messenger"
-        android:name="com.urobot.droid.ui.fragments.addMesenger.AddMessengerFragment"
+        android:name="com.urobot.android.ui.fragments.addMesenger.AddMessengerFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/add_messenger_fragment">
         <action
@@ -160,19 +160,19 @@
 
     <fragment
         android:id="@+id/navigation_settings_promo"
-        android:name="com.urobot.droid.ui.fragments.promo.PromoFragment"
+        android:name="com.urobot.android.ui.fragments.promo.PromoFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/promo_fragment" />
 
     <fragment
         android:id="@+id/navigation_settings_tariffs"
-        android:name="com.urobot.droid.ui.fragments.tariffs.TariffsFragment"
+        android:name="com.urobot.android.ui.fragments.tariffs.TariffsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_tariffs" />
 
     <fragment
         android:id="@+id/navigation_settings_support"
-        android:name="com.urobot.droid.ui.fragments.support.SupportFragment"
+        android:name="com.urobot.android.ui.fragments.support.SupportFragment"
         android:label="@string/support"
         tools:layout="@layout/support_fragment">
         <action
@@ -182,7 +182,7 @@
 
     <fragment
         android:id="@+id/navigation_settings_support_details"
-        android:name="com.urobot.droid.ui.fragments.support.SupportDetailsFragment"
+        android:name="com.urobot.android.ui.fragments.support.SupportDetailsFragment"
         android:label="@string/support"
         tools:layout="@layout/support_details_fragment">
 
@@ -194,7 +194,7 @@
 
     <fragment
         android:id="@+id/navigation_messages"
-        android:name="com.urobot.droid.ui.fragments.message.MessageFragment"
+        android:name="com.urobot.android.ui.fragments.message.MessageFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/message_fragment">
 
@@ -208,11 +208,16 @@
             app:argType="integer"
             android:defaultValue="-1" />
 
+        <argument
+            android:name="BotId"
+            app:argType="integer"
+            android:defaultValue="0" />
+
     </fragment>
 
     <fragment
         android:id="@+id/navigation_add_telegram"
-        android:name="com.urobot.droid.ui.fragments.addMesenger.AddmessengerByTypeFragment"
+        android:name="com.urobot.android.ui.fragments.addMesenger.AddmessengerByTypeFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/add_telegram_fragment">
         <argument
@@ -223,19 +228,19 @@
 
     <fragment
         android:id="@+id/navigation_services_fragment"
-        android:name="com.urobot.droid.ui.fragments.ubotservice.ServicesFragment"
+        android:name="com.urobot.android.ui.fragments.ubotservice.ServicesFragment"
         android:label="Services"
         tools:layout="@layout/ubot_service_fragment">
         <argument
             android:name="onlineRecord"
             android:defaultValue="@null"
             app:nullable="true"
-            app:argType="com.urobot.droid.data.model.OnlineRecordModel" />
+            app:argType="com.urobot.android.data.model.OnlineRecordModel" />
         <argument
             android:name="paymentModel"
             android:defaultValue="@null"
             app:nullable="true"
-            app:argType="com.urobot.droid.data.model.PaymentModel" />
+            app:argType="com.urobot.android.data.model.PaymentModel" />
         <argument
             android:name="namePaymentService"
             app:argType="string"
@@ -246,7 +251,7 @@
             android:defaultValue="" />
         <argument
             android:name="updateOnlineRecord"
-            app:argType="com.urobot.droid.data.model.OnlineRecordModel"
+            app:argType="com.urobot.android.data.model.OnlineRecordModel"
             app:nullable="true"
             android:defaultValue="@null" />
         <argument
@@ -255,19 +260,25 @@
             android:defaultValue="0" />
         <argument
             android:name="updatePaymentSevice"
-            app:argType="com.urobot.droid.data.model.PaymentModel"
+            app:argType="com.urobot.android.data.model.PaymentModel"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_navigation_services_fragment_to_navigation_create_payment"
+            app:destination="@id/navigation_create_payment" />
+        <action
+            android:id="@+id/action_navigation_services_fragment_to_navigation_create_calendar"
+            app:destination="@id/navigation_create_calendar" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_industry_fragment"
-        android:name="com.urobot.droid.ui.fragments.industry.IndustryFragment"
+        android:name="com.urobot.android.ui.fragments.industry.IndustryFragment"
         android:label="Industry"
         tools:layout="@layout/fragment_industry">
         <argument
             android:name="updateListIndusty"
-            app:argType="com.urobot.droid.data.model.IdsModel"
+            app:argType="com.urobot.android.data.model.IdsModel"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>

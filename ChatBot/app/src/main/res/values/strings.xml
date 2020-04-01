@@ -103,8 +103,8 @@
     <string name="period">Срок Действия</string>
     <string name="start_bot">Запустить</string>
 
-    <string name="tabs_my_contacts">Подписчики</string>
-    <string name="tabs_server_contacts">Контакты</string>
+    <string name="tabs_my_contacts">Контакты</string>
+    <string name="tabs_server_contacts">Подписчики</string>
 
 
     <array name="material_calendar_months_array">
@@ -184,4 +184,11 @@
     <string name="titleCRM">Интеграция с CRM</string>
     <string name="titleBill">Оплата на р/с</string>
     <string name="descriptionBill">Стоимость:</string>
+    <string name="robot_tips">Добавте своего робота</string>
+    <string name="service_tips">Добавте свои сервисы</string>
+
+    <string name="chats_tips">Чтобы увидеть список чатов — привяжите мессенджер из списка в Профиле. \n\n
+        Чтобы увидеть список чатов Робота — сойзайте и активируйте робота в Роботах.</string>
+
+    <string name="contacts_tips">Чтобы увидеть список контактов — привяжите мессенджер из списка в Профиле.</string>
 </resources>
