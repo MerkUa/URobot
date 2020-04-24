@@ -37,7 +37,7 @@ android {
          * 23 only for testing in device */
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 13
+        versionCode 20
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -139,6 +139,8 @@ dependencies {
     implementation 'org.koin:koin-androidx-viewmodel:1.0.1'
 
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+
+    implementation 'com.google.android.gms:play-services-tagmanager:17.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -3,12 +3,19 @@ package com.urobot.android.ui.fragments.ubot
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.urobot.android.Apifactory
+import com.urobot.android.NetModel.Industries
+import com.urobot.android.Network.ApiService
 import com.urobot.android.Repository.UserRepository
 import com.urobot.android.contracts.IUserContract
 import com.urobot.android.db.User
 import com.urobot.android.db.UserRoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application), IUserContract {
@@ -20,6 +27,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val repository: UserRepository
     // LiveData gives us updated words when they change.
     val User: LiveData<User>
+    val getAllIndustryFromNetLivaData: MutableLiveData<List<Industries>> = MutableLiveData()
+
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -57,6 +66,21 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             repository.logout(token)
             userDao.deleteAll()
             listener?.onLogoutResult()
+        }
+    }
+
+    fun getAllIndustryFromNet(token: String, userId: String) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val apiService: ApiService = Apifactory.create()
+            val response = apiService.getInfobyId(token, userId)
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    getAllIndustryFromNetLivaData.value = response.body()?.industries
+                }
+            }
         }
     }
 

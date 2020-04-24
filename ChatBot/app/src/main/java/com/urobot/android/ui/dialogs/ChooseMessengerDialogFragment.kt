@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.fragment.app.DialogFragment
 import com.urobot.android.R
 import com.urobot.android.db.Messenger
@@ -15,6 +17,7 @@ class ChooseMessengerDialogFragment : DialogFragment() {
 
     private var onClickListener: OnMessengerClickListener? = null
     var messengerId: Int = 0
+    var userId: Int = 0
     private var robotId = ""
 
     override fun onCreateView(
@@ -29,22 +32,20 @@ class ChooseMessengerDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val url = "https://google.com"
-//        Log.d("Merk","Merk "+url)
-//        webView.settings.javaScriptEnabled = true;
-//        webView.settings.javaScriptCanOpenWindowsAutomatically = true
-//        webView.webViewClient = object : WebViewClient() {
-//            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-////                    if(url == "https://urobot-dev.ml/system/services/messenger-login/success"){
-////                        activity?.onBackPressed()
-////                dismiss()
-////                onClickListener?.messengerAdded()
-////                        SharedManager(context!!).telegramIsConnected = true
-////                    }
-//                view?.loadUrl(url)
-//                return true
-//            }
-//        }
+        val url = "https://urobot-dev.ml/system/services/bot-registration/" + robotId + "/"
+        webView.settings.javaScriptEnabled = true;
+        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                if (url == "https://urobot-dev.ml/system/services/bot-registr/success") {
+//                    activity?.onBackPressed()
+                    dismiss()
+                    onClickListener?.messengerAdded()
+                }
+                view?.loadUrl(url)
+                return true
+            }
+        }
 
         faceBookLayout.setOnClickListener {
             linearLayoutMessengers.visibility = View.GONE
@@ -57,7 +58,12 @@ class ChooseMessengerDialogFragment : DialogFragment() {
         telegramLayout.setOnClickListener {
             linearLayoutMessengers.visibility = View.GONE
             linearLayoutText.visibility = View.VISIBLE
+
+//            linearLayoutWebView.visibility = View.VISIBLE
+
             messengerId = Messenger.Telegram.messengerId
+            webView.loadUrl(url + messengerId)
+
         }
         vkLayout.setOnClickListener {
             linearLayoutMessengers.visibility = View.GONE
@@ -107,6 +113,10 @@ class ChooseMessengerDialogFragment : DialogFragment() {
     }
 
     fun setRobotId(botId: String) {
+        robotId = botId
+    }
+
+    fun setUserId(botId: String) {
         robotId = botId
     }
 

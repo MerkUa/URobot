@@ -106,11 +106,12 @@
                     android:text="Индустрия" />
 
                 <TextView
+                    android:id="@+id/industryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColor="@color/black_text"
-                    android:text="Салон красоты, еще что-нибудь" />
+                    android:text="" />
             </LinearLayout>
 
 

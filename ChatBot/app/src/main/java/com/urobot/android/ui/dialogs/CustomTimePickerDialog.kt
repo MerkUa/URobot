@@ -5,14 +5,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.widget.NumberPicker
 import android.widget.TimePicker
-import com.urobot.android.R
 import java.lang.reflect.Field
 import java.util.*
 
 class CustomTimePickerDialog(
     context: Context?, private val mTimeSetListener: OnTimeSetListener?, hourOfDay: Int, minute: Int, is24HourView: Boolean) :
     TimePickerDialog(
-        context, R.style.DialogTheme, null, hourOfDay,
+        context, 3, null, hourOfDay,
         minute / TIME_PICKER_INTERVAL, is24HourView
     ) {
     private var mTimePicker: TimePicker? = null

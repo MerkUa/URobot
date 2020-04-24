@@ -48,7 +48,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:text="test@gmail.com"
+
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +69,6 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="1029384756"
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -164,8 +163,8 @@
 
                 <ImageView
                     android:id="@+id/imGoodle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     android:src="@drawable/google" />
             </FrameLayout>
 
@@ -184,8 +183,8 @@
 
                 <ImageView
                     android:id="@+id/imTwitter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     android:src="@drawable/twitter" />
 
             </FrameLayout>
@@ -203,8 +202,8 @@
 
                 <ImageView
                     android:id="@+id/imFacebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     android:src="@drawable/facebook" />
             </FrameLayout>
         </LinearLayout>

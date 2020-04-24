@@ -279,4 +279,10 @@ interface ApiService {
     suspend fun getCms(
         @Header("Authorization") authorization: String
     ): Response<List<cmsModel>>
+
+    @GET("users/get")
+    suspend fun getInfobyId(
+        @Header("Authorization") authorization: String,
+        @Query("user_id") robotId: String?
+    ): Response<ResponseLoginModel>
 }

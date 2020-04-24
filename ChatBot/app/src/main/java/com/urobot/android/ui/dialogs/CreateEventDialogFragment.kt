@@ -162,9 +162,9 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener,
                     botContentItem!!.description = descriptionEditText.text.toString()
                     botContentItem!!.list_buttons = allButtons
 
-                    if (botContentItem!!.parent_id != null) {
-                        botContentItem!!.parent_id = botContentItem!!.id
-                    }
+//                    if (botContentItem!!.parent_id == null) {
+//                        botContentItem!!.parent_id = botContentItem!!.id
+//                    }
                     it!!.onBotDataChanged(botContentItem!!)
                 }
                 descriptionEditText.setText("")

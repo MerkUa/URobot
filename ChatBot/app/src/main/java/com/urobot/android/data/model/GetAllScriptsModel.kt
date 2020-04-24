@@ -51,6 +51,9 @@ data class GetAllScriptsModel (
     @SerializedName("parent_uid")
     @Expose
     var parentUid: Long? = null,
+    @SerializedName("service_id")
+    @Expose
+    var serviceId: Long? = null,
     @SerializedName("level")
     @Expose
     var level: Int? = null,

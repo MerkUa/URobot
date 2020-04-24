@@ -6,16 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.urobot.android.R
 import com.urobot.android.data.model.PaymentModel
 import com.urobot.android.data.model.PaymentTypes
+import com.urobot.android.data.model.TypeServices
+import com.urobot.android.db.User
 import kotlinx.android.synthetic.main.fragment_bottom_payment.*
 
 
 class BottomPaymentFragment : Fragment() {
 
+    private lateinit var viewModel: PaymentsViewModel
+    private lateinit var user: User
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewModel = ViewModelProvider(this).get(PaymentsViewModel::class.java)
+        viewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+            users?.let {
+                user = it
+            }
+        })
         return inflater.inflate(R.layout.fragment_bottom_payment, container, false)
     }
 
@@ -57,12 +69,21 @@ class BottomPaymentFragment : Fragment() {
                     )
                     val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
 
-                    val action = BottomPaymentFragmentDirections.actionNavigationCreatePaymentToNavigationServicesFragment()
-                        .setServiceId(id)
-                        .setUpdatePaymentSevice(data)
-                        .setNamePaymentService(namePaymentService)
-                        .setDescriptionPaymentService(description)
-                    Navigation.findNavController(view).navigate(action)
+                    user.token?.let { it1 ->
+                        viewModel.updatePaymentServices(
+                            namePaymentService, description,
+                            it1, data, id, TypeServices.payment.type_id
+                        )
+                    }
+
+//                   val action = BottomPaymentFragmentDirections.actionNavigationCreatePaymentToNavigationServicesFragment()
+//                        .setServiceId(id)
+//                        .setUpdatePaymentSevice(data)
+//                        .setNamePaymentService(namePaymentService)
+//                        .setDescriptionPaymentService(description)
+//                    Navigation.findNavController(view).navigate(action)
+                    activity!!.onBackPressed()
+
                 } else {
                     Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
                 }
@@ -91,14 +112,21 @@ class BottomPaymentFragment : Fragment() {
                     listOf(PaymentTypes.CreditCard.type)
                 )
 
-                val action = BottomPaymentFragmentDirections
-                    .actionNavigationCreatePaymentToNavigationServicesFragment()
-                    .setPaymentModel(dataPayment)
-                    .setNamePaymentService(namePaymentService)
-                    .setDescriptionPaymentService(description)
+                user.token?.let { it1 ->
+                    viewModel.createPaymentService(
+                        namePaymentService, description,
+                        it1, dataPayment, TypeServices.payment.type_id
+                    )
+                }
 
-                Navigation.findNavController(view).navigate(action)
-                activity!!.finish()
+//                val action = BottomPaymentFragmentDirections
+//                    .actionNavigationCreatePaymentToNavigationServicesFragment()
+//                    .setPaymentModel(dataPayment)
+//                    .setNamePaymentService(namePaymentService)
+//                    .setDescriptionPaymentService(description)
+//
+//                Navigation.findNavController(view).navigate(action)
+                activity!!.onBackPressed()
 
             } else{
                 Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()

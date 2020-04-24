@@ -94,7 +94,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                             item.parentUid?.toLong(),
                             item.level,
                             null,
-                            -1,
+                            item.serviceId,
                             item.empty!!,
                             item.text,
                             item.data,

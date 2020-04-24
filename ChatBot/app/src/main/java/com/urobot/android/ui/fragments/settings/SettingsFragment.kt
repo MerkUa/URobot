@@ -63,12 +63,25 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
                 textViewName.text =
                     if (currentUser != null) currentUser.fName + " " + currentUser.lName else ""
                 textViewPhone.text = if (currentUser != null) currentUser.cellPhone else ""
-                Log.d("currentUser", "id " + currentUser.id)
                 Picasso.get().load(Uri.parse(currentUser.photoURL)).into(photoView)
-                Log.d("currentUser", "id " + currentUser.photoURL)
-
+                settingsViewModel.getAllIndustryFromNet(currentUser.token!!, currentUser.id)
             }
         })
+
+        settingsViewModel.getAllIndustryFromNetLivaData.observe(
+            viewLifecycleOwner,
+            Observer { result ->
+                industryText.text = ""
+                val sb = StringBuilder()
+                for (i in result.indices) {
+                    sb.append(result[i].name)
+                    if (i < result.size - 1) {
+                        sb.append(", ")
+                    }
+                }
+                industryText.text = sb.toString()
+
+            })
         settingsViewModel.setListener(this)
 
         return root

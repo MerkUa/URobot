@@ -1,6 +1,7 @@
 package com.urobot.android.ui.createbot
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -71,9 +72,9 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
             val apiService: ApiService = Apifactory.create()
             val listscripts: ArrayList<UpdateOrCreateScriptsModel> = ArrayList()
+            Log.d("createBotContentAndScripts", "action" + botContentItem.action)
+            Log.d("createBotContentAndScripts", "id" + botContentItem.id)
 
-
-            !
             listscripts.add(
                 UpdateOrCreateScriptsModel(
                     botContentItem.description,
@@ -103,6 +104,11 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
                 val list: ArrayList<ServiceButtons>? = ArrayList()
 
                 if (!contain) {
+                    Log.d(
+                        "createBotContentAndScripts",
+                        "uid" + botContentItem.parent_id!! + buttons.id!!
+                    )
+                    Log.d("createBotContentAndScripts", "parent" + botContentItem.id)
                     listscripts.add(
                         UpdateOrCreateScriptsModel(
                             "",

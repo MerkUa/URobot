@@ -40,6 +40,26 @@ class TariffsFragment : Fragment(), TariffsViewModel.ITariffsContract {
         var url = ""
         viewModel.setListener(this)
 
+        tariffCard.setOnClickListener {
+            url = "https://urobot-dev.ml/system/services/subscription-payment/" + userId
+            payments.visibility = View.GONE
+            webView.visibility = View.VISIBLE
+            webView.webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                    if (url == "https://urobot-dev.ml/system/services/subscription-paymen/success") {
+
+
+                    }
+                    view?.loadUrl(url)
+                    return true
+                }
+            }
+            webView.settings.javaScriptEnabled = true;
+            webView.settings.javaScriptCanOpenWindowsAutomatically = true
+            webView.loadUrl(url)
+
+        }
+
         payBill.setOnClickListener {
             url = "https://urobot-dev.ml/system/user/update-billing/" + userId
             payments.visibility = View.GONE

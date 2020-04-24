@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.DatePicker
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener
 import com.urobot.android.R
 import com.urobot.android.data.model.OnlineRecordModel
+import com.urobot.android.data.model.TypeServices
+import com.urobot.android.db.User
 import kotlinx.android.synthetic.main.fragment_bottom_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,7 +25,8 @@ import kotlin.collections.ArrayList
 
 class BottomCalendarFragment : Fragment() {
 
-
+    private lateinit var viewModel: CalendarsViewModel
+    private lateinit var user: User
 
     var calendars: ArrayList<Calendar> = arrayListOf()
     var listener = OnSelectDateListener {
@@ -38,6 +42,12 @@ class BottomCalendarFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this).get(CalendarsViewModel::class.java)
+        viewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+            users?.let {
+                user = it
+            }
+        })
         return inflater.inflate(R.layout.fragment_bottom_calendar, container, false)
     }
 
@@ -78,9 +88,17 @@ class BottomCalendarFragment : Fragment() {
                 val id = BottomCalendarFragmentArgs.fromBundle(arguments!!).serviceId
 
 
-                val action = BottomCalendarFragmentDirections.actionNavigationCreateCalendarToNavigationServicesFragment()
-                    .setUpdateOnlineRecord(data).setServiceId(id)
-                Navigation.findNavController(view).navigate(action)
+                user.token?.let { it ->
+                    viewModel.updateCalendarServices(
+                        nameEditText.text.toString(), "",
+                        it, data, id
+                    )
+                }
+                activity!!.onBackPressed()
+
+//                val action = BottomCalendarFragmentDirections.actionNavigationCreateCalendarToNavigationServicesFragment()
+//                    .setUpdateOnlineRecord(data).setServiceId(id)
+//                Navigation.findNavController(view).navigate(action)
             }
 
         }
@@ -175,10 +193,15 @@ class BottomCalendarFragment : Fragment() {
             val data = OnlineRecordModel(
                 name, timeFrom, timeTo, breakTime , session, listDate)
 
-            val action = BottomCalendarFragmentDirections.actionNavigationCreateCalendarToNavigationServicesFragment().setOnlineRecord(data)
-            Navigation.findNavController(view).navigate(action)
-
+            user.token?.let { it1 ->
+                viewModel.createOnlineRecordService(
+                    nameEditText.text.toString(), it1,
+                    data, TypeServices.onlineRecord.type_id
+                )
             }
+            activity!!.onBackPressed()
+
+        }
     }
 
     private fun showCalendar() {

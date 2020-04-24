@@ -1,5 +1,6 @@
 package com.urobot.android.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +63,8 @@ class ContentBotAdapter(
 
             val listButtons = botList[position].list_buttons
 
-            if (listButtons != null) {
+            if (listButtons != null && listButtons.size > 0) {
+                holder.itemView.buttonsLinearLayout.visibility = View.VISIBLE
                 holder.itemView.buttonsLinearLayout.removeAllViews()
                 for (item in listButtons) {
                     val itemView = LinearLayout.inflate(
@@ -75,6 +77,8 @@ class ContentBotAdapter(
                     holder.itemView.buttonsLinearLayout.addView(itemView)
 
                 }
+            } else {
+                holder.itemView.buttonsLinearLayout.visibility = View.INVISIBLE
             }
 
             holder.itemView.setOnClickListener {
@@ -94,6 +98,7 @@ class ContentBotAdapter(
             holder.itemView.setOnClickListener {
                 val manager = activity.supportFragmentManager
                 activity.supportFragmentManager.beginTransaction()
+                Log.d("newInstance", "action " + botList[position].action)
                 val newFragment = CreateEventDialogFragment.newInstance(botList[position], botId)
                 newFragment?.setSelectedListener(activity as CreateBotActivity)
                 newFragment?.show(manager, botList[position].id.toString())

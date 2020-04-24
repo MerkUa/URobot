@@ -15,7 +15,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.urobot.android.R
 import com.urobot.android.adapter.ServiceListAdapter
 import com.urobot.android.data.model.GetAllServicesModel
-import com.urobot.android.data.model.TypeServices
 import com.urobot.android.ui.dialogs.BottomFragment
 import com.urobot.android.ui.fragments.robot.RobotFragmentDirections
 import kotlinx.android.synthetic.main.bottom_sheet_service.*
@@ -99,68 +98,68 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener,
         /**Get All Services Observe LiveData */
 
 
-        if (arguments != null) {
+//        if (arguments != null) {
+//
+//            val createCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
+//            val createPaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
+//
+//            val updateCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).updateOnlineRecord
+//            val updatePaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).updatePaymentSevice
+//
+//            val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
+//            val description = ServicesFragmentArgs.fromBundle(arguments!!).descriptionPaymentService
+//            val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
+//            val serviceId = ServicesFragmentArgs.fromBundle(arguments!!).serviceId
+//
+//            if (createCalendarArgs != null) {
+//                /**Create Online record Service */
+//                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+//                    users?.let {
+//                        servicesViewModel.createOnlineRecordService(
+//                            nameCalendar!!, it.token!!,
+//                            createCalendarArgs, TypeServices.onlineRecord.type_id
+//                        )
+//                    }
+//                })
+//            }
+//
+//            if (updateCalendarArgs != null) {
+//                /**Update Online record Service */
+//                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+//                    users?.let {
+//                        servicesViewModel.updateCalendarServices(
+//                            updateCalendarArgs.name, description, it.token!!,
+//                            updateCalendarArgs, serviceId
+//                        )
+//                    }
+//                })
+//            }
+//
+//            if (createPaymentArgs != null) {
+//                /**Create Payment Service */
+//                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+//                    users?.let {
+//                        servicesViewModel.createPaymentService(
+//                            namePayment, description, it.token!!,
+//                            createPaymentArgs, TypeServices.payment.type_id
+//                        )
+//                    }
+//                })
+//            }
+//
+//            if (updatePaymentArgs != null) {
+//                /**Update Payment Service */
+//                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
+//                    users?.let {
+//                        servicesViewModel.updatePaymentServices(
+//                            namePayment, description, it.token!!,
+//                            updatePaymentArgs, serviceId, TypeServices.payment.type_id
+//                        )
+//                    }
+//                })
+//            }
 
-            val createCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord
-            val createPaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).paymentModel
-
-            val updateCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).updateOnlineRecord
-            val updatePaymentArgs = ServicesFragmentArgs.fromBundle(arguments!!).updatePaymentSevice
-
-            val namePayment = ServicesFragmentArgs.fromBundle(arguments!!).namePaymentService
-            val description = ServicesFragmentArgs.fromBundle(arguments!!).descriptionPaymentService
-            val nameCalendar = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord?.name
-            val serviceId = ServicesFragmentArgs.fromBundle(arguments!!).serviceId
-
-            if (createCalendarArgs != null) {
-                /**Create Online record Service */
-                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-                    users?.let {
-                        servicesViewModel.createOnlineRecordService(
-                            nameCalendar!!, it.token!!,
-                            createCalendarArgs, TypeServices.onlineRecord.type_id
-                        )
-                    }
-                })
-            }
-
-            if (updateCalendarArgs != null) {
-                /**Update Online record Service */
-                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-                    users?.let {
-                        servicesViewModel.updateCalendarServices(
-                            updateCalendarArgs.name, description, it.token!!,
-                            updateCalendarArgs, serviceId
-                        )
-                    }
-                })
-            }
-
-            if (createPaymentArgs != null) {
-                /**Create Payment Service */
-                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-                    users?.let {
-                        servicesViewModel.createPaymentService(
-                            namePayment, description, it.token!!,
-                            createPaymentArgs, TypeServices.payment.type_id
-                        )
-                    }
-                })
-            }
-
-            if (updatePaymentArgs != null) {
-                /**Update Payment Service */
-                servicesViewModel.currentUser.observe(viewLifecycleOwner, Observer { users ->
-                    users?.let {
-                        servicesViewModel.updatePaymentServices(
-                            namePayment, description, it.token!!,
-                            updatePaymentArgs, serviceId, TypeServices.payment.type_id
-                        )
-                    }
-                })
-            }
-
-        }
+//        }
 
     }
 

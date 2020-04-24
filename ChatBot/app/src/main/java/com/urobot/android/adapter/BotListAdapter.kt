@@ -102,6 +102,43 @@ class BotListAdapter(
             )
         })
 
+        holder.iconTelegram.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+        holder.iconFacabook.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+        holder.iconViber.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+        holder.iconVk.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+        holder.iconInstagramm.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+        holder.iconWhatsUp.setOnClickListener(View.OnClickListener { view ->
+            mOnBotClickListener?.onAddBotClick(
+                view, position
+            )
+        })
+
+
         holder.change.setOnClickListener(View.OnClickListener { view ->
             mOnBotClickListener?.onChangeClick(
                 view, position
