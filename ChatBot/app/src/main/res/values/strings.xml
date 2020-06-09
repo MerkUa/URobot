@@ -4,7 +4,6 @@
     <string name="fb_login_protocol_scheme">0d1cb6b45462c64cee28cbb275b7172c</string>
 
 
-    2
     <string name="com.twitter.sdk.android.CONSUMER_KEY">XnSbA5ptLFQPHD1x5tROiCRHo</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">j8cHkhx2deVhj7W3LulrwmOiLCl19FDBVDMpWx0iLeuJOPxmmJ</string>
 
@@ -26,9 +25,11 @@
     <string name="action_sign_up">Создать</string>
     <string name="action_promo">Подарить другу</string>
 
-    <string name="hint_name_calendar">Название</string>
-    <string name="hint_name_bot">Название</string>
-    <string name="hint_description_bot">Описание</string>
+    <string name="hint_name_calendar">Название календаря</string>
+    <string name="hint_name_payment">Название оплаты</string>
+    <string name="hint_name_bot">Название робота</string>
+    <string name="hint_description_bot">Напишите приветственное сообщене</string>
+    <string name="hint_description">Описание</string>
     <string name="hint_phone_bot">Телефон</string>
 
     <string name="text_bot_description">Введите номер к которому будет привязан робот, на этот номер придет смс с кодом подтверждения</string>
@@ -71,9 +72,9 @@
     <string name="title_activity_promo">PromoActivity</string>
     <string name="title_activity_main_chat">MainChatActivity</string>
     <string name="title_bot">U-Robot</string>
-    <string name="title_chats">Chats</string>
+    <string name="title_chats">Чаты</string>
     <string name="title_contacts">Контакты и подписчики</string>
-    <string name="contacts">Contacts</string>
+    <string name="contacts">Контакты</string>
     <string name="title_settings">Настройки</string>
     <string name="text_forgot_pass">Необходимо ввести e-mail который был указан во время регистрации</string>
     <string name="text_add_messenger">Введите номер к которому привязан мессенджер, на этот номер придет смс с кодом подтверждения</string>
@@ -96,6 +97,7 @@
     <string name="pause">Перерыв</string>
     <string name="session_time">Длительность сеанса</string>
     <string name="hint_number_card">Номер карты</string>
+    <string name="price_number_card">Сумма для оплаты</string>
     <string name="hint_owner_card">Фамилия Имя (как на карте)</string>
     <string name="period">Срок Действия</string>
     <string name="start_bot">Запустить</string>
@@ -131,61 +133,105 @@
     <string name="token">Токен</string>
     <string name="code">Код</string>
     <string name="faqtitle1">Что такое U-robot?</string>
-    <string name="faqtitle2">U-robot - мобильная платформа, а какие телефоны поддерживаются?</string>
-    <string name="faqtitle3">Можно ли работать с платформой на ПК?</string>
-    <string name="faqtitle4">Какие мессенджеры и соцсети поддерживает U-robot?</string>
-    <string name="faqtitle5">Зачем нужен сайт в мессенджерах и соцсетях?</string>
-    <string name="faqtitle6">Чем U-robot отличается от конкурентов?</string>
-    <string name="faqtitle7">С чего начать?</string>
-    <string name="faqtitle8">Как создать своего робота?</string>
-    <string name="faqtitle9">Что такое сервисы в U-robot?</string>
-    <string name="faqtitle10">Как начать создавать свой сервис?</string>
-    <string name="faqtitle11">Как создать сервис “ОНЛАЙН-ЗАПИСЬ”?</string>
-    <string name="faqtitle12">Как создать сервис “ОПЛАТА”?</string>
-    <string name="faqtitle13">Раздел “ЧАТЫ”</string>
-    <string name="faqtitle14">Раздел “НАСТРОЙКА”</string>
+    <string name="faqtitle2">Как создать своего робота?</string>
+    <string name="faqtitle3">Какие мессенджеры и социальные сети можно подключить в приложении?</string>
+    <string name="faqtitle4">Какие сервисы можно подключить в приложении U-Robot?</string>
+    <string name="faqtitle5">Как создать календарь для Онлайн-записи?</string>
+    <string name="faqtitle6"> Как подключить Оплату в чат с клиентом?</string>
+    <string name="faqtitle7">Раздел “Чаты”</string>
+    <string name="faqtitle8">Раздел “Настройки”</string>
+    <string name="faqtitle9">Раздел “Подписчики”</string>
+    <string name="faqtitle10">Раздел “Контакты”</string>
+    <string name="faqtitle11">Партнерская сеть U-Robot</string>
     <string name="faqtitle15">Terms of use</string>
     <string name="faqtitle16">Privacy Policy</string>
+    <string name="n_level">%s Уровень</string>
+    <string name="level1_description">: Приветствие</string>
+    <string name="level2_description">: Основное меню</string>
 
 
-    <string name="faqdescription1">U-robot - мобильная платформа для создания полнофункциональных  роботов, сайтов, интернет-магазинов,  лендингов в мессенджерах и соцсетях.</string>
-    <string name="faqdescription2">Все - на базе Android или iOS.</string>
-    <string name="faqdescription3">Нет, на данный момент поддерживаются только мобильные версии.</string>
-    <string name="faqdescription4">WhatsApp, Telegram, Viber, Facebook, Instagram, VK.</string>
-    <string name="faqdescription5">Пользователи не любят уходить на другие площадки, даже на ваш сайт. Клиент будет чувствовать себя гораздо комфортнее, взаимодействуя с вами в привычных соцсетях или мессенджерах. Дать им возможность находиться на той же площадке, где вы их поймали - гарантированный рост конверсии в платеж и лояльности вашему бизнесу.</string>
-    <string name="faqdescription6">Изначально ориентирован на мобильные телефоны; Простота и скорость при создании роботов и сервисов на платформе.</string>
-    <string name="faqdescription7">Скачайте официальное приложение с AppStore (здесь будет линк) или Google Play (здесь будет линк) в зависимости от модели вашего телефона.</string>
-    <string name="faqdescription8">- После загрузки приложения вы по умолчанию попадаете на главный экран и вкладку “РОБОТЫ”, где сможете создать своего робота нажав кнопку “СОЗДАТЬ”; \n
-                                    - далее необходимо ввести название робота, описание (для каких целей вы его используете), телефон к которому он будет привязан и куда будут приходить все сообщения пользователей; \n
-                                    - получить и ввести код для активации робота.
+    <string name="faqdescription1">Это первая мобильная платформа для создания чатботов. Теперь любой желающий, не обладая специальными навыками сможет создать и подключить персонального робота в любой мессенджер или социальную сеть.</string>
+    <string name="faqdescription2">Зайдите в главное меню и нажмите кнопку “Создать”. \n
+        - Введите название вашего робота и дайте краткое описание - информацию, которая может быть полезна вашим клиентам. \n
+        - Нажмите кнопку “Создать”. Перед вами откроется новое окно, где в дальнейшем будет отображаться весь сценарий диалога с роботом. \n
+        - Первый уровень - это приветственное сообщение робота. Для создания сценария разговора добавляйте варианты взаимодействия клиента с роботом.\n
+        - Для того чтобы продолжить сценарий необходимо нажать “Добавить” и выбрать “Кнопка” или “Сервис”\n
+        - Добавляя кнопку, вам нужно ввести ее название. Она появится на следующем уровне. Перейдя на этот уровень вы сможете добавить описание к созданной кнопке. \n
+        \n
+        Например: Я хочу чтобы мои клиенты могли узнать адрес. Для этого,  на первом уровне добавляю кнопку и даю ей название “Адрес”. В общем окне на втором уровне появляется карточка “Адрес”. Чтобы клиент мог получить информацию, нажав на кнопку “Адрес”, мне необходимо заполнить эту карточку, указав там необходимую информацию о местонахождении. \n
+
+        - Подключайте сервисы - онлайн-запись и возможность оплаты ваших товаров или услуг внутри чата.  \n
+        - Создавайте неограниченное количество кнопок и давайте любую информацию, которая может быть полезна вашим клиентам. \n
+        - Привязывайте мессенджеры, в которых вы обычно общаетесь с клиентами. Робот будет отвечать на все однотипные вопросы, вести онлайн-запись и принимать оплату без вашего участия!
+
 </string>
-    <string name="faqdescription9">Это онлайн-запись или оплата, которые будут доступны для ваших клиентов в нужных вам мессенджерах и соцсетях.</string>
-    <string name="faqdescription10">После попадания на главный экран вам необходимо выбрать вкладку “СЕРВИСЫ” и нажать кнопку “СОЗДАТЬ”.</string>
-    <string name="faqdescription11">- После нажатия кнопки “СОЗДАТЬ” в разделе “СЕРВИСЫ” выберите “ОНЛАЙН-ЗАПИСЬ”;\n
-- введите название сервиса “ОНЛАЙН-ЗАПИСЬ”;\n
-- отметьте рабочие дни, время работы, возможные перерывы, длительность сеансов сервиса;\n
-- нажмите “СОЗДАТЬ”.</string>
-    <string name="faqdescription12">- После нажатия кнопки “СОЗДАТЬ” в разделе “СЕРВИСЫ” выберите “ОПЛАТА”;\n
-- введите название сервиса оплаты;\n
-- введите номер карты, на которую будут осуществляться платежи клиентов;\n
-- фамилия и имя, как на карте;\n
-- срок действия;\n
-- CVC код и нажмите кнопку “СОЗДАТЬ”.\n
+    <string name="faqdescription3">На данный момент U-Robot поддерживает:
+        - WhatsApp \n
+        - Telegram \n
+        - Viber \n
+        - Facebook Messenger \n
+        - Instagram Direct \n
+        - ВКонтакте \n
 </string>
-    <string name="faqdescription13">В едином окне вы можете видеть и отвечать на все сообщения, которые пользователи присылают вашим ботам.</string>
-    <string name="faqdescription14">Общая информация о вашем аккаунте. Фото профиля, описание, индустрия, привязанные мессенджеры, поддержка, через которую вы можете задать необходимые параметры, и раздел “ПРОМОКОД”, где вы можете ввести полученное промо для активации особых условий.</string>
+    <string name="faqdescription4">В приложении U-Robot есть 2 вида сервиса:\n
+\n
+
+        - Оплата \n
+Вы можете подключить к роботу оплату картой или другими удобными способами — клиент сам будет выбирать, как ему удобнее совершить оплату.
+\n
+\n
+        - Онлайн-запись \n
+Подключайте календари для онлайн записи. Робот будет предлагать клиенту свободные дни и время и автоматически передавать вам всю информацию.
+</string>
+    <string name="faqdescription5">На главном экране нажимаете на кнопку  “U-Robot”\n
+        - Далее - вкладка “Сервис” - “Онлайн-запись” - “Создать”\n
+        - Введите название сервиса\n
+        - Отметьте рабочие дни, часы работы, перерывы, длительность сеансов сервиса\n
+        - Нажмите “Создать”, чтобы сохранить изменения.\n
+</string>
+    <string name="faqdescription6">На главном экране нажимаете на кнопку  “U-Robot”\n
+        - Далее - вкладка “Сервис” - “Оплата” - “Добавить” \n
+        - Введите название сервиса оплаты\n
+        - Добавьте номер карты, на которую вы будете принимать платежи клиентов\n
+        - Введите данные с карты\n
+        - И далее кнопку “Создать”, чтобы сохранить изменения\n
+</string>
+    <string name="faqdescription7">В этом разделе вы можете видеть и отвечать на все сообщения, которые пользователи присылают в мессенджерах и социальных сетях вашим ботам.
+</string>
+    <string name="faqdescription8">В этом разделе вы можете добавить информацию о себе, привязать мессенджеры, узнать ответы на самые частые вопросы, ввести промокод, узнать о тарифах и сервисах.
+</string>
+    <string name="faqdescription9">В этом разделе вы можете увидеть информацию о тех клиентах, которые подписались на ваших ботов в мессенджерах и социальных сетях
+</string>
+    <string name="faqdescription10">В этом разделе вы можете увидеть свои контакты, которые были синхронизированы из мессенджеров и социальных сетей.
+</string>
+    <string name="faqdescription11">U-Robot предлагает вам возможность использования реферальной программы для еще большей выгоды. \n
+\n
+Вы приглашаете пользователей через свою реферальную ссылку и получаете 20% с каждого клиента, который оплатит подписку в течении первого года использования.\n
+\n
+Пользователь, который воспользовался вашей ссылкой, получает 500 бонусных рублей, которые можно потратить при оплате подписки.\n
+\n
+Ваша ссылка:\n
+</string>
 
     <string name="faqdescription15"></string>
     <string name="off">отключить</string>
     <string name="on">подключить</string>
-    <string name="titleCRM">Интеграция с CRM</string>
+    <string name="title_1c">Интеграция с 1C</string>
+    <string name="title_amo">Интеграция с Amo CRM</string>
+    <string name="title_insta">Instagram бот</string>
+    <string name="title_wa">WhatsApp бот</string>
     <string name="titleBill">Оплата на р/с</string>
     <string name="descriptionBill">Стоимость:</string>
     <string name="robot_tips">Добавте своего робота</string>
     <string name="service_tips">Добавте свои сервисы</string>
 
-    <string name="chats_tips">Чтобы увидеть список чатов — привяжите мессенджер из списка в Профиле. \n\n
-        Чтобы увидеть список чатов Робота — сойзайте и активируйте робота в Роботах.</string>
+    <string name="chats_tips">Чтобы увидеть список чатов — привяжите мессенджер из списка в Профиле. \n\nЧтобы увидеть список чатов Робота — сойзайте и активируйте робота в Роботах.</string>
 
     <string name="contacts_tips">Чтобы увидеть список контактов — привяжите мессенджер из списка в Профиле.</string>
+    <string name="botHint">Сценарий диалога</string>
+    <string name="repeat_day">Повторить через</string>
+    <string name="day">дней</string>
+    <string name="title_profile">Профиль</string>
+    <string name="content">Введите текст сообщения</string>
+    <string name="title_bucket">Корзина</string>
 </resources>

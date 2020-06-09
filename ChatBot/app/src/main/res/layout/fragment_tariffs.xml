@@ -5,219 +5,483 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/payments"
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/paymentsScroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/tariffCard"
+        <LinearLayout
+            android:id="@+id/payments"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="8dp">
-
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/tariffCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:layout_margin="16dp"
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/typeBot"
-                    android:layout_marginTop="4dp"
-                    android:text="Базовый"
-                    android:textColor="@color/black_text"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="16dp">
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/title"
-                    android:layout_marginTop="36dp"
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_marginTop="4dp"
+                        android:text="Базовый"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-                    android:text="@string/descriptionBill"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title"
+                        android:layout_marginTop="36dp"
 
-
-                <TextView
-                    android:id="@+id/tvChange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/description"
-                    android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@+id/description"
-                    android:text="4999 руб./мес."
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
 
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tvChange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/description"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/description"
+                        android:text="4999 руб./мес."
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
-        </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
 
-        <TextView
-            android:id="@+id/additionalServices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleBot"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="Дополнительные сервисы"
-            android:textSize="16sp" />
+            </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="8dp">
+            <TextView
+                android:id="@+id/additionalServices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleBot"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Дополнительные сервисы"
+                android:textSize="16sp" />
 
-            <RelativeLayout
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:layout_margin="16dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
 
-                <TextView
-                    android:id="@+id/titleBill"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/typeBot"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/titleBill"
-                    android:textColor="@color/black_text"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="16dp">
 
-                <TextView
-                    android:id="@+id/descriptionBill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/titleBill"
-                    android:layout_marginTop="36dp"
+                    <TextView
+                        android:id="@+id/titleBill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/titleBill"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-                    android:text="@string/descriptionBill"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/descriptionBill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleBill"
+                        android:layout_marginTop="36dp"
 
-
-                <TextView
-                    android:id="@+id/tvChangeBill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/descriptionBill"
-                    android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@+id/descriptionBill"
-                    android:text="+2000 руб./мес."
-
-                    android:textColor="@color/black_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
 
 
-                <TextView
-                    android:id="@+id/payBill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/titleBill"
-                    android:layout_alignParentEnd="true"
+                    <TextView
+                        android:id="@+id/tvChangeBill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/descriptionBill"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/descriptionBill"
+                        android:text="+2000 руб./мес."
 
-                    android:layout_marginStart="16dp"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-            </RelativeLayout>
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/payBill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/titleBill"
+                        android:layout_alignParentEnd="true"
+
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="8dp">
+                </RelativeLayout>
 
-            <RelativeLayout
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:layout_margin="16dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
 
-                <TextView
-                    android:id="@+id/titleCRM"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/typeBot"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/titleCRM"
-                    android:textColor="@color/black_text"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="16dp">
 
-                <TextView
-                    android:id="@+id/descriptionCRM"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/title1C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/title_1c"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/description1C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title1C"
+                        android:layout_marginTop="36dp"
+
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvChange1C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/description1C"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/description1C"
+                        android:text="+3000 руб./мес."
+
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/pay1C"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/title1C"
+                        android:layout_alignParentEnd="true"
+
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/titleCRM"
-                    android:layout_marginTop="36dp"
+                    android:layout_margin="16dp">
 
-                    android:text="@string/descriptionBill"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/titleAMO"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/title_amo"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/descriptionAMO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleAMO"
+                        android:layout_marginTop="16dp"
+
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
 
 
-                <TextView
-                    android:id="@+id/tvChangeCRM"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tvChangeAMO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/descriptionAMO"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/descriptionAMO"
+                        android:text="+3000 руб./мес."
+
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/payAMO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/titleAMO"
+                        android:layout_alignParentEnd="true"
+
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/descriptionCRM"
-                    android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@+id/descriptionCRM"
-                    android:text="+3000 руб./мес."
+                    android:layout_margin="16dp">
 
-                    android:textColor="@color/black_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/titleInsta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/title_insta"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/descriptionInsta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleInsta"
+                        android:layout_marginTop="36dp"
+
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
 
 
-                <TextView
-                    android:id="@+id/payCRM"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tvChangeInsta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/descriptionInsta"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/descriptionInsta"
+                        android:text="+3000 руб./мес."
+
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/payInsta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/titleInsta"
+                        android:layout_alignParentEnd="true"
+
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/titleCRM"
-                    android:layout_alignParentEnd="true"
+                    android:layout_margin="16dp">
 
-                    android:layout_marginStart="16dp"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/titleWA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/title_wa"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/descriptionWA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleWA"
+                        android:layout_marginTop="36dp"
+
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
 
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tvChangeWA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/descriptionWA"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/descriptionWA"
+                        android:text="+3000 руб./мес."
+
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/payWA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/titleWA"
+                        android:layout_alignParentEnd="true"
+
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp">
+
+                    <TextView
+                        android:id="@+id/titleBucket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typeBot"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/title_bucket"
+                        android:textColor="@color/black_text"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/descriptionBucket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleBucket"
+                        android:layout_marginTop="36dp"
+
+                        android:text="@string/descriptionBill"
+                        android:textSize="16sp" />
 
 
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvChangeBucket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/descriptionBucket"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/descriptionBucket"
+                        android:text="+3000 руб./мес."
+
+                        android:textColor="@color/black_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/payBucket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/titleBucket"
+                        android:layout_alignParentEnd="true"
+
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
     </WebView>
 

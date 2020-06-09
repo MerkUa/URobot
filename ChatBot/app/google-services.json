@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "633963900896-6bvlvilgdjdks6hs2scetjgdlmq9c859.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urobot.android",
+            "certificate_hash": "94a87879629f994b3ae10f960a5bd66bd65632af"
+          }
+        },
+        {
           "client_id": "633963900896-jhpjgf3ioj1qtok7mb6foqdcbls3q9du.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -40,10 +48,10 @@
               "client_type": 3
             },
             {
-              "client_id": "633963900896-l0d6qdi39b5lv8qm3n11epsk8l8o1siu.apps.googleusercontent.com",
+              "client_id": "633963900896-rpm2d7r9rrlj250mv8vfe61d8j4q61a6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hilditonn.URobot"
+                "bundle_id": "com.URobot.bot"
               }
             }
           ]
@@ -84,10 +92,10 @@
               "client_type": 3
             },
             {
-              "client_id": "633963900896-l0d6qdi39b5lv8qm3n11epsk8l8o1siu.apps.googleusercontent.com",
+              "client_id": "633963900896-rpm2d7r9rrlj250mv8vfe61d8j4q61a6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hilditonn.URobot"
+                "bundle_id": "com.URobot.bot"
               }
             }
           ]

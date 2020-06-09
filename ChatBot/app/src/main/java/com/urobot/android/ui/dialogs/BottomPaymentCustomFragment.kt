@@ -30,10 +30,12 @@ class BottomPaymentCustomFragment : Fragment() {
 
             createPaymentBotButton.visibility = View.GONE
             updatePaymentBotButton.visibility = View.VISIBLE
+            deleteBtn.visibility = View.VISIBLE
 
             val paymentData = BottomPaymentFragmentArgs.fromBundle(arguments!!).paymentData
 
             namePaymentEditText.setText(paymentData?.name)
+            pricePaymentEditText.setText(paymentData?.data?.price)
             descriptionPaymentEditText.setText(paymentData?.description)
             ownerPaymentEditText.setText(paymentData?.data?.card_name)
             numberPaymentEditText.setText(paymentData?.data?.cardNumber)
@@ -57,6 +59,7 @@ class BottomPaymentCustomFragment : Fragment() {
                         ownerPaymentEditText.text.toString(),
                         numberPaymentEditText.textAlignment.toString(),
                         month, year, "",
+                        pricePaymentEditText.text.toString(),
                         listOf(PaymentTypes.CreditCard.type)
                     )
                     val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
@@ -98,6 +101,7 @@ class BottomPaymentCustomFragment : Fragment() {
                     month,
                     year,
                     "",
+                    pricePaymentEditText.text.toString(),
                     listOf(PaymentTypes.CreditCard.type)
                 )
 

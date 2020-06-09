@@ -35,13 +35,13 @@ class SupportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        textView1.setOnClickListener {
+        textView2.setOnClickListener {
             val action = SupportFragmentDirections.navigationToDetails()
                 .setText(getString(R.string.faqdescription1))
             view.findNavController().navigate(action)
         }
 
-        textView2.setOnClickListener {
+        textView1.setOnClickListener {
             val action = SupportFragmentDirections.navigationToDetails()
                 .setText(getString(R.string.faqdescription2))
             view.findNavController().navigate(action)
@@ -97,27 +97,27 @@ class SupportFragment : Fragment() {
 
         textView11.setOnClickListener {
             val action = SupportFragmentDirections.navigationToDetails()
-                .setText(getString(R.string.faqdescription11))
+                .setText(getString(R.string.faqdescription11) + " " + viewModel.promo)
             view.findNavController().navigate(action)
         }
 
-        textView12.setOnClickListener {
-            val action = SupportFragmentDirections.navigationToDetails()
-                .setText(getString(R.string.faqdescription12))
-            view.findNavController().navigate(action)
-        }
-
-        textView13.setOnClickListener {
-            val action = SupportFragmentDirections.navigationToDetails()
-                .setText(getString(R.string.faqdescription13))
-            view.findNavController().navigate(action)
-        }
-
-        textView14.setOnClickListener {
-            val action = SupportFragmentDirections.navigationToDetails()
-                .setText(getString(R.string.faqdescription14))
-            view.findNavController().navigate(action)
-        }
+//        textView12.setOnClickListener {
+//            val action = SupportFragmentDirections.navigationToDetails()
+//                .setText(getString(R.string.faqdescription12))
+//            view.findNavController().navigate(action)
+//        }
+//
+//        textView13.setOnClickListener {
+//            val action = SupportFragmentDirections.navigationToDetails()
+//                .setText(getString(R.string.faqdescription13))
+//            view.findNavController().navigate(action)
+//        }
+//
+//        textView14.setOnClickListener {
+//            val action = SupportFragmentDirections.navigationToDetails()
+//                .setText(getString(R.string.faqdescription14))
+//            view.findNavController().navigate(action)
+//        }
 
         textView15.setOnClickListener {
             val action = SupportFragmentDirections.navigationToDetails()

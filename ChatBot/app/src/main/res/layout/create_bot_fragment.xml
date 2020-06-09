@@ -25,7 +25,7 @@
                 style="@style/RegistrationEditTextStyle"
                 android:hint="@string/hint_name_bot"
                 android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
+                android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
@@ -45,10 +45,61 @@
                 style="@style/RegistrationEditTextStyle"
                 android:hint="@string/hint_description_bot"
                 android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:textColor="#1d1d26"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/repeatBotLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RegistrationTextInputLayoutStyle"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionBotLayout"
+            android:text="@string/repeat_day"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dayLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            style="@style/RegistrationTextInputLayoutStyle"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionBotLayout"
+            android:text="@string/day"
+            tools:ignore="MissingConstraints" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/repeatDayEditText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:ems="2"
+            android:maxEms="2"
+            android:maxLength="2"
+            android:paddingEnd="8dp"
+            android:inputType="number"
+            android:maxLines="1"
+            android:text="0"
+            android:textColor="#1d1d26"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/repeatBotLayout"
+            app:layout_constraintEnd_toStartOf="@+id/dayLayout"
+            app:layout_constraintTop_toTopOf="@+id/repeatBotLayout" />
+
 
         <Button
             android:id="@+id/add_messenger"
@@ -70,8 +121,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/button_rounded_background"
             android:text="@string/action_add_bot"
@@ -85,11 +134,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/button_rounded_background_red"
-            android:text="Удалить"
+            android:text="@string/delete"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/updateBtn"
             app:layout_constraintEnd_toEndOf="parent"

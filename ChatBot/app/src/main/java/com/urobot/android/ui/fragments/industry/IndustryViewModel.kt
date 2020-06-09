@@ -53,7 +53,9 @@ class IndustryViewModel(application: Application) : AndroidViewModel(application
             val response = apiService.getAllIndustry(token)
 
             withContext(Dispatchers.Main) {
-                getAllIndustryFromNetLivaData.value =  response.body()
+                if (response.isSuccessful) {
+                    getAllIndustryFromNetLivaData.value = response.body()
+                }
             }
         }
     }

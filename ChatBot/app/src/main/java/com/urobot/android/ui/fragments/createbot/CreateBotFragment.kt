@@ -43,7 +43,8 @@ class CreateBotFragment : Fragment() {
                         createBotViewModel.createRobot(
                             it.token!!,
                             nameBotEditText.text.toString(),
-                            descriptionBotEditText.text.toString()
+                            descriptionBotEditText.text.toString(),
+                            repeatDayEditText.text.toString()
                         )
                     }
 

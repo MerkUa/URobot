@@ -12,6 +12,7 @@ import com.urobot.android.R
 import com.urobot.android.data.model.BotContentItem
 import com.urobot.android.ui.createbot.CreateBotActivity
 import com.urobot.android.ui.dialogs.CreateEventDialogFragment
+import kotlinx.android.synthetic.main.item_empty_type_create_bot.view.*
 import kotlinx.android.synthetic.main.item_with_event_create_bot.view.*
 
 
@@ -56,7 +57,10 @@ class ContentBotAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         if ((getItemViewType(position) == contentType) and botList.isNotEmpty()) {
-
+            holder.itemView.title.text = botList[position].title
+            if (botList[position].title!!.isEmpty()) {
+//                holder.itemView.title.visibility = View.GONE
+            }
             holder.itemView.text_from_dialog.text = botList[position].description
 
             holder.itemView.textId.text = botList[position].level.toString() + "." + (position + 1)
@@ -80,7 +84,6 @@ class ContentBotAdapter(
             } else {
                 holder.itemView.buttonsLinearLayout.visibility = View.INVISIBLE
             }
-
             holder.itemView.setOnClickListener {
                 holder.itemView.setOnClickListener {
                     val manager = activity.supportFragmentManager
@@ -95,6 +98,11 @@ class ContentBotAdapter(
             }
         }
         if (getItemViewType(position) == emptyType) {
+            holder.itemView.levelId.text = botList[position].level.toString() + "." + (position + 1)
+            holder.itemView.titleEmpty.text = botList[position].title
+            if (botList[position].title!!.isEmpty()) {
+                holder.itemView.titleEmpty.visibility = View.GONE
+            }
             holder.itemView.setOnClickListener {
                 val manager = activity.supportFragmentManager
                 activity.supportFragmentManager.beginTransaction()

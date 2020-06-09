@@ -16,7 +16,7 @@ import com.urobot.android.db.User
 import kotlinx.android.synthetic.main.fragment_bottom_payment.*
 
 
-class BottomPaymentFragment : Fragment() {
+class BottomPaymentFragment : Fragment(), PaymentsViewModel.IPaymentsContract {
 
     private lateinit var viewModel: PaymentsViewModel
     private lateinit var user: User
@@ -33,23 +33,31 @@ class BottomPaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.setListener(this)
         if( BottomPaymentFragmentArgs.fromBundle(arguments!!).paymentData != null ){
 
             createPaymentBotButton.visibility = View.GONE
             updatePaymentBotButton.visibility = View.VISIBLE
+            deleteBtn.visibility = View.VISIBLE
 
             val paymentData = BottomPaymentFragmentArgs.fromBundle(arguments!!).paymentData
 
             namePaymentEditText.setText(paymentData?.name)
             descriptionPaymentEditText.setText(paymentData?.description)
-
+            pricePaymentEditText.setText(paymentData?.data?.price)
             ownerPaymentEditText.setText(paymentData?.data?.card_name)
             numberPaymentEditText.setText(paymentData?.data?.cardNumber)
 
             val monthAndYearTextFromNet = paymentData?.data?.month + paymentData?.data?.year
 
             phoneEditText.setMaskedText( monthAndYearTextFromNet)
+
+            deleteBtn.setOnClickListener {
+                user.token?.let { it1 ->
+                    val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
+                    viewModel.deletePaymentServices(it1, id)
+                }
+            }
 
 
             updatePaymentBotButton.setOnClickListener{
@@ -65,6 +73,7 @@ class BottomPaymentFragment : Fragment() {
                         ownerPaymentEditText.text.toString(),
                         numberPaymentEditText.textAlignment.toString(),
                         month, year, "",
+                        pricePaymentEditText.text.toString(),
                         listOf(PaymentTypes.CreditCard.type)
                     )
                     val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
@@ -82,7 +91,6 @@ class BottomPaymentFragment : Fragment() {
 //                        .setNamePaymentService(namePaymentService)
 //                        .setDescriptionPaymentService(description)
 //                    Navigation.findNavController(view).navigate(action)
-                    activity!!.onBackPressed()
 
                 } else {
                     Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
@@ -109,6 +117,7 @@ class BottomPaymentFragment : Fragment() {
                     month,
                     year,
                     "",
+                    pricePaymentEditText.text.toString(),
                     listOf(PaymentTypes.CreditCard.type)
                 )
 
@@ -126,11 +135,15 @@ class BottomPaymentFragment : Fragment() {
 //                    .setDescriptionPaymentService(description)
 //
 //                Navigation.findNavController(view).navigate(action)
-                activity!!.onBackPressed()
+
 
             } else{
                 Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
         }
         }
+    }
+
+    override fun onPaymentsResult() {
+        activity!!.onBackPressed()
     }
 }

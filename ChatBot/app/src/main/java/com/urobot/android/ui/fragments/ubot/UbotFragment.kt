@@ -121,8 +121,13 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
         ubotViewModel.update(context!!)
     }
 
-    override fun onEditListener(robotId: String, title: String, description: String) {
-        ubotViewModel.editBot(robotId, title, description, context!!)
+    override fun onEditListener(
+        robotId: String,
+        title: String,
+        description: String,
+        repeat: String
+    ) {
+        ubotViewModel.editBot(robotId, title, description, repeat, context!!)
     }
 
     override fun onDeleteListener(robotId: String) {

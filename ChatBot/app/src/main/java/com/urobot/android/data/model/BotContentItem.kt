@@ -11,6 +11,7 @@ data class BotContentItem(
     var action: Long?,
     var isEmpty: Boolean,
     var description: String?,
+    var title: String?,
     var image: String?,
     var list_buttons: ArrayList<ServiceButtons>?
 )

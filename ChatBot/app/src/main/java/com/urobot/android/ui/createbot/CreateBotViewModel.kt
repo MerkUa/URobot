@@ -153,7 +153,9 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
 
             withContext(Dispatchers.Main) {
 
-                if(response.body() != null ){
+                if (response.isSuccessful &&
+                    response.body() != null
+                ) {
 
 
                     list = response.body() as ArrayList<List<GetAllScriptsModel>>

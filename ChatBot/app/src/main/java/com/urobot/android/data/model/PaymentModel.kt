@@ -16,6 +16,8 @@ data class PaymentModel(
     val year: String,
     @field:SerializedName("cvv")
     val cvv: String,
+    @field:SerializedName("price")
+    val price: String,
     @field:SerializedName("payment_types")
     val payment_types: List<String>
 ) : Parcelable

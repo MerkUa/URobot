@@ -68,15 +68,20 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
         createBotViewModel.getAllScriptsLivaData.observe(this, Observer { result ->
             dataList.clear()
             if (result.isEmpty()) {
+                dataList.clear()
+                listContent.clear()
                 val list: ArrayList<ServiceButtons>? = ArrayList()
-                listContent.add(BotContentItem(1, 0, 1, null, -1, true, "", "", list))
+                listContent.add(BotContentItem(1, 0, 1, null, -1, true, "", "", "", list))
                 dataList.add(BotData(listContent))
                 adapter.setData(dataList)
             }
 
+            val listAllButtons: ArrayList<ServiceButtons>? = ArrayList()
+
             for (level in result) {
                 val listLevelContent: ArrayList<BotContentItem> = ArrayList()
                 for (item in level) {
+                    var title = ""
                     val list: ArrayList<ServiceButtons>? = ArrayList()
                     for (button in item.buttons!!) {
                         list?.add(
@@ -85,6 +90,17 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                                 button.name
                             )
                         )
+                        listAllButtons?.add(
+                            ServiceButtons(
+                                button.serviceId,
+                                button.name
+                            )
+                        )
+                    }
+                    for (button in listAllButtons!!) {
+                        if (button.id == item.serviceId) {
+                            title = button.name!!
+                        }
                     }
 
 
@@ -97,6 +113,7 @@ class CreateBotActivity : AppCompatActivity(), CreateEventDialogFragment.ChangeD
                             item.serviceId,
                             item.empty!!,
                             item.text,
+                            title,
                             item.data,
                             list
                         )

@@ -36,11 +36,11 @@ class CreateBotViewModel(application: Application) : AndroidViewModel(applicatio
         currentUser = repository.User
     }
 
-    fun createRobot(token: String, name: String, description: String) {
+    fun createRobot(token: String, name: String, description: String, repeat: String) {
 
         viewModelScope.launch(IO) {
             val apiService: ApiService = Apifactory.create()
-            val response = apiService.createRobot(token, name, description)
+            val response = apiService.createRobot(token, name, description, repeat)
 
             withContext(Main) {
                 if(response.isSuccessful){

@@ -52,8 +52,8 @@ class TutorialPageFragment : Fragment() {
         val title = view.findViewById<TextView>(R.id.textTitle)
         val description = view.findViewById<TextView>(R.id.textDescription)
         val image = view.findViewById<ImageView>(R.id.imageView)
-        paramTitle?.let { title.setText(it) }
-        paramDescription?.let { description.setText(it) }
+//        paramTitle?.let { title.setText(it) }
+//        paramDescription?.let { description.setText(it) }
         paramImage?.let { image.setImageResource(it) }
         // Inflate the layout for this fragment
         return view

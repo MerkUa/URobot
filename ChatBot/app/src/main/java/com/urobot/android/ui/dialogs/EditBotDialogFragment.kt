@@ -36,7 +36,8 @@ class EditBotDialogFragment : DialogFragment() {
             onClickListener?.onEditListener(
                 robot!!.botId,
                 nameBotEditText.text.toString(),
-                descriptionBotEditText.text.toString()
+                descriptionBotEditText.text.toString(),
+                repeatDayEditText.text.toString()
             )
             dismiss()
         }
@@ -67,7 +68,12 @@ class EditBotDialogFragment : DialogFragment() {
     }
 
     interface OnEditClickListener {
-        fun onEditListener(robotId: String, title: String, description: String)
+        fun onEditListener(
+            robotId: String,
+            title: String,
+            description: String,
+            toString: String
+        )
         fun onDeleteListener(robotId: String)
 
     }

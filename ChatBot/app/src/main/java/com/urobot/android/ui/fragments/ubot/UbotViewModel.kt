@@ -56,8 +56,9 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
                     val response = apiService.getAllRobots(token)
                     withContext(Dispatchers.Main) {
                         Log.d("Merk", "Main")
-
-                        if (response.body() != null) {
+                        if (response.isSuccessful &&
+                            response.body() != null
+                        ) {
                             val list: List<GetAllRobotsModel>
 
                             list = response.body() as ArrayList<GetAllRobotsModel>
@@ -111,11 +112,18 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
         getAllContentAndScripts(userToken, context)
     }
 
-    fun editBot(robotId: String, title: String, description: String, context: Context) {
+    fun editBot(
+        robotId: String,
+        title: String,
+        description: String,
+        repeat: String,
+        context: Context
+    ) {
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
                 val apiService: ApiService = Apifactory.create()
-                val response = apiService.updateRobot(userToken, robotId, title, description)
+                val response =
+                    apiService.updateRobot(userToken, robotId, title, description, repeat)
 
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful) {

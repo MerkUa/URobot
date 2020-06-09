@@ -42,18 +42,23 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
             apiService.getContacts(token)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
-                    val list = arrayListOf<Contact>()
-                    for (contact in result) {
-                        list.add(
-                            Contact(
-                                contact.id.toString(), contact.firstName + " " + contact.lastName,
-                                "",
-                                "contact.", contact.photo!!, contact.messengerId
+                    if (result.isNotEmpty()) {
+                        val list = arrayListOf<Contact>()
+                        for (contact in result) {
+                            list.add(
+                                Contact(
+                                    contact.id.toString(),
+                                    contact.firstName + " " + contact.lastName,
+                                    "",
+                                    "contact.",
+                                    contact.photo!!,
+                                    contact.messengerId
+                                )
                             )
-                        )
-                    }
-                    listener?.onGetContactsResult(list)
+                        }
+                        listener?.onGetContactsResult(list)
 
+                    }
                 }, { error ->
 
                 })

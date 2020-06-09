@@ -33,6 +33,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
     // LiveData gives us updated words when they change.
     val currentUser: LiveData<User>
     lateinit var contextApp: Context
+    var tokenSaved: String? = null
 
     val getAllServicesLivaData: MutableLiveData<List<GetAllServicesModel>> = MutableLiveData()
 
@@ -45,6 +46,8 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
 
     fun getAllServices(token: String, context: Context) {
         contextApp = context
+        tokenSaved = token
+
         if (Utils.isNetworkConected(context)) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {

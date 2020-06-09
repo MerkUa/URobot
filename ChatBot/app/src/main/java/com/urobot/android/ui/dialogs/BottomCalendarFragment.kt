@@ -23,7 +23,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class BottomCalendarFragment : Fragment() {
+class BottomCalendarFragment : Fragment(), CalendarsViewModel.ICalendarContract {
 
     private lateinit var viewModel: CalendarsViewModel
     private lateinit var user: User
@@ -53,12 +53,19 @@ class BottomCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.setListener(this)
         if(BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData != null){
 
             createBotButton.visibility = View.GONE
             updateBotButton.visibility = View.VISIBLE
+            deleteBtn.visibility = View.VISIBLE
 
+            deleteBtn.setOnClickListener {
+                user.token?.let { it1 ->
+                    val id = BottomPaymentFragmentArgs.fromBundle(arguments!!).serviceId
+                    viewModel.deletePaymentServices(it1, id)
+                }
+            }
             val calendarData = BottomCalendarFragmentArgs.fromBundle(arguments!!).calendarData
 
             nameEditText.setText(calendarData?.name)
@@ -66,6 +73,15 @@ class BottomCalendarFragment : Fragment() {
             timePickerTo.text = calendarData?.data?.workingHoursTo
             tvBreak.text = calendarData?.data?.breakTime
             tvSessionDuration.text = calendarData?.data?.sessionDuration
+
+            for (timeInMilis in calendarData?.data?.workingDays!!) {
+                val calendar = Calendar.getInstance()
+                calendar.timeInMillis = timeInMilis.toLong()
+//                val timeInMillis = calendar.timeInMillis
+                calendars.add(calendar)
+
+//                listDate.add(timeInMillis.toString())
+            }
 
             val calendar = Calendar.getInstance()
             for (item in calendarData?.data?.workingDays!!) {
@@ -94,7 +110,6 @@ class BottomCalendarFragment : Fragment() {
                         it, data, id
                     )
                 }
-                activity!!.onBackPressed()
 
 //                val action = BottomCalendarFragmentDirections.actionNavigationCreateCalendarToNavigationServicesFragment()
 //                    .setUpdateOnlineRecord(data).setServiceId(id)
@@ -199,7 +214,6 @@ class BottomCalendarFragment : Fragment() {
                     data, TypeServices.onlineRecord.type_id
                 )
             }
-            activity!!.onBackPressed()
 
         }
     }
@@ -235,5 +249,9 @@ class BottomCalendarFragment : Fragment() {
 
         val datePicker: DatePicker = builder.build()
         datePicker.show()
+    }
+
+    override fun onCalendarResult() {
+        activity!!.onBackPressed()
     }
 }

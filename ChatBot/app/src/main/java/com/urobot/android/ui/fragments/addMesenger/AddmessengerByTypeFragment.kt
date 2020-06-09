@@ -102,7 +102,7 @@ class AddmessengerByTypeFragment : Fragment() {
         tokenLayout.visibility = View.GONE
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                if (url == "https://urobot-dev.ml/system/services/messenger-login/success") {
+                if (url == "https://urobot.ml/system/services/messenger-login/success") {
                     activity?.onBackPressed()
                     SharedManager(context!!).telegramIsConnected = true
                 }
@@ -111,7 +111,7 @@ class AddmessengerByTypeFragment : Fragment() {
             }
         }
         val url =
-            "https://urobot-dev.ml/system/services/messenger-login/" + userId + "/" + messenger.messengerId
+            "https://urobot.ml/system/services/messenger-login/" + userId + "/" + messenger.messengerId
         Log.d("Merk", "Merk " + url)
         webView.settings.javaScriptEnabled = true;
         webView.settings.javaScriptCanOpenWindowsAutomatically = true

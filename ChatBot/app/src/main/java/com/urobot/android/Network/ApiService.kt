@@ -185,7 +185,9 @@ interface ApiService {
     suspend fun createRobot(
         @Header("Authorization") authorization: String,
         @Query("name") name: String?,
-        @Query("description") description: String?
+        @Query("description") description: String?,
+        @Query("delay_count_days") repeat: String?
+
     ) : Response<GetRobotModel>
 
     /** Services */
@@ -267,12 +269,20 @@ interface ApiService {
         @Query("robot_id") robotId: String?
     ): Response<ResponseBody>
 
+    @DELETE("services/delete")
+    suspend fun deleteService(
+        @Header("Authorization") authorization: String,
+        @Query("service_id") robotId: String?
+    ): Response<ResponseBody>
+
+
     @PUT("robots/update")
     suspend fun updateRobot(
         @Header("Authorization") authorization: String,
         @Query("robot_id") robotId: String?,
         @Query("name") name: String?,
-        @Query("description") description: String?
+        @Query("description") description: String?,
+        @Query("delay_count_days") repeat: String?
     ): Response<GetRobotModel>
 
     @GET("users/cms")

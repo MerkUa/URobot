@@ -12,9 +12,13 @@ class TutorialPageAdapter(fm: FragmentManager, behavior: Int) :
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> TutorialPageFragment.newInstance(R.string.title_fragment_1, R.drawable.tutorial1)
-            1 -> TutorialPageFragment.newInstance(R.string.title_fragment_2, R.drawable.tutorial2)
-            2 -> TutorialPageFragment.newInstance(R.string.title_fragment_3, R.drawable.tutorial3)
+//            0 -> TutorialPageFragment.newInstance(R.string.title_fragment_1, R.drawable.tutorial1)
+//            1 -> TutorialPageFragment.newInstance(R.string.title_fragment_2, R.drawable.tutorial2)
+//            2 -> TutorialPageFragment.newInstance(R.string.title_fragment_3, R.drawable.tutorial3)
+
+            0 -> TutorialPageFragment.newInstance(R.string.title_fragment_1, R.drawable.sp1)
+            1 -> TutorialPageFragment.newInstance(R.string.title_fragment_2, R.drawable.sp2)
+            2 -> TutorialPageFragment.newInstance(R.string.title_fragment_3, R.drawable.sp3)
             else -> TutorialPageFragment.newInstance(
                 R.string.title_fragment_1,
                 R.drawable.tutorial_page

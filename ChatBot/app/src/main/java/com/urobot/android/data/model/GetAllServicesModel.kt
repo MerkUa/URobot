@@ -52,6 +52,9 @@ data class Datum (
     @Expose
     var cvv: String? = null,
 
+    @field:SerializedName("price")
+    val price: String,
+
     @SerializedName("payment_types")
     @Expose
     var payment_types: List<String>? = null
@@ -61,7 +64,7 @@ data class Datum (
 data class GetAllServicesModel (
     @SerializedName("id")
     @Expose
-    var id: Int? = null,
+    var id: Int = 0,
     @SerializedName("bot_id")
     @Expose
     var botId: Int? = null,

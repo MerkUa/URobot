@@ -15,7 +15,6 @@ import com.urobot.android.data.model.TypeServices
 import com.urobot.android.data.model.UpdateBotCalendarService
 import com.urobot.android.db.User
 import com.urobot.android.db.UserRoomDatabase
-import com.urobot.android.ui.fragments.chats.ChatsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +22,7 @@ import kotlinx.coroutines.withContext
 
 class CalendarsViewModel(application: Application) : AndroidViewModel(application), IUserContract {
     private val userDao = UserRoomDatabase.getDatabase(application).userDao()
-    private var listener: ChatsViewModel.IChatsContract? = null
+    private var listener: ICalendarContract? = null
 
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: UserRepository
@@ -65,6 +64,7 @@ class CalendarsViewModel(application: Application) : AndroidViewModel(applicatio
             withContext(Dispatchers.Main) {
 
                 if (response.isSuccessful) {
+                    listener?.onCalendarResult()
                 } else {
                     Toast.makeText(
                         getApplication(),
@@ -104,6 +104,7 @@ class CalendarsViewModel(application: Application) : AndroidViewModel(applicatio
             withContext(Dispatchers.Main) {
 
                 if (response.isSuccessful) {
+                    listener?.onCalendarResult()
                 } else {
                     Toast.makeText(
                         getApplication(),
@@ -113,6 +114,40 @@ class CalendarsViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }
         }
+    }
+
+    fun setListener(listener: ICalendarContract) {
+        this.listener = listener
+    }
+
+    fun deletePaymentServices(
+        token: String,
+        serviceId: Int
+    ) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val apiService: ApiService = Apifactory.create()
+            val response = apiService.deleteService(token, serviceId.toString())
+
+            withContext(Dispatchers.Main) {
+
+                if (response.isSuccessful) {
+                    listener?.onCalendarResult()
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Ooops: Something else went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+        }
+    }
+
+    interface ICalendarContract {
+        fun onCalendarResult()
     }
 
 

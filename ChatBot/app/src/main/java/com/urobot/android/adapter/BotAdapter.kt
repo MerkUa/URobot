@@ -33,7 +33,14 @@ class HomeBotAdapter(
 
     override fun onBindViewHolder(holder: HomeBotViewHolder, position: Int) {
         val level = (holder.adapterPosition + 1)
-        holder.itemView.tv_level.text =  ("$level Уровень")
+        var description = ""
+        if (level == 1) {
+            description = holder.itemView.context.getString(R.string.level1_description)
+        } else if (level == 2) {
+            description = holder.itemView.context.getString(R.string.level2_description)
+        }
+        holder.itemView.tv_level.text =
+            holder.itemView.context.getString(R.string.n_level, level.toString()) + description
 
         horizontalAdapter =
             ContentBotAdapter(data[position].botContentList, activity)
@@ -83,7 +90,8 @@ class HomeBotAdapter(
                                     buttons.id,
                                     true,
                                     "",
-                                    "",
+                                    buttons.name,
+                                    buttons.id.toString(),
                                     list
                                 )
                             )
@@ -104,7 +112,8 @@ class HomeBotAdapter(
                                 buttons.id,
                                 true,
                                 "",
-                                "",
+                                buttons.name,
+                                buttons.id.toString(),
                                 list
                             )
 

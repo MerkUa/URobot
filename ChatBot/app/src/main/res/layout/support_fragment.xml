@@ -155,41 +155,41 @@
                 android:textColor="@color/black_text"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="24dp"
-                android:text="@string/faqtitle12"
-                android:textColor="@color/black_text"
-                android:textSize="20sp" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView12"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="?selectableItemBackground"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                android:padding="24dp"-->
+            <!--                android:text="@string/faqtitle12"-->
+            <!--                android:textColor="@color/black_text"-->
+            <!--                android:textSize="20sp" />-->
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="24dp"
-                android:text="@string/faqtitle13"
-                android:textColor="@color/black_text"
-                android:textSize="20sp" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView13"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="?selectableItemBackground"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                android:padding="24dp"-->
+            <!--                android:text="@string/faqtitle13"-->
+            <!--                android:textColor="@color/black_text"-->
+            <!--                android:textSize="20sp" />-->
 
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="24dp"
-                android:text="@string/faqtitle14"
-                android:textColor="@color/black_text"
-                android:textSize="20sp" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView14"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="?selectableItemBackground"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                android:padding="24dp"-->
+            <!--                android:text="@string/faqtitle14"-->
+            <!--                android:textColor="@color/black_text"-->
+            <!--                android:textSize="20sp" />-->
 
             <TextView
                 android:id="@+id/textView15"

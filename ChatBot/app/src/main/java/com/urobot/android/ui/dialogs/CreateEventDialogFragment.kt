@@ -138,6 +138,7 @@ class CreateEventDialogFragment : DialogFragment(), View.OnClickListener,
             Log.d("Merk", "createEventViewModel" + result.size)
 
 //            adapter.addData()
+            listService.clear()
             listService.addAll(result)
             listService.add(GetAllServicesModel(0, null, "кнопка"))
             addButtonDialog.setListSerice(listService)

@@ -4,9 +4,9 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class cmsModel(
-    @SerializedName("id")
-    @Expose
-    var id: Int = 100,
+//    @SerializedName("id")
+//    @Expose
+//    var id: Int = 100,
     @SerializedName("name")
     @Expose
     var name: String? = null,
@@ -18,7 +18,10 @@ data class cmsModel(
     var added: Boolean = false,
     @SerializedName("active")
     @Expose
-    var active: Boolean = false
+    var active: Boolean = false,
+    @SerializedName("price")
+    @Expose
+    var price: String = ""
 
 
 )
@@ -27,6 +30,8 @@ enum class cmsType(val type_id: Int) {
     BillingAccount(0),
     OneC(1),
     Amo(2),
+    Insta(3),
+    Wa(4),
     Unknown(100);
 
 
@@ -36,7 +41,8 @@ enum class cmsType(val type_id: Int) {
                 0 -> BillingAccount
                 1 -> OneC
                 2 -> Amo
-
+                3 -> Insta
+                4 -> Wa
                 else -> Unknown
             }
         }

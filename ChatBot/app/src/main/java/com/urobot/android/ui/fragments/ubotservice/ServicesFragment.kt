@@ -93,11 +93,7 @@ class ServicesFragment : Fragment(), BottomFragment.BottomSheetListener,
     override fun onResume() {
         super.onResume()
 
-        /**Get All Services Request */
-
-        /**Get All Services Observe LiveData */
-
-
+//        servicesViewModel.tokenSaved?.let { servicesViewModel.getAllServices(it, context!!) }
 //        if (arguments != null) {
 //
 //            val createCalendarArgs = ServicesFragmentArgs.fromBundle(arguments!!).onlineRecord

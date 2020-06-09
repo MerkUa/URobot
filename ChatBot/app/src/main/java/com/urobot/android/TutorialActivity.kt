@@ -2,6 +2,8 @@ package com.urobot.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
@@ -17,7 +19,11 @@ class TutorialActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
         setContentView(R.layout.activity_tutorial)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val pager = findViewById<ViewPager>(R.id.pager)
