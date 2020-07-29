@@ -19,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -86,7 +86,7 @@ class CreateEventDialogViewModel(application: Application) : AndroidViewModel(ap
     fun sendImage(file: File, id: Long, robotId: String) {
         if (Utils.isNetworkConected(contextApp)) {
             val requestBody: RequestBody =
-                RequestBody.create(MediaType.parse("image/*"), file)
+                RequestBody.create("image/*".toMediaTypeOrNull(), file)
 
             val fileUpload =
                 MultipartBody.Part.createFormData("data", file.name, requestBody)

@@ -121,12 +121,12 @@ class SupportFragment : Fragment() {
 
         textView15.setOnClickListener {
             val action = SupportFragmentDirections.navigationToDetails()
-                .setText("https://u-robot.net/termsofuse")
+                .setText("https://urobot.ai/terms-of-use/")
             view.findNavController().navigate(action)
         }
         textView16.setOnClickListener {
             val action = SupportFragmentDirections.navigationToDetails()
-                .setText("https://u-robot.net/privacypolicy")
+                .setText("https://urobot.ai/privacy-policy/")
             view.findNavController().navigate(action)
         }
     }

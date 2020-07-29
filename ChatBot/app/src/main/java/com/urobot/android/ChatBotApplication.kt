@@ -19,7 +19,6 @@ import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
 import com.urobot.android.data.SharedManager
 
-
 class ChatBotApplication : Application(), LifecycleObserver {
 
     /* Firebase Instance */

@@ -9,7 +9,7 @@ import com.urobot.android.db.User
 import com.urobot.android.db.UserDao
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -36,7 +36,7 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
     fun update(user: User, file: File) {
         try {
             val requestBody: RequestBody =
-                RequestBody.create(MediaType.parse("image/*"), file)
+                RequestBody.create("image/*".toMediaTypeOrNull(), file)
             val fileupload =
                 MultipartBody.Part.createFormData("photo", file.name, requestBody)
 
@@ -121,6 +121,6 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
     }
 
     fun toRequestBody(value: String): RequestBody {
-        return RequestBody.create(MediaType.parse("text/plain"), value)
+        return RequestBody.create("text/plain".toMediaTypeOrNull(), value)
     }
 }

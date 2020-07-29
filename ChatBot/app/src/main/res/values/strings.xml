@@ -234,4 +234,5 @@
     <string name="title_profile">Профиль</string>
     <string name="content">Введите текст сообщения</string>
     <string name="title_bucket">Корзина</string>
+    <string name="subscribe_message">Пожалуйста, укажите Ваши платежные данные, чтобы получить подписку на 1 месяц всего за 1 рубль.</string>
 </resources>

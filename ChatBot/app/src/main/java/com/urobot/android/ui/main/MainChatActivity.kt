@@ -1,9 +1,12 @@
 package com.urobot.android.ui.main
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import androidx.lifecycle.Observer
@@ -17,6 +20,7 @@ import com.urobot.android.Helper.Utils.ensureCalendarExists
 import com.urobot.android.R
 import com.urobot.android.db.User
 import com.urobot.android.ui.dialogs.CreateEventDialogFragment
+import com.urobot.android.ui.dialogs.SubscribeDialogFragment
 
 
 class MainChatActivity : AppCompatActivity() {
@@ -32,6 +36,9 @@ class MainChatActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
         navController.popBackStack(R.id.nav_host_fragment, true)
+        val PREF_NAME = "SHOW_SUBSCRIBE"
+        val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, 0)
+
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -39,17 +46,23 @@ class MainChatActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         }
         val appBarConfiguration = AppBarConfiguration(
-                setOf(
-                        R.id.navigation_ubot, R.id.navigation_chats, R.id.navigation_contacts, R.id.navigation_settings,
-                        R.id.navigation_settings_support, R.id.navigation_settings_support_details,
-                        R.id.navigation_settings_promo, R.id.navigation_messages, R.id.navigation_services_fragment,
-                    R.id.navigation_create_calendar,
-                    R.id.navigation_create_payment,
-                    R.id.navigation_settings_add_messenger,
-                    R.id.navigation_industry_fragment,
-                    R.id.navigation_create_bot,
-                    R.id.navigation_settings_tariffs
-                )
+            setOf(
+                R.id.navigation_ubot,
+                R.id.navigation_chats,
+                R.id.navigation_contacts,
+                R.id.navigation_settings,
+                R.id.navigation_settings_support,
+                R.id.navigation_settings_support_details,
+                R.id.navigation_settings_promo,
+                R.id.navigation_messages,
+                R.id.navigation_services_fragment,
+                R.id.navigation_create_calendar,
+                R.id.navigation_create_payment,
+                R.id.navigation_settings_add_messenger,
+                R.id.navigation_industry_fragment,
+                R.id.navigation_create_bot,
+                R.id.navigation_settings_tariffs
+            )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -78,10 +91,16 @@ class MainChatActivity : AppCompatActivity() {
                 } else {
                     mainViewModel.getCalendarEvent(this, user.token!!)
                 }
+                Log.d("merk", "pref " + sharedPref.getBoolean(PREF_NAME, true))
+                if (sharedPref.getBoolean(PREF_NAME, true)) {
+                    Log.d("merk", "alertDialogSubscribe")
+                    alertDialogSubscribe(user.id)
+                }
 
             }
         })
         checkPermission()
+
     }
 
     fun onBackStackChanged() {
@@ -137,5 +156,17 @@ class MainChatActivity : AppCompatActivity() {
         } else {
             ensureCalendarExists(this)
         }
+    }
+
+    fun alertDialogSubscribe(id: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(getString(R.string.subscribe_message))
+
+        builder.setPositiveButton("OK") { dialogInterface, i ->
+            val dialog = SubscribeDialogFragment()
+            dialog.setUserId(id)
+            dialog.show(this.supportFragmentManager, "TAG")
+        }
+        builder.show()
     }
 }

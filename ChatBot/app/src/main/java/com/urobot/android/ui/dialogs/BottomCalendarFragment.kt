@@ -90,10 +90,23 @@ class BottomCalendarFragment : Fragment(), CalendarsViewModel.ICalendarContract 
                 }
 
             updateBotButton.setOnClickListener {
+                val listDate = ArrayList<String>()
+                for (calendar in calendars) {
+
+                    val timeInMillis = calendar.timeInMillis
+
+                    listDate.add(timeInMillis.toString())
+                }
+
                 calendarData.name = nameEditText.text.toString()
                 val data = OnlineRecordModel(
-                    nameEditText.text.toString(), timePickerFrom.text.toString(), timePickerTo.text.toString(), tvBreak.text.toString() ,
-                    tvSessionDuration.text.toString(), listOf(calendar.timeInMillis.toString()))
+                    nameEditText.text.toString(),
+                    timePickerFrom.text.toString(),
+                    timePickerTo.text.toString(),
+                    tvBreak.text.toString(),
+                    tvSessionDuration.text.toString(),
+                    listDate
+                )
                 calendarData.data!!.workingHoursFrom = timePickerFrom.text.toString()
                 calendarData.data!!.workingHoursTo = timePickerTo.text.toString()
                 calendarData.data!!.breakTime = tvBreak.text.toString()
