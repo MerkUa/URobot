@@ -72,7 +72,8 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
                             bot.name!!,
                             bot.description!!,
                             bot.list!!,
-                            ""
+                            "",
+                            bot.bots
                         )
                     )
                 }
@@ -111,6 +112,17 @@ class UbotFragment : Fragment(), BotListAdapter.ItemClickListener,
         dialog.setSelectedListener(this)
         dialog.show(activity!!.supportFragmentManager, "TAG")
 
+    }
+
+    override fun shareBot(link: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, link)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     override fun onClickListener(robotId: String, messengerId: Int, token: String, code: String) {

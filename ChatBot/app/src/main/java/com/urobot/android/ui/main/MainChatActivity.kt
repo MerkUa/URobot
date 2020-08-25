@@ -61,7 +61,8 @@ class MainChatActivity : AppCompatActivity() {
                 R.id.navigation_settings_add_messenger,
                 R.id.navigation_industry_fragment,
                 R.id.navigation_create_bot,
-                R.id.navigation_settings_tariffs
+                R.id.navigation_settings_tariffs,
+                R.id.navigation_settings_web
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

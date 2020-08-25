@@ -6,5 +6,6 @@ data class Bot(
     val title: String,
     val description: String,
     val listMessengers: List<Int>,
-    val details: String
+    val details: String,
+    val link: String?
 )

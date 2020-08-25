@@ -145,6 +145,9 @@
         <action
             android:id="@+id/action_navigation_settings_to_navigation_industry_fragment"
             app:destination="@id/navigation_industry_fragment" />
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_settings_support_details"
+            app:destination="@id/navigation_settings_web" />
     </fragment>
 
 
@@ -184,6 +187,18 @@
         android:id="@+id/navigation_settings_support_details"
         android:name="com.urobot.android.ui.fragments.support.SupportDetailsFragment"
         android:label="@string/support"
+        tools:layout="@layout/support_details_fragment">
+
+        <argument
+            android:name="text"
+            app:argType="string"
+            android:defaultValue="text" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings_web"
+        android:name="com.urobot.android.ui.fragments.support.SupportDetailsFragment"
+        android:label="@string/title_profile"
         tools:layout="@layout/support_details_fragment">
 
         <argument

@@ -42,6 +42,20 @@ class BotListAdapter(
 
         if (dataSource[position].listMessengers.isEmpty()) {
             holder.addBot.visibility = View.VISIBLE
+            holder.iconTelegram.visibility = View.GONE
+            holder.iconViber.visibility = View.GONE
+            holder.iconFacabook.visibility = View.GONE
+            holder.iconVk.visibility = View.GONE
+            holder.iconWhatsUp.visibility = View.GONE
+            holder.iconInstagramm.visibility = View.GONE
+            holder.shareIcon.visibility = View.GONE
+
+        } else {
+            holder.addBot.visibility = View.GONE
+            holder.shareIcon.visibility = View.VISIBLE
+        }
+        holder.shareIcon.setOnClickListener {
+            dataSource[position].link?.let { it1 -> mOnBotClickListener?.shareBot(it1) }
         }
         for (id in dataSource[position].listMessengers) {
             when (Messenger.Companion.fromValue(id)) {
@@ -165,6 +179,7 @@ class BotListAdapter(
         var iconInstagramm: ImageView
         var iconWhatsUp: ImageView
         var botView: RelativeLayout
+        var shareIcon: ImageView
 
         init {
             title = itemView.findViewById(R.id.titleBot)
@@ -178,6 +193,7 @@ class BotListAdapter(
             iconInstagramm = itemView.findViewById(R.id.iconInstagram)
             iconWhatsUp = itemView.findViewById(R.id.iconWhatsApp)
             addBot = itemView.findViewById(R.id.tvAddBot)
+            shareIcon = itemView.findViewById(R.id.shareButton)
 
         }
 
@@ -188,6 +204,7 @@ class BotListAdapter(
         fun onItemClick(view: View?, position: Int)
         fun onAddBotClick(view: View?, position: Int)
         fun onChangeClick(view: View?, position: Int)
+        fun shareBot(link: String)
     }
 
     fun addClickListener(itemClickListener: ItemClickListener) {

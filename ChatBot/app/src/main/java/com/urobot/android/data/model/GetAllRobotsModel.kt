@@ -13,6 +13,9 @@ data class GetAllRobotsModel(
     @SerializedName("description")
     @Expose
     var description: String? = null,
+    @SerializedName("bots")
+    @Expose
+    var bots: String? = null,
     @SerializedName("list_of_messengers")
     @Expose
     var list: List<Int>? = null

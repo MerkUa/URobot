@@ -107,6 +107,20 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
 
         }
 
+        calendarsTextView.setOnClickListener {
+            val action =
+                SettingsFragmentDirections.actionNavigationSettingsToNavigationSettingsSupportDetails()
+                    .setText("https://urobot.ml/system/user/online-records/" + currentUser.id)
+            view.findNavController().navigate(action)
+        }
+
+        paymentsTextView.setOnClickListener {
+            val action =
+                SettingsFragmentDirections.actionNavigationSettingsToNavigationSettingsSupportDetails()
+                    .setText("https://urobot.ml/system/user/payments/" + currentUser.id)
+            view.findNavController().navigate(action)
+        }
+
         messengerTextView.setOnClickListener {
 
             view.findNavController().navigate(R.id.navigation_settings_add_messenger)
