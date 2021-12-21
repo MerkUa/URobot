@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,14 +25,28 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import com.urobot.android.Helper.Utils
 import com.urobot.android.R
 import com.urobot.android.db.User
 import com.urobot.android.ui.login.LoginActivity
-import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.fragment_settings.calendarsTextView
+import kotlinx.android.synthetic.main.fragment_settings.industry
+import kotlinx.android.synthetic.main.fragment_settings.industryText
+import kotlinx.android.synthetic.main.fragment_settings.logOutTextView
+import kotlinx.android.synthetic.main.fragment_settings.messengerTextView
+import kotlinx.android.synthetic.main.fragment_settings.paymentsTextView
+import kotlinx.android.synthetic.main.fragment_settings.phoneNumberView
+import kotlinx.android.synthetic.main.fragment_settings.photoView
+import kotlinx.android.synthetic.main.fragment_settings.promoTextView
+import kotlinx.android.synthetic.main.fragment_settings.supportTextView
+import kotlinx.android.synthetic.main.fragment_settings.tariffsTextView
+import kotlinx.android.synthetic.main.fragment_settings.textViewName
+import kotlinx.android.synthetic.main.fragment_settings.textViewPhone
 import java.io.File
-
 
 class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
 
@@ -106,6 +121,9 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
             view.findNavController().navigate(R.id.navigation_settings_tariffs)
 
         }
+
+        textViewName.setOnClickListener { changeName(textViewName.text.toString()) }
+
 
         calendarsTextView.setOnClickListener {
             val action =
@@ -185,7 +203,28 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
             settingsViewModel.update(currentUser)
             // TODO save text only
 //            settingsViewModel.sendUpdate(currentUser, )
-                settingsViewModel.sendUpdatePhone(currentUser)
+            settingsViewModel.sendUpdatePhone(currentUser)
+        }
+        builder.show()
+    }
+
+    fun changeName(name: String) {
+        val builder = AlertDialog.Builder(this.context!!)
+        val inflater = layoutInflater
+        builder.setTitle(R.string.prompt_name)
+        val dialogLayout = inflater.inflate(R.layout.alert_dialog_with_edittext, null)
+        val editText = dialogLayout.findViewById<EditText>(R.id.editText)
+        editText.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+        editText.setText(name)
+        editText.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("OK") { dialogInterface, i ->
+            currentUser.fName = editText.text.toString().split(" ").first()
+            if (editText.text.toString().split(" ").size > 1) {
+                currentUser.lName = editText.text.toString().split(" ").lastOrNull()
+            }
+            textViewName.text = editText.text
+            settingsViewModel.update(currentUser)
         }
         builder.show()
     }
@@ -194,7 +233,8 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] ==
-                        PermissionChecker.PERMISSION_GRANTED) {
+                    PermissionChecker.PERMISSION_GRANTED
+                ) {
                     //permission from popup granted
                     pickImageFromGallery()
 //                    pickPhoto()
@@ -254,8 +294,12 @@ class SettingsFragment : Fragment(), SettingsViewModel.ISettingsContract {
     }
 
     override fun onLogoutResult() {
-        Log.d("onLogoutResult", "onLogoutResult ")
+        val gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+        activity?.let {
+            GoogleSignIn.getClient(it, gsoBuilder.build())?.signOut()
+        }
 
+        FirebaseAuth.getInstance()
         val sharedPrefL: SharedPreferences = activity!!.getSharedPreferences("isLoged", 0)
 
         var intent = Intent(activity, LoginActivity::class.java)

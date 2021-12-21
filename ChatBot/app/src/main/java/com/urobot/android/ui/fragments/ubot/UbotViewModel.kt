@@ -38,7 +38,7 @@ class UbotViewModel(application: Application) : AndroidViewModel(application), I
         // Gets reference to WordDao from WordRoomDatabase to construct
 
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
     }
 
     val getAllScriptsLivaData: MutableLiveData<List<GetAllRobotsModel>> = MutableLiveData()

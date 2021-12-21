@@ -28,7 +28,7 @@ class SupportViewModel(application: Application) : AndroidViewModel(application)
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
         repository = UserRepository(userDao, this)
-        User = repository.User
+        User = repository.user
         getPromo(User.value?.token.toString())
     }
 

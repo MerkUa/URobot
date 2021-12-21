@@ -148,6 +148,7 @@
     <string name="n_level">%s Уровень</string>
     <string name="level1_description">: Приветствие</string>
     <string name="level2_description">: Основное меню</string>
+    <string name="promocode">Вы можете использовать этот промокод для U-Robot: </string>
 
 
     <string name="faqdescription1">Это первая мобильная платформа для создания чатботов. Теперь любой желающий, не обладая специальными навыками сможет создать и подключить персонального робота в любой мессенджер или социальную сеть.</string>
@@ -235,4 +236,6 @@
     <string name="content">Введите текст сообщения</string>
     <string name="title_bucket">Корзина</string>
     <string name="subscribe_message">Пожалуйста, укажите Ваши платежные данные, чтобы получить подписку на 1 месяц всего за 1 рубль.</string>
+    <string name="booking">запись</string>
+    <string name="required">Обязательное поле</string>
 </resources>

@@ -19,7 +19,7 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    val User: LiveData<User> = userDao.getUser()
+    val user: LiveData<User> = userDao.getUser()
 
     suspend fun insert(user: User) {
         userDao.insert(user)
@@ -33,11 +33,15 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
         return userDao.getUserById(id)!!
     }
 
+    fun getCurrentUser(): User? {
+        return userDao.getCurrentUser()
+    }
+
     fun update(user: User, file: File) {
         try {
             val requestBody: RequestBody =
                 RequestBody.create("image/*".toMediaTypeOrNull(), file)
-            val fileupload =
+            val fileUpload =
                 MultipartBody.Part.createFormData("photo", file.name, requestBody)
 
             val apiService: ApiService = Apifactory.create()
@@ -52,7 +56,7 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
             map["phone"] = time
 
 
-            apiService.updateUser(user.token!!, map, fileupload, requestBody)
+            apiService.updateUser(user.token!!, map, fileUpload, requestBody)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe({ result ->
@@ -111,7 +115,6 @@ class UserRepository(private val userDao: UserDao, val userContract: IUserContra
                 .subscribeOn(Schedulers.io())
                 .subscribe({ result ->
                     Log.d("Retr", "logout ")
-
                 }, { error ->
                 })
 

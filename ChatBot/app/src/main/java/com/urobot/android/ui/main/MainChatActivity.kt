@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +21,6 @@ import com.urobot.android.db.User
 import com.urobot.android.ui.dialogs.CreateEventDialogFragment
 import com.urobot.android.ui.dialogs.SubscribeDialogFragment
 
-
 class MainChatActivity : AppCompatActivity() {
 
 
@@ -38,6 +36,7 @@ class MainChatActivity : AppCompatActivity() {
         navController.popBackStack(R.id.nav_host_fragment, true)
         val PREF_NAME = "SHOW_SUBSCRIBE"
         val sharedPref: SharedPreferences = getSharedPreferences(PREF_NAME, 0)
+        var isAlertShowed = false
 
 
         // Passing each menu ID as a set of Ids because each
@@ -92,9 +91,8 @@ class MainChatActivity : AppCompatActivity() {
                 } else {
                     mainViewModel.getCalendarEvent(this, user.token!!)
                 }
-                Log.d("merk", "pref " + sharedPref.getBoolean(PREF_NAME, true))
-                if (sharedPref.getBoolean(PREF_NAME, true)) {
-                    Log.d("merk", "alertDialogSubscribe")
+                if (!isAlertShowed && sharedPref.getBoolean(PREF_NAME, true)) {
+                    isAlertShowed = true
                     alertDialogSubscribe(user.id)
                 }
 

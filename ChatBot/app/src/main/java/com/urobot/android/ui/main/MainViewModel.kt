@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import com.urobot.android.Apifactory
 import com.urobot.android.Helper.Utils.addCalendarEvent
 import com.urobot.android.Network.ApiService
+import com.urobot.android.R
 import com.urobot.android.Repository.UserRepository
 import com.urobot.android.contracts.IUserContract
 import com.urobot.android.data.model.CalendarItemModel
@@ -28,9 +29,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
-
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
     }
 
     override fun onUpdateResult(user: User) {
@@ -53,7 +53,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
                             val item = CalendarItemModel(
                                 details.id,
                                 date.time,
-                                "запись",
+                                context.getString(R.string.booking),
                                 item.firstName + " " + item.lastName
                             )
                             addCalendarEvent(context, item)
@@ -64,10 +64,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), I
                 }
             } catch (e: ConnectException) {
             }
-
-//            withContext(Dispatchers.Main) {
-//
-//            }
         }
     }
 

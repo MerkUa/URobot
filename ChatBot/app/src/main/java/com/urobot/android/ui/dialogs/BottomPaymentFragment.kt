@@ -13,8 +13,18 @@ import com.urobot.android.data.model.PaymentModel
 import com.urobot.android.data.model.PaymentTypes
 import com.urobot.android.data.model.TypeServices
 import com.urobot.android.db.User
-import kotlinx.android.synthetic.main.fragment_bottom_payment.*
-
+import kotlinx.android.synthetic.main.fragment_bottom_payment.createPaymentBotButton
+import kotlinx.android.synthetic.main.fragment_bottom_payment.deleteBtn
+import kotlinx.android.synthetic.main.fragment_bottom_payment.descriptionPaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.descriptionPaymentLayout
+import kotlinx.android.synthetic.main.fragment_bottom_payment.namePaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.namePaymentLayout
+import kotlinx.android.synthetic.main.fragment_bottom_payment.numberPaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.numberPaymentLayout
+import kotlinx.android.synthetic.main.fragment_bottom_payment.ownerPaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.periodEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.pricePaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.updatePaymentBotButton
 
 class BottomPaymentFragment : Fragment(), PaymentsViewModel.IPaymentsContract {
 
@@ -50,7 +60,7 @@ class BottomPaymentFragment : Fragment(), PaymentsViewModel.IPaymentsContract {
 
             val monthAndYearTextFromNet = paymentData?.data?.month + paymentData?.data?.year
 
-            phoneEditText.setMaskedText( monthAndYearTextFromNet)
+            periodEditText.setMaskedText(monthAndYearTextFromNet)
 
             deleteBtn.setOnClickListener {
                 user.token?.let { it1 ->
@@ -62,14 +72,14 @@ class BottomPaymentFragment : Fragment(), PaymentsViewModel.IPaymentsContract {
 
             updatePaymentBotButton.setOnClickListener{
 
-                if(phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
+                if (periodEditText.unmaskedText.isNotEmpty() || periodEditText.unmaskedText.length == 6) {
 
                     val namePaymentService = namePaymentEditText.text.toString()
                     val description = descriptionPaymentEditText.text.toString()
-                    val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
-                    val year = phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length).toString()
+                    val month = periodEditText?.unmaskedText?.subSequence(0, 2).toString()
+                    val year = periodEditText?.unmaskedText?.subSequence(2, periodEditText.unmaskedText.length).toString()
 
-                    val data  = PaymentModel(
+                    val data = PaymentModel(
                         ownerPaymentEditText.text.toString(),
                         numberPaymentEditText.textAlignment.toString(),
                         month, year, "",
@@ -99,48 +109,58 @@ class BottomPaymentFragment : Fragment(), PaymentsViewModel.IPaymentsContract {
         }
 
 
-        createPaymentBotButton.setOnClickListener{
+        createPaymentBotButton.setOnClickListener {
+            if (validate()) {
+                val namePaymentService = namePaymentEditText.text.toString()
+                val description = descriptionPaymentEditText.text.toString()
+                val cardName = ownerPaymentEditText.text.toString()
+                val cardNumber = numberPaymentEditText.text.toString()
 
-            val namePaymentService = namePaymentEditText.text.toString()
-            val description = descriptionPaymentEditText.text.toString()
-            val cardName =  ownerPaymentEditText.text.toString()
-            val cardNumber = numberPaymentEditText.text.toString()
+                if (periodEditText.unmaskedText.isNotEmpty() || periodEditText.unmaskedText.length == 6) {
 
-            if(phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
+                    val month = periodEditText?.unmaskedText?.subSequence(0, 2).toString()
+                    val year = periodEditText?.unmaskedText?.subSequence(2, periodEditText.unmaskedText.length).toString()
 
-                val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
-                val year = phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length).toString()
-
-                val dataPayment = PaymentModel(
-                    cardNumber,
-                    cardName,
-                    month,
-                    year,
-                    "",
-                    pricePaymentEditText.text.toString(),
-                    listOf(PaymentTypes.CreditCard.type)
-                )
-
-                user.token?.let { it1 ->
-                    viewModel.createPaymentService(
-                        namePaymentService, description,
-                        it1, dataPayment, TypeServices.payment.type_id
+                    val dataPayment = PaymentModel(
+                        cardNumber,
+                        cardName,
+                        month,
+                        year,
+                        "",
+                        pricePaymentEditText.text.toString(),
+                        listOf(PaymentTypes.CreditCard.type)
                     )
+
+                    user.token?.let { it1 ->
+                        viewModel.createPaymentService(
+                            namePaymentService, description,
+                            it1, dataPayment, TypeServices.payment.type_id
+                        )
+                    }
+                } else {
+                    Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
                 }
-
-//                val action = BottomPaymentFragmentDirections
-//                    .actionNavigationCreatePaymentToNavigationServicesFragment()
-//                    .setPaymentModel(dataPayment)
-//                    .setNamePaymentService(namePaymentService)
-//                    .setDescriptionPaymentService(description)
-//
-//                Navigation.findNavController(view).navigate(action)
-
-
-            } else{
-                Toast.makeText(context, "Please Check Field: validity period of the card, ", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    fun validate(): Boolean {
+        val namePaymentService = namePaymentEditText.text.toString()
+        val description = descriptionPaymentEditText.text.toString()
+        val cardNumber = numberPaymentEditText.text.toString()
+        if (namePaymentService.isEmpty()) {
+            namePaymentLayout.error = getString(R.string.required)
         }
+        if (description.isEmpty()) {
+            descriptionPaymentLayout.error = getString(R.string.required)
+        }
+        if (cardNumber.isEmpty()) {
+            numberPaymentLayout.error = getString(R.string.required)
+        }
+        if (periodEditText.unmaskedText.isEmpty()) {
+            periodEditText.error = getString(R.string.required)
+        }
+        return namePaymentService.isNotEmpty() || description.isNotEmpty() || cardNumber.isNotEmpty() || periodEditText.unmaskedText.isNotEmpty()
     }
 
     override fun onPaymentsResult() {

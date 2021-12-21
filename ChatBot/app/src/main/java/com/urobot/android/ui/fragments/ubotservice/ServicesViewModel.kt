@@ -13,7 +13,12 @@ import com.urobot.android.Repository.UserRepository
 import com.urobot.android.contracts.IUserContract
 import com.urobot.android.data.NetModel.Request.RequestBotCalendarService
 import com.urobot.android.data.NetModel.Request.RequestBotPaymentService
-import com.urobot.android.data.model.*
+import com.urobot.android.data.model.GetAllServicesModel
+import com.urobot.android.data.model.OnlineRecordModel
+import com.urobot.android.data.model.PaymentModel
+import com.urobot.android.data.model.TypeServices
+import com.urobot.android.data.model.UpdateBotCalendarService
+import com.urobot.android.data.model.UpdatePaymentService
 import com.urobot.android.db.User
 import com.urobot.android.db.UserRoomDatabase
 import com.urobot.android.ui.fragments.chats.ChatsViewModel
@@ -40,7 +45,7 @@ class ServicesViewModel(application: Application) : AndroidViewModel(application
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
 
     }
 

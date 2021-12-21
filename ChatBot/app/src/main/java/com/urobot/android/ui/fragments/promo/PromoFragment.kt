@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.urobot.android.R
-import kotlinx.android.synthetic.main.promo_fragment.*
+import kotlinx.android.synthetic.main.promo_fragment.sharePromo
 
 class PromoFragment : Fragment(), PromoViewModel.IPromoContract {
 
@@ -43,7 +43,7 @@ class PromoFragment : Fragment(), PromoViewModel.IPromoContract {
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Это Ваш Промокод " + promo);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.promocode))
             startActivity(Intent.createChooser(shareIntent, "Отправить промокод другу"))
         }
     }

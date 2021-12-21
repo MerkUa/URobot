@@ -10,7 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.urobot.android.R
 import com.urobot.android.ui.createbot.CreateBotActivity
-import kotlinx.android.synthetic.main.create_bot_fragment.*
+import kotlinx.android.synthetic.main.create_bot_fragment.createBtn
+import kotlinx.android.synthetic.main.create_bot_fragment.descriptionBotEditText
+import kotlinx.android.synthetic.main.create_bot_fragment.nameBotEditText
+import kotlinx.android.synthetic.main.create_bot_fragment.nameBotLayout
+import kotlinx.android.synthetic.main.create_bot_fragment.repeatDayEditText
 
 class CreateBotFragment : Fragment() {
 
@@ -30,42 +34,32 @@ class CreateBotFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         createBotViewModel = ViewModelProvider(this).get(CreateBotViewModel::class.java)
+
+        createBotViewModel.createRobotLiveData.observe(viewLifecycleOwner, Observer { robot ->
+            robot?.let {
+                activity?.onBackPressed()
+                val intent = Intent(activity, CreateBotActivity::class.java)
+                intent.putExtra(CreateBotActivity.EXTRA_BOT_ID, it.id)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         createBtn.setOnClickListener {
-
-            createBotViewModel.currentUser.observe(viewLifecycleOwner, Observer { user ->
-                user?.let {
-                    if (nameBotEditText.text!!.isNotEmpty()) {
-                        createBotViewModel.createRobot(
-                            it.token!!,
-                            nameBotEditText.text.toString(),
-                            descriptionBotEditText.text.toString(),
-                            repeatDayEditText.text.toString()
-                        )
-                    }
-
-                }
-            })
-
-            createBotViewModel.createRobotLiveData.observe(viewLifecycleOwner, Observer { robot ->
-                robot?.let {
-                    activity?.onBackPressed()
-                    val intent = Intent(activity, CreateBotActivity::class.java)
-                    intent.putExtra(CreateBotActivity.EXTRA_BOT_ID, it.id)
-                    startActivity(intent)
-                }
-            })
-
-
+            if (nameBotEditText.text!!.isNotEmpty()) {
+                createBotViewModel.createRobot(
+                    nameBotEditText.text.toString(),
+                    descriptionBotEditText.text.toString(),
+                    repeatDayEditText.text.toString()
+                )
+            } else {
+                nameBotLayout.error = getString(R.string.required)
+            }
         }
 //        codeLayout.visibility = View.GONE
-
     }
-
-
 }
 

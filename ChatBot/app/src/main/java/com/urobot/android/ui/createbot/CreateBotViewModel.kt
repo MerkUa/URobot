@@ -10,7 +10,11 @@ import com.urobot.android.Network.ApiService
 import com.urobot.android.Repository.UserRepository
 import com.urobot.android.contracts.IUserContract
 import com.urobot.android.data.NetModel.Request.RequestBotScripts
-import com.urobot.android.data.model.*
+import com.urobot.android.data.model.BotContentItem
+import com.urobot.android.data.model.GetAllScriptsModel
+import com.urobot.android.data.model.GetAllServicesModel
+import com.urobot.android.data.model.ServiceButtons
+import com.urobot.android.data.model.UpdateOrCreateScriptsModel
 import com.urobot.android.db.User
 import com.urobot.android.db.UserRoomDatabase
 import com.urobot.android.ui.fragments.chats.ChatsViewModel
@@ -18,7 +22,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class CreateBotViewModel(application:Application) : AndroidViewModel(application), IUserContract{
 
@@ -37,7 +40,7 @@ class CreateBotViewModel(application:Application) : AndroidViewModel(application
         // Gets reference to WordDao from WordRoomDatabase to construct
 
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
     }
 
     val getAllScriptsLivaData: MutableLiveData<List<List<GetAllScriptsModel>>> = MutableLiveData()

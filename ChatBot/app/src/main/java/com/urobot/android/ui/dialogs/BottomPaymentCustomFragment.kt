@@ -10,8 +10,15 @@ import androidx.navigation.Navigation
 import com.urobot.android.R
 import com.urobot.android.data.model.PaymentModel
 import com.urobot.android.data.model.PaymentTypes
-import kotlinx.android.synthetic.main.fragment_bottom_payment.*
-
+import kotlinx.android.synthetic.main.fragment_bottom_payment.createPaymentBotButton
+import kotlinx.android.synthetic.main.fragment_bottom_payment.deleteBtn
+import kotlinx.android.synthetic.main.fragment_bottom_payment.descriptionPaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.namePaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.numberPaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.ownerPaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.periodEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.pricePaymentEditText
+import kotlinx.android.synthetic.main.fragment_bottom_payment.updatePaymentBotButton
 
 class BottomPaymentCustomFragment : Fragment() {
 
@@ -42,17 +49,17 @@ class BottomPaymentCustomFragment : Fragment() {
 
             val monthAndYearTextFromNet = paymentData?.data?.month + paymentData?.data?.year
 
-            phoneEditText.setMaskedText(monthAndYearTextFromNet)
+            periodEditText.setMaskedText(monthAndYearTextFromNet)
 
 
             updatePaymentBotButton.setOnClickListener {
 
-                if (phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
+                if (periodEditText.unmaskedText.isNotEmpty() || periodEditText.unmaskedText.length == 6) {
 
-                    val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
-                    val year = phoneEditText?.unmaskedText?.subSequence(
+                    val month = periodEditText?.unmaskedText?.subSequence(0, 2).toString()
+                    val year = periodEditText?.unmaskedText?.subSequence(
                         2,
-                        phoneEditText.unmaskedText.length
+                        periodEditText.unmaskedText.length
                     ).toString()
 
                     val data = PaymentModel(
@@ -88,11 +95,11 @@ class BottomPaymentCustomFragment : Fragment() {
             val cardNumber = numberPaymentEditText.text.toString()
 //            val cvv = cvvPaymentEditText.text.toString()
 
-            if (phoneEditText.unmaskedText.isNotEmpty() || phoneEditText.unmaskedText.length == 6) {
+            if (periodEditText.unmaskedText.isNotEmpty() || periodEditText.unmaskedText.length == 6) {
 
-                val month = phoneEditText?.unmaskedText?.subSequence(0, 2).toString()
+                val month = periodEditText?.unmaskedText?.subSequence(0, 2).toString()
                 val year =
-                    phoneEditText?.unmaskedText?.subSequence(2, phoneEditText.unmaskedText.length)
+                    periodEditText?.unmaskedText?.subSequence(2, periodEditText.unmaskedText.length)
                         .toString()
 
                 val dataPayment = PaymentModel(

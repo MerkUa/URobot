@@ -33,7 +33,7 @@ class IndustryViewModel(application: Application) : AndroidViewModel(application
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
         repository = UserRepository(userDao, this)
-        User = repository.User
+        User = repository.user
     }
 
     fun setListener(listener: SettingsViewModel.ISettingsContract) {

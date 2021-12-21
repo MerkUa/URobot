@@ -1,8 +1,11 @@
 package com.urobot.android.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
-
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface UserDao {
@@ -21,6 +24,9 @@ interface UserDao {
 
     @Query("SELECT * FROM user_table WHERE id = :userId LIMIT 1")
     fun getUserById(userId: String): User?
+
+    @Query("SELECT * from user_table ORDER BY ID DESC LIMIT 1")
+    fun getCurrentUser(): User?
 
 //    @Query("SELECT token FROM user_table")
 //    fun getToken(): User

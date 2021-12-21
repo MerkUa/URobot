@@ -30,7 +30,7 @@ class RobotViewModel(application: Application) : AndroidViewModel(application), 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
     }
 
     fun registerDeviceId(context: Context, token: String) {

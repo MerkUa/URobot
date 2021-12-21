@@ -36,6 +36,7 @@
         android:singleLine="false"
         android:textColor="@color/black_text"
         android:textSize="24sp"
+        tools:text="Name"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView"

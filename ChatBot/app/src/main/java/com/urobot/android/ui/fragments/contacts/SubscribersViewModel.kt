@@ -31,7 +31,7 @@ class SubscribersViewModel(application: Application) : AndroidViewModel(applicat
         // Gets reference to WordDao from WordRoomDatabase to construct
 
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
     }
 
 

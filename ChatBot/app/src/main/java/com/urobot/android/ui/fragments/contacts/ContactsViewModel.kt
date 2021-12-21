@@ -29,7 +29,7 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
         // Gets reference to WordDao from WordRoomDatabase to construct
 
         repository = UserRepository(userDao, this)
-        currentUser = repository.User
+        currentUser = repository.user
     }
 
 
